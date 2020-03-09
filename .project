@@ -41,5 +41,25 @@
 			<type>2</type>
 			<location>/home/zwax/arduino-1.8.5/hardware/teensy/avr/libraries/AccelStepper</location>
 		</link>
+		<link>
+			<name>libraries/Adafruit_GFX_Library</name>
+			<type>2</type>
+			<location>/home/zwax/Arduino/libraries/Adafruit_GFX_Library</location>
+		</link>
+		<link>
+			<name>libraries/SD</name>
+			<type>2</type>
+			<location>/home/zwax/arduino-1.8.5/hardware/teensy/avr/libraries/SD</location>
+		</link>
+		<link>
+			<name>libraries/SPI</name>
+			<type>2</type>
+			<location>/home/zwax/arduino-1.8.5/hardware/teensy/avr/libraries/SPI</location>
+		</link>
+		<link>
+			<name>libraries/Wire</name>
+			<type>2</type>
+			<location>/home/zwax/arduino-1.8.5/hardware/teensy/avr/libraries/Wire</location>
+		</link>
 	</linkedResources>
 </projectDescription>

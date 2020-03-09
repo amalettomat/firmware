@@ -34,12 +34,12 @@
 		<link>
 			<name>core/core</name>
 			<type>2</type>
-			<location>/home/zwax/arduino-1.8.5/hardware/teensy/avr/cores/teensy3</location>
+			<location>/home/zwax/arduino-1.8.7/hardware/teensy/avr/cores/teensy3</location>
 		</link>
 		<link>
 			<name>libraries/AccelStepper</name>
 			<type>2</type>
-			<location>/home/zwax/arduino-1.8.5/hardware/teensy/avr/libraries/AccelStepper</location>
+			<location>/home/zwax/arduino-1.8.7/hardware/teensy/avr/libraries/AccelStepper</location>
 		</link>
 		<link>
 			<name>libraries/Adafruit_GFX_Library</name>
@@ -49,17 +49,17 @@
 		<link>
 			<name>libraries/SD</name>
 			<type>2</type>
-			<location>/home/zwax/arduino-1.8.5/hardware/teensy/avr/libraries/SD</location>
+			<location>/home/zwax/arduino-1.8.7/hardware/teensy/avr/libraries/SD</location>
 		</link>
 		<link>
 			<name>libraries/SPI</name>
 			<type>2</type>
-			<location>/home/zwax/arduino-1.8.5/hardware/teensy/avr/libraries/SPI</location>
+			<location>/home/zwax/arduino-1.8.7/hardware/teensy/avr/libraries/SPI</location>
 		</link>
 		<link>
 			<name>libraries/Wire</name>
 			<type>2</type>
-			<location>/home/zwax/arduino-1.8.5/hardware/teensy/avr/libraries/Wire</location>
+			<location>/home/zwax/arduino-1.8.7/hardware/teensy/avr/libraries/Wire</location>
 		</link>
 	</linkedResources>
 </projectDescription>

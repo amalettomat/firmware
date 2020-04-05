@@ -42,36 +42,64 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	g_btnRozel.drawButton(false);
 
 	// rozel pos
-	g_spinRozelPos.init(g_display, COL_POS_RIGHT, 5, 16, 1, 0, 25, "%2.0f");
+	g_spinRozelPos.init(g_display,
+			            COL_POS_RIGHT, 5, // x-pos, y-pos
+			            16, 1, 0, 25,     // value, step, min, max
+			            "%2.0f");         // format
 	g_spinRozelPos.draw();
 
 	// plate motor on/off
-	g_btnPlateMotor.initButtonUL(g_display, COL_POS_MID, 65, MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT, COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, "PLATE", TEXTSIZE_BUTTON);
+	g_btnPlateMotor.initButtonUL(g_display,
+			                     COL_POS_MID, 65,                           // x-pos, y-pos
+			                     MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT, // width, height
+								 COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, // colors
+								 "PLATE", TEXTSIZE_BUTTON);                 // Label, testsize
 	g_btnPlateMotor.drawButton(g_plateMotor);
 
 	// plate speed
-	g_spinPlateSpeed.init(g_display, COL_POS_RIGHT, 65, 255, 5, 150, 255, "%3.0f"); // range: 150-255
+	g_spinPlateSpeed.init(g_display,
+			              COL_POS_RIGHT, 65, // x-pos, y-pos
+						  255, 5, 150, 255,  // value, step, min, max
+						  "%3.0f");          // format
 	g_spinPlateSpeed.draw();
 
 	// heating
-	g_btnHeating.initButtonUL(g_display, COL_POS_MID, 125, MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT, COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, "HEATING", TEXTSIZE_BUTTON);
+	g_btnHeating.initButtonUL(g_display,        // x-pos, y-pos
+			                  COL_POS_MID, 125,
+							  MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
+							  COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
+							  "HEATING", TEXTSIZE_BUTTON);
 	g_btnHeating.drawButton(g_heatingEnabled);
 
 	// plate temperature
-	g_spinTemp.init(g_display, COL_POS_RIGHT, 125, 158, 2, 120, 200, "%3.0f"); // range: 120-200
+	g_spinTemp.init(g_display,
+			        COL_POS_RIGHT, 125, // x-pos, y-pos
+					158, 2, 120, 200,   // value, step, min, max
+					"%3.0f");
 	g_spinTemp.draw();
 
 	// batter button
 	g_batterValve = false;
-	g_btnBatterOnOff.initButtonUL(g_display, COL_POS_LEFT, 185, MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT, COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, "BATTER", TEXTSIZE_BUTTON);
+	g_btnBatterOnOff.initButtonUL(g_display,
+			                      COL_POS_LEFT, 185,
+								  MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
+								  COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
+								  "BATTER", TEXTSIZE_BUTTON);
 	g_btnBatterOnOff.drawButton(false);
 
 	// batter dose button
-	g_btnBatterDose.initButtonUL(g_display, COL_POS_MID, 185, MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT, COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, "DOSE", TEXTSIZE_BUTTON);
+	g_btnBatterDose.initButtonUL(g_display,
+			                     COL_POS_MID, 185,
+								 MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
+								 COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
+								 "DOSE", TEXTSIZE_BUTTON);
 	g_btnBatterDose.drawButton(false);
 
 	// batter amount
-	g_spinBatterAmount.init(g_display, COL_POS_RIGHT, 185, 1.5, 0.1, 1.0, 3.0, "%3.1f"); // range: 1.0-3.0
+	g_spinBatterAmount.init(g_display,
+			                COL_POS_RIGHT, 185,
+							1.5, 0.1, 1.0, 3.0, // value, step, min, max
+							"%3.1f");
 	g_spinBatterAmount.draw();
 
 

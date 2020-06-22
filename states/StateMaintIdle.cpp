@@ -9,9 +9,9 @@
 #include "../Gui.h"
 #include <AccelStepper.h>
 #include "../config.h"
+#include "../MotorControllerClient.h"
 
-
-extern AccelStepper g_rozelStepper;
+extern MotorControllerClient g_rozelController;
 extern bool g_batterValve;
 extern bool g_plateMotor;
 extern int g_plateMotorSpeed;
@@ -37,8 +37,13 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 
 	// rozel button
 	m_rozelDown = false;
-	g_rozelStepper.move(-200*ROZEL_MICROSTEPS);
-	g_btnRozel.initButtonUL(g_display, COL_POS_MID, 5, MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT, COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, "ROZEL", TEXTSIZE_BUTTON);
+	// g_rozelStepper.move(-200*ROZEL_MICROSTEPS);
+
+	g_btnRozel.initButtonUL(g_display,
+			                COL_POS_MID, 5,                            // x-pos, y-pos
+							MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT, // width, height
+							COL_BUTTON_OUTLINE,	COL_BUTTON_INFILL, COL_BUTTON_TEXT, // colors
+							"ROZEL", TEXTSIZE_BUTTON);                 // Label, testsize
 	g_btnRozel.drawButton(false);
 
 	// rozel pos
@@ -109,7 +114,7 @@ void StateMaintIdle::action() {
 	if( g_spinRozelPos.handleTouch(g_touchPressed, g_touchX, g_touchY) ) {
 		if( m_rozelDown ) {
 			// if rozel pos changed and rozel is down, set new position
-			g_rozelStepper.moveTo(ROZEL_ENDPOS - 5 * g_spinRozelPos.getValue());
+			// g_rozelStepper.moveTo(ROZEL_ENDPOS - 5 * g_spinRozelPos.getValue());
 		}
 	}
 
@@ -130,10 +135,12 @@ void StateMaintIdle::action() {
 	if( g_btnRozel.justPressed() ) {
 		m_rozelDown = !m_rozelDown;
 		if( m_rozelDown ) {
-			g_rozelStepper.moveTo(ROZEL_ENDPOS - 5 * g_spinRozelPos.getValue());
+			// g_rozelStepper.moveTo(ROZEL_ENDPOS - 5 * g_spinRozelPos.getValue());
+			g_rozelController.moveToPos(ROZEL_ENDPOS);
 			g_btnRozel.drawButton(true);
 		} else {
-			g_rozelStepper.move(-200*ROZEL_MICROSTEPS); // move until hitting home switch
+			// g_rozelStepper.move(-200*ROZEL_MICROSTEPS); // move until hitting home switch
+			g_rozelController.startHoming();
 			g_btnRozel.drawButton(false);
 		}
 	}

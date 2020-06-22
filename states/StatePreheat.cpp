@@ -10,6 +10,10 @@
 #include "StateIdle.h"
 #include "../Gui.h"
 
+// ### TEST
+#include "../MotorControllerClient.h"
+extern MotorControllerClient g_rozelController;
+
 extern bool g_heating;
 
 StatePreheat STATE_PREHEAT;
@@ -38,12 +42,29 @@ void StatePreheat::action() {
 		g_btnSkip.press(false);
 	}
 
-	if( g_btnSkip.justReleased() )
-		switchState(&STATE_MAINTENANCE_IDLE);
-	else if( g_btnSkip.justPressed() )
+	// ### TEST
+//	if( g_btnSkip.justReleased() )
+//		switchState(&STATE_MAINTENANCE_IDLE);
+//	else if( g_btnSkip.justPressed() )
+//		g_btnSkip.drawButton(true);
+	if( g_btnSkip.justReleased() ) {
+		g_btnSkip.drawButton(false);
+		g_rozelController.moveToPos(0);
+	} else if( g_btnSkip.justPressed() ){
 		g_btnSkip.drawButton(true);
+		g_rozelController.moveToPos(1000);
+	}
 }
 
 void StatePreheat::refreshDisplay() {
-	refreshStatusBar();
+	// ### TEST
+	// refreshStatusBar();
+
+	g_display->setTextColor(COL_STATUS_TEXT, COL_BACKGROUND);
+	g_display->setTextSize(3);
+
+	g_rozelController.fetchControllerData();
+	g_display->setCursor(60, 288);
+	g_display->printf(" %3.2f %d", g_rozelController.m_controllerData.position, g_rozelController.m_numOfBytes);
+
 }

@@ -19,12 +19,14 @@
 
 // rozel
 // =============================================
-#define ROZEL_MICROSTEPS 8
-#define PIN_STEPPER_ROZEL_DIR 28
-#define PIN_STEPPER_ROZEL_STEP 29
-#define PIN_STEPPER_ROZEL_ENABLE 30
-#define PIN_STEPPER_ROZEL_ENDSTOP 19
-#define ROZEL_ENDPOS (181*ROZEL_MICROSTEPS)
+//#define ROZEL_MICROSTEPS 8
+//#define PIN_STEPPER_ROZEL_DIR 28
+//#define PIN_STEPPER_ROZEL_STEP 29
+//#define PIN_STEPPER_ROZEL_ENABLE 30
+//#define PIN_STEPPER_ROZEL_ENDSTOP 19
+//#define ROZEL_ENDPOS (181*ROZEL_MICROSTEPS)
+#define ROZEL_TICKS_PER_DEG (8600/360.0)
+#define ROZEL_ENDPOS (180 * ROZEL_TICKS_PER_DEG)
 
 // display
 // =============================================

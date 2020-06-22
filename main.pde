@@ -11,12 +11,14 @@
 #include "states/StateIdle.h"
 #include "layout.h"
 #include "config.h"
+#include "MotorControllerClient.h"
+
 
 // #include <SD.h>
 // #include "BmpFile.h"
 
 AccelStepper scraperStepper(AccelStepper::DRIVER, PIN_STEPPER_SCRAPER_STEP, PIN_STEPPER_SCRAPER_DIR);
-AccelStepper g_rozelStepper(AccelStepper::DRIVER, PIN_STEPPER_ROZEL_STEP, PIN_STEPPER_ROZEL_DIR);
+// AccelStepper g_rozelStepper(AccelStepper::DRIVER, PIN_STEPPER_ROZEL_STEP, PIN_STEPPER_ROZEL_DIR);
 
 Adafruit_ILI9486_Teensy tftDisplay;
 Adafruit_GFX* g_display = &tftDisplay;
@@ -91,6 +93,9 @@ String commandParams[MAX_PARAMS];
 int numOfParams = 0;
 unsigned long displayTime;
 
+int16_t rozelMotorSpeed;
+MotorControllerClient g_rozelController;
+
 
 // ====================================================================
 
@@ -99,18 +104,20 @@ void writeOutputs();
 // ====================================================================
 
 void initRozel() {
-	pinMode(PIN_STEPPER_ROZEL_ENABLE, OUTPUT);
-	pinMode(PIN_STEPPER_ROZEL_DIR, OUTPUT);
-	pinMode(PIN_STEPPER_ROZEL_STEP, OUTPUT);
-	pinMode(PIN_STEPPER_ROZEL_ENDSTOP, INPUT);
+	g_rozelController.startHoming();
 
-	g_rozelStepper.setMaxSpeed(100.0 * ROZEL_MICROSTEPS);
-	g_rozelStepper.setSpeed(60.0 * ROZEL_MICROSTEPS);
-	g_rozelStepper.setAcceleration(250.0 * ROZEL_MICROSTEPS);
-	g_rozelStepper.setCurrentPosition(0);
-	// digitalWrite(PIN_STEPPER_ROZEL_ENABLE, HIGH); // sleep mode
-	digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW); // enabled
-	g_rozelStepper.move(-200*ROZEL_MICROSTEPS);
+//	pinMode(PIN_STEPPER_ROZEL_ENABLE, OUTPUT);
+//	pinMode(PIN_STEPPER_ROZEL_DIR, OUTPUT);
+//	pinMode(PIN_STEPPER_ROZEL_STEP, OUTPUT);
+//	pinMode(PIN_STEPPER_ROZEL_ENDSTOP, INPUT);
+//
+//	g_rozelStepper.setMaxSpeed(100.0 * ROZEL_MICROSTEPS);
+//	g_rozelStepper.setSpeed(60.0 * ROZEL_MICROSTEPS);
+//	g_rozelStepper.setAcceleration(250.0 * ROZEL_MICROSTEPS);
+//	g_rozelStepper.setCurrentPosition(0);
+//	// digitalWrite(PIN_STEPPER_ROZEL_ENABLE, HIGH); // sleep mode
+//	digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW); // enabled
+//	g_rozelStepper.move(-200*ROZEL_MICROSTEPS);
 }
 
 void initScraper() {
@@ -153,6 +160,9 @@ void setup() {
 	SPI.begin();
 	Serial.begin(9600);
 
+	// init I2C
+	Wire.begin();
+
 	initScreen();
 	initRozel();
 	initScraper();
@@ -178,6 +188,8 @@ void setup() {
 	digitalWrite(PIN_RELAY4, HIGH);
 
 	writeOutputs();
+
+	rozelMotorSpeed = 500;
 
 	for( int index=0; index < NUM_AVG_TEMP_VALUES; index++ )
 		readPlateTemp();
@@ -337,13 +349,13 @@ void handleCommand() {
 	switch( command ) {
 	case COMMAND_MOVE_STEP_FWD:
 		Serial.println("step FWD");
-		digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW);
-		g_rozelStepper.move(100);
+//		digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW);
+//		g_rozelStepper.move(100);
 		break;
 	case COMMAND_MOVE_STEP_BACK:
 		Serial.println("step BACK");
-		digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW);
-		g_rozelStepper.move(-100);
+//		digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW);
+//		g_rozelStepper.move(-100);
 		break;
 	case COMMAND_HEAT_ON:
 		Serial.println("g_heating on");
@@ -370,14 +382,14 @@ void handleCommand() {
 		g_oilerSolenoid = !g_oilerSolenoid;
 		break;
 	case COMMAND_ROZEL_HOME:
-		if( digitalRead(PIN_STEPPER_ROZEL_ENDSTOP) ) {
-			digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW);
-			g_rozelStepper.moveTo(-5000);
-		}
+//		if( digitalRead(PIN_STEPPER_ROZEL_ENDSTOP) ) {
+//			digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW);
+//			g_rozelStepper.moveTo(-5000);
+//		}
 		break;
 	case COMMAND_ROZEL_DOWN:
-		digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW);
-		g_rozelStepper.moveTo(180*ROZEL_MICROSTEPS);
+//		digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW);
+//		g_rozelStepper.moveTo(180*ROZEL_MICROSTEPS);
 		break;
 
 	}
@@ -516,33 +528,15 @@ void pressureControl() {
 		g_compressor = true;
 }
 
-void rozelControl() {
-	long dist = g_rozelStepper.distanceToGo();
-//	static bool stepperEnabled = true;
+//void rozelControl() {
+//	long dist = g_rozelStepper.distanceToGo();
 //
-//	if( dist == 0 && g_rozelStepper.currentPosition() == 0 ) {
-//		if( stepperEnabled ) {
-//			digitalWrite(PIN_STEPPER_ROZEL_ENABLE, HIGH);
-//			stepperEnabled = false;
-//			Serial.printf("turn off rozel motor\n");
-//		}
-//	} else {
-//		digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW);
-//		stepperEnabled = true;
-//
-//		if( dist < 0 && !digitalRead(PIN_STEPPER_ROZEL_ENDSTOP) ){
-//			g_rozelStepper.stop();
-//			Serial.printf("rozel endstop, pos: %ld\n", g_rozelStepper.currentPosition());
-//			g_rozelStepper.setCurrentPosition(0);
-//		}
+//	if( dist < 0 && !digitalRead(PIN_STEPPER_ROZEL_ENDSTOP) ){
+//		g_rozelStepper.stop();
+//		Serial.printf("rozel endstop, pos: %ld\n", g_rozelStepper.currentPosition());
+//		g_rozelStepper.setCurrentPosition(0);
 //	}
-
-	if( dist < 0 && !digitalRead(PIN_STEPPER_ROZEL_ENDSTOP) ){
-		g_rozelStepper.stop();
-		Serial.printf("rozel endstop, pos: %ld\n", g_rozelStepper.currentPosition());
-		g_rozelStepper.setCurrentPosition(0);
-	}
-}
+//}
 
 void coinControl() {
 	static int signalCount = 0;
@@ -591,13 +585,13 @@ void loop() {
 
 	tempControl();
 	pressureControl();
-	rozelControl();
+	// rozelControl();
 	coinControl();
 
 	serialComm();
 	handleCommand();
 
-	g_rozelStepper.run();
+	// g_rozelStepper.run();
 
 	// state machine: calls action method of current state
 	AbstractState::handleState();

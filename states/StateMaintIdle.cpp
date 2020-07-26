@@ -135,12 +135,12 @@ void StateMaintIdle::action() {
 	if( g_btnRozel.justPressed() ) {
 		m_rozelDown = !m_rozelDown;
 		if( m_rozelDown ) {
-			// g_rozelStepper.moveTo(ROZEL_ENDPOS - 5 * g_spinRozelPos.getValue());
-			g_rozelController.moveToPos(ROZEL_ENDPOS);
+			g_rozelController.setSpeed(1200);
+			g_rozelController.moveTo(ROZEL_ENDPOS - 10 * g_spinRozelPos.getValue());
 			g_btnRozel.drawButton(true);
 		} else {
 			// g_rozelStepper.move(-200*ROZEL_MICROSTEPS); // move until hitting home switch
-			g_rozelController.startHoming();
+			g_rozelController.home(200);
 			g_btnRozel.drawButton(false);
 		}
 	}
@@ -185,4 +185,14 @@ void StateMaintIdle::action() {
 
 void StateMaintIdle::refreshDisplay() {
 	refreshStatusBar();
+
+	g_display->setTextColor(COL_STATUS_TEXT, COL_BACKGROUND);
+	g_display->setTextSize(3);
+
+//	bool result = g_rozelController.updateStatus();
+//	ControllerData& controllerData = g_rozelController.getStatus();
+//
+//	g_display->setCursor(70, 260);
+//	g_display->printf("pos: %3.2f speed: %3.2f, %d   ", controllerData.position, controllerData.speed, controllerData.m_controllerStatus);
+
 }

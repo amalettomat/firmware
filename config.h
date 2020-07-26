@@ -25,8 +25,8 @@
 //#define PIN_STEPPER_ROZEL_ENABLE 30
 //#define PIN_STEPPER_ROZEL_ENDSTOP 19
 //#define ROZEL_ENDPOS (181*ROZEL_MICROSTEPS)
-#define ROZEL_TICKS_PER_DEG (8600/360.0)
-#define ROZEL_ENDPOS (180 * ROZEL_TICKS_PER_DEG)
+#define ROZEL_TICKS_PER_DEG (5850/360.0)
+#define ROZEL_ENDPOS 2890
 
 // display
 // =============================================

@@ -1,37 +1,42 @@
 /*
  * MotorControllerClient.h
  *
- *  Created on: 05.04.2020
+ *  Created on: 03.07.2020
  *      Author: zwax
  */
 
 #ifndef MOTORCONTROLLERCLIENT_H_
 #define MOTORCONTROLLERCLIENT_H_
 
-#include "../MotorController/MotorController.h"
-#include <sys/types.h>
+#include "MotorController.h"
 #include <Wire.h>
 
 
 class MotorControllerClient {
 public:
 	MotorControllerClient();
+	MotorControllerClient( int twiAddress );
 	virtual ~MotorControllerClient();
+	static void init();
 
-	void runAtSpeed(int16_t speed);
-	void stop();
-	void startHoming();
-	void moveToPos(int32_t pos);
-	void fetchControllerData();
+	int stop();
+	int home(int16_t speed);
+	int moveTo(int32_t pos);
+	int setSpeed(int16_t speed);
+	bool updateStatus();
+
+	ControllerData& getStatus() { return m_controllerData; };
 
 protected:
-	void sendCommand(uint8_t cmd);
-	void sendCommandParam16(uint8_t cmd, int16_t param);
-	void sendCommandParam32(uint8_t cmd, int32_t param);
+	static void onReceive(int count);
 
-public:
+	int sendCommand(char twiCommand);
+	int sendCommand16(char twiCommand, int16_t param);
+	int sendCommand32(char twiCommand, int32_t param);
+
+private:
+	int m_twiAddress;
 	ControllerData m_controllerData;
-	size_t m_numOfBytes;
 };
 
 #endif /* MOTORCONTROLLERCLIENT_H_ */

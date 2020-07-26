@@ -13,6 +13,7 @@
 #include "config.h"
 #include "MotorControllerClient.h"
 
+#define SERIAL_DEBUG false
 
 // #include <SD.h>
 // #include "BmpFile.h"
@@ -104,7 +105,8 @@ void writeOutputs();
 // ====================================================================
 
 void initRozel() {
-	g_rozelController.startHoming();
+	g_rozelController.updateStatus();
+	g_rozelController.home(150);
 
 //	pinMode(PIN_STEPPER_ROZEL_ENABLE, OUTPUT);
 //	pinMode(PIN_STEPPER_ROZEL_DIR, OUTPUT);
@@ -158,7 +160,9 @@ void initScreen() {
 
 void setup() {
 	SPI.begin();
-	Serial.begin(9600);
+
+	if( SERIAL_DEBUG )
+		Serial.begin(9600);
 
 	// init I2C
 	Wire.begin();
@@ -199,8 +203,10 @@ void setup() {
 
 	displayTime = millis() + DISPLAY_INTERVAL;
 
-	Serial.println("# Amalettomat V2");
-	Serial.println("# READY.");
+	if( SERIAL_DEBUG ) {
+		Serial.println("# Amalettomat V2");
+		Serial.println("# READY.");
+	}
 
 	// clear display area
 	g_display->fillScreen(COL_BACKGROUND);
@@ -239,7 +245,9 @@ void readTouchPos() {
 	SPI.endTransaction();
 
 	if(g_touchPressed){
-		Serial.printf("% 5i % 8i % 8i\n",z, g_touchX, g_touchY);
+		if( SERIAL_DEBUG )
+			Serial.printf("% 5i % 8i % 8i\n",z, g_touchX, g_touchY);
+
 //		g_display->drawFastHLine(g_touchX-20, g_touchY, 40, COL_LINES);
 //		g_display->drawFastVLine(g_touchX, g_touchY-20, 40, COL_LINES);
 	}
@@ -486,7 +494,9 @@ void writeState() {
 //}
 
 void displayMessage(const char* msg) {
-	Serial.println(msg);
+	if( SERIAL_DEBUG )
+		Serial.println(msg);
+
 	g_display->setCursor(120, 280);
 	g_display->setTextColor(WHITE, BLACK);
 	g_display->setTextSize(2);
@@ -588,7 +598,9 @@ void loop() {
 	// rozelControl();
 	coinControl();
 
-	serialComm();
+	if( SERIAL_DEBUG )
+		serialComm();
+
 	handleCommand();
 
 	// g_rozelStepper.run();

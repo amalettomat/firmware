@@ -404,8 +404,32 @@ void Adafruit_ILI9486_Teensy::setRotation(uint8_t m)
 /*****************************************************************************/
 void Adafruit_ILI9486_Teensy::invertDisplay(boolean i)
 {
-		SPI.beginTransaction(SPISET);
+	SPI.beginTransaction(SPISET);
 	
 	writecommand(i ? ILI9486_INVON : ILI9486_INVOFF);
 	SPI.endTransaction();
 }
+
+/**************************************************************************/
+/*!
+   @brief   Draw a RAM-resident 16-bit image (RGB 5/6/5) at the specified (x,y)
+   position. For 16-bit display devices; no color reduction performed.
+    @param    x   Top left corner x coordinate
+    @param    y   Top left corner y coordinate
+    @param    bitmap  byte array with 16-bit color bitmap
+    @param    w   Width of bitmap in pixels
+    @param    h   Height of bitmap in pixels
+*/
+/**************************************************************************/
+void Adafruit_ILI9486_Teensy::drawRGBBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
+                                 int16_t w, int16_t h) {
+
+	setAddrWindow(x, y, x + w, y + h);
+
+	SPI.beginTransaction(SPISET);
+	for( int32_t i=0; i < w * h * 2; i += 2 ) {
+		writedata16(makeWord(bitmap[i], bitmap[i+1]));
+	}
+	SPI.endTransaction();
+}
+

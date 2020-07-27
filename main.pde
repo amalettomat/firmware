@@ -148,12 +148,13 @@ void initScreen() {
 
 	// show splash screen
 	//g_display->drawRGBBitmap(0, 0, (uint16_t*)splash_image.pixel_data, 480, 320);
-	tftDisplay.setAddrWindow(0,0, 480, 320);
-	for(int i=0;i<320*480;i++){
-		tftDisplay.pushColor( makeWord(splash_image.pixel_data[2*i], splash_image.pixel_data[2*i+1]) );
-	}
+//	tftDisplay.setAddrWindow(0,0, 480, 320);
+//	for(int i=0;i<320*480;i++){
+//		tftDisplay.pushColor( makeWord(splash_image.pixel_data[2*i], splash_image.pixel_data[2*i+1]) );
+//	}
+	tftDisplay.drawRGBBitmap(0, 0, (const uint8_t*)splash_image.pixel_data, 480, 320);
 
-	delay(1000);
+	delay(2000);
 }
 
 // =============================================================================

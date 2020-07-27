@@ -37,7 +37,6 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 
 	// rozel button
 	m_rozelDown = false;
-	// g_rozelStepper.move(-200*ROZEL_MICROSTEPS);
 
 	g_btnRozel.initButtonUL(g_display,
 			                COL_POS_MID, 5,                            // x-pos, y-pos
@@ -139,7 +138,6 @@ void StateMaintIdle::action() {
 			g_rozelController.moveTo(ROZEL_ENDPOS - 10 * g_spinRozelPos.getValue());
 			g_btnRozel.drawButton(true);
 		} else {
-			// g_rozelStepper.move(-200*ROZEL_MICROSTEPS); // move until hitting home switch
 			g_rozelController.home(200);
 			g_btnRozel.drawButton(false);
 		}

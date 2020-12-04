@@ -9,9 +9,11 @@
 #define GUI_H_
 
 #include "layout.h"
+#include "Adafruit_ILI9486_Teensy.h"
 #include "GfxSpinButtonField.h"
 
-extern Adafruit_GFX* g_display;
+
+extern Adafruit_ILI9486_Teensy* g_display;
 extern int g_touchX;
 extern int g_touchY;
 extern bool g_touchPressed;
@@ -19,6 +21,9 @@ extern bool g_touchPressed;
 
 // state PREHEAT
 extern Adafruit_GFX_Button g_btnSkip;
+
+// state IDLE
+extern Adafruit_GFX_Button g_btnMaintenance;
 
 // state MAINTENANCE
 extern Adafruit_GFX_Button g_btnRozel;

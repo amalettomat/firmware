@@ -13,6 +13,9 @@
 // state PREHEAT
 Adafruit_GFX_Button g_btnSkip;
 
+// state IDLE
+Adafruit_GFX_Button g_btnMaintenance;
+
 // state MAINTENANCE
 Adafruit_GFX_Button g_btnRozel;
 GfxSpinButtonField g_spinRozelPos;
@@ -23,6 +26,7 @@ Adafruit_GFX_Button g_btnPlateMotor;
 GfxSpinButtonField g_spinPlateSpeed;
 Adafruit_GFX_Button g_btnHeating;
 GfxSpinButtonField g_spinTemp;
+
 
 
 // functions

@@ -28,9 +28,11 @@ StateMaintIdle::StateMaintIdle() : m_rozelDown(false), m_batterStartTime(0) {
 StateMaintIdle::~StateMaintIdle() {
 }
 
-#define COL_POS_LEFT 10
-#define COL_POS_MID 160
-#define COL_POS_RIGHT 310
+#define COL_POS_ROW1 2
+#define COL_POS_ROW2 82
+#define COL_POS_ROW3 250
+#define COL_POS_ROW4 328
+
 
 void StateMaintIdle::transition(AbstractState* prevState) {
 	clearMainArea();
@@ -39,7 +41,7 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	m_rozelDown = false;
 
 	g_btnRozel.initButtonUL(g_display,
-			                COL_POS_MID, 5,                            // x-pos, y-pos
+			                COL_POS_ROW1, 2,                            // x-pos, y-pos
 							MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT, // width, height
 							COL_BUTTON_OUTLINE,	COL_BUTTON_INFILL, COL_BUTTON_TEXT, // colors
 							"ROZEL", TEXTSIZE_BUTTON);                 // Label, testsize
@@ -47,14 +49,14 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 
 	// rozel pos
 	g_spinRozelPos.init(g_display,
-			            COL_POS_RIGHT, 5, // x-pos, y-pos
+			            COL_POS_ROW2, 2, // x-pos, y-pos
 			            16, 1, 0, 25,     // value, step, min, max
 			            "%2.0f");         // format
 	g_spinRozelPos.draw();
 
 	// plate motor on/off
 	g_btnPlateMotor.initButtonUL(g_display,
-			                     COL_POS_MID, 65,                           // x-pos, y-pos
+			                     COL_POS_ROW1, 58,                           // x-pos, y-pos
 			                     MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT, // width, height
 								 COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, // colors
 								 "PLATE", TEXTSIZE_BUTTON);                 // Label, testsize
@@ -62,38 +64,29 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 
 	// plate speed
 	g_spinPlateSpeed.init(g_display,
-			              COL_POS_RIGHT, 65, // x-pos, y-pos
+			              COL_POS_ROW2, 58, // x-pos, y-pos
 						  255, 5, 150, 255,  // value, step, min, max
 						  "%3.0f");          // format
 	g_spinPlateSpeed.draw();
 
 	// heating
 	g_btnHeating.initButtonUL(g_display,        // x-pos, y-pos
-			                  COL_POS_MID, 125,
+			                  COL_POS_ROW1, 114,
 							  MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
 							  COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
-							  "HEATING", TEXTSIZE_BUTTON);
+							  "HEAT", TEXTSIZE_BUTTON);
 	g_btnHeating.drawButton(g_heatingEnabled);
 
 	// plate temperature
 	g_spinTemp.init(g_display,
-			        COL_POS_RIGHT, 125, // x-pos, y-pos
+			        COL_POS_ROW2, 114, // x-pos, y-pos
 					158, 2, 120, 200,   // value, step, min, max
 					"%3.0f");
 	g_spinTemp.draw();
 
-	// batter button
-	g_batterValve = false;
-	g_btnBatterOnOff.initButtonUL(g_display,
-			                      COL_POS_LEFT, 185,
-								  MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
-								  COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
-								  "BATTER", TEXTSIZE_BUTTON);
-	g_btnBatterOnOff.drawButton(false);
-
 	// batter dose button
 	g_btnBatterDose.initButtonUL(g_display,
-			                     COL_POS_MID, 185,
+			                     COL_POS_ROW1, 170,
 								 MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
 								 COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
 								 "DOSE", TEXTSIZE_BUTTON);
@@ -101,10 +94,19 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 
 	// batter amount
 	g_spinBatterAmount.init(g_display,
-			                COL_POS_RIGHT, 185,
+			                COL_POS_ROW2, 170,
 							1.5, 0.1, 1.0, 3.0, // value, step, min, max
 							"%3.1f");
 	g_spinBatterAmount.draw();
+
+	// batter button
+	g_batterValve = false;
+	g_btnBatterOnOff.initButtonUL(g_display,
+			                      COL_POS_ROW1, 226,
+								  MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
+								  COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
+								  "BATTER", TEXTSIZE_BUTTON);
+	g_btnBatterOnOff.drawButton(false);
 
 
 }

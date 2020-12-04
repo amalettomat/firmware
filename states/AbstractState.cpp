@@ -69,7 +69,8 @@ void AbstractState::refreshStatusBar() {
 	g_display->printf("%5.2f", g_credit);
 
 	// write state
-	g_display->setCursor(5, 260);
-	g_display->setTextSize(2);
-	g_display->print(AbstractState::getCurrentState()->toString());
+//	g_display->setCursor(5, 310);
+//	g_display->setTextSize(2);
+//	g_display->setTextColor(0x6B6D, COL_BACKGROUND);
+//	g_display->print(AbstractState::getCurrentState()->toString());
 }

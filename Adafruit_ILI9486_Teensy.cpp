@@ -421,10 +421,10 @@ void Adafruit_ILI9486_Teensy::invertDisplay(boolean i)
     @param    h   Height of bitmap in pixels
 */
 /**************************************************************************/
-void Adafruit_ILI9486_Teensy::drawRGBBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
+void Adafruit_ILI9486_Teensy::drawRGBBitmap_fast(int16_t x, int16_t y, const uint8_t *bitmap,
                                  int16_t w, int16_t h) {
 
-	setAddrWindow(x, y, x + w, y + h);
+	setAddrWindow(x, y, x + w - 1, y + h -1);
 
 	SPI.beginTransaction(SPISET);
 	for( int32_t i=0; i < w * h * 2; i += 2 ) {

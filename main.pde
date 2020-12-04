@@ -7,6 +7,9 @@
 #include "Adafruit_ILI9486_Teensy.h"
 #include <SPI.h>
 #include "Splashscreen.h"
+#include "images/icon_choc.bmp.h"
+#include "images/icon_jam.bmp.h"
+//#include "images/test.bmp.h"
 #include "states/StatePreheat.h"
 #include "states/StateIdle.h"
 #include "layout.h"
@@ -22,7 +25,7 @@ AccelStepper scraperStepper(AccelStepper::DRIVER, PIN_STEPPER_SCRAPER_STEP, PIN_
 // AccelStepper g_rozelStepper(AccelStepper::DRIVER, PIN_STEPPER_ROZEL_STEP, PIN_STEPPER_ROZEL_DIR);
 
 Adafruit_ILI9486_Teensy tftDisplay;
-Adafruit_GFX* g_display = &tftDisplay;
+Adafruit_ILI9486_Teensy* g_display = &tftDisplay;
 
 #define NUM_AVG_TEMP_VALUES 32
 RunningAverage<float> g_plateTempAverage(NUM_AVG_TEMP_VALUES);
@@ -152,7 +155,7 @@ void initScreen() {
 //	for(int i=0;i<320*480;i++){
 //		tftDisplay.pushColor( makeWord(splash_image.pixel_data[2*i], splash_image.pixel_data[2*i+1]) );
 //	}
-	tftDisplay.drawRGBBitmap(0, 0, (const uint8_t*)splash_image.pixel_data, 480, 320);
+	tftDisplay.drawRGBBitmap_fast(0, 0, (const uint8_t*)splash_image.pixel_data, 480, 320);
 
 	delay(2000);
 }

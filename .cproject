@@ -58,6 +58,8 @@
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Amalettomat2/libraries/Wire/utility}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Amalettomat2/libraries/PID}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Amalettomat2/libraries/Adafruit_BusIO}&quot;"/>
                                     								
                                 </option>
                                 								
@@ -88,6 +90,8 @@
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Amalettomat2/libraries/Wire/utility}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Amalettomat2/libraries/PID}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Amalettomat2/libraries/Adafruit_BusIO}&quot;"/>
                                     								
                                 </option>
                                 								
@@ -118,6 +122,8 @@
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Amalettomat2/libraries/Wire/utility}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Amalettomat2/libraries/PID}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Amalettomat2/libraries/Adafruit_BusIO}&quot;"/>
                                     								
                                 </option>
                                 								

@@ -43,7 +43,7 @@ void StatePreheat::action() {
 	}
 
 	if( g_btnSkip.justReleased() )
-		switchState(&STATE_MAINTENANCE_IDLE);
+		switchState(&STATE_IDLE);
 	else if( g_btnSkip.justPressed() )
 		g_btnSkip.drawButton(true);
 

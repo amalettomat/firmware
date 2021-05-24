@@ -23,6 +23,9 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.GCC/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.GCC/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.GCC/value=arm-none-eabi-gcc
+environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.LINKER/delimiter=\:
+environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.LINKER/operation=replace
+environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.LINKER/value=arm-none-eabi-gcc
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.OBJCOPY/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.OBJCOPY/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.OBJCOPY/value=arm-none-eabi-objcopy
@@ -34,7 +37,7 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.COMMAND.SIZE/value=arm-none-eabi-size
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.CORE.PATH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.CORE.PATH/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.CORE.PATH/value=/home/zwax/arduino-1.8.7/hardware/teensy/avr/cores/teensy3
+environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.CORE.PATH/value=/home/zwax/arduino-1.8.13/hardware/teensy/avr/cores/teensy3
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.CORE/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.CORE/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.CORE/value=teensy3
@@ -49,25 +52,25 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.CO
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.COMMON/value=-g -Wall -ffunction-sections -fdata-sections -nostdlib
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.CPP/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.CPP/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.CPP/value=-fno-exceptions -felide-constructors -std\=gnu++14 -Wno-error\=narrowing -fno-rtti
+environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.CPP/value=-fno-exceptions -fpermissive -felide-constructors -std\=gnu++14 -Wno-error\=narrowing -fno-rtti
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.CPU/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.CPU/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.CPU/value=-mthumb -mcpu\=cortex-m4 -mfloat-abi\=hard -mfpu\=fpv4-sp-d16 -fsingle-precision-constant
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.DEFS/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.DEFS/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.DEFS/value=-D__MK66FX1M0__ -DTEENSYDUINO\=144
+environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.DEFS/value=-D__MK66FX1M0__ -DTEENSYDUINO\=153
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.DEP/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.DEP/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.DEP/value=-MMD
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.LD/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.LD/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.LD/value=-Wl,--gc-sections,--relax,--defsym\=__rtc_localtime\=${A.EXTRA.TIME.LOCAL} "-T${A.BUILD.CORE.PATH}/mk66fx1m0.ld" -lstdc++
+environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.LD/value=-Wl,--gc-sections,--relax,--defsym\=__rtc_localtime\=${A.EXTRA.TIME.LOCAL} "-T${A.BUILD.CORE.PATH}/mk66fx1m0.ld"
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.LDSPECS/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.LDSPECS/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.LDSPECS/value=-fuse-linker-plugin
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.LIBS/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.LIBS/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.LIBS/value=-larm_cortexM4lf_math -lm
+environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.LIBS/value=-larm_cortexM4lf_math -lm -lstdc++
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.OPTIMIZE/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.OPTIMIZE/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.BUILD.FLAGS.OPTIMIZE/value=-O1 -flto -fno-fat-lto-objects
@@ -116,6 +119,9 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.COMPILER.WARNI
 environment/project/io.sloeber.core.toolChain.release.198191952/A.COMPILER.WARNING_FLAGS/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.COMPILER.WARNING_FLAGS/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.COMPILER.WARNING_FLAGS/value=${A.COMPILER.WARNING_FLAGS.ALL}
+environment/project/io.sloeber.core.toolChain.release.198191952/A.DISCOVERY.TEENSY.PATTERN/delimiter=\:
+environment/project/io.sloeber.core.toolChain.release.198191952/A.DISCOVERY.TEENSY.PATTERN/operation=replace
+environment/project/io.sloeber.core.toolChain.release.198191952/A.DISCOVERY.TEENSY.PATTERN/value="${A.RUNTIME.HARDWARE.PATH}/../tools/teensy_ports" -J2
 environment/project/io.sloeber.core.toolChain.release.198191952/A.ESP8266.NETWORK.UPLOAD.TOOL/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.ESP8266.NETWORK.UPLOAD.TOOL/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.ESP8266.NETWORK.UPLOAD.TOOL/value=esp8266OTA
@@ -142,7 +148,7 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.AR.PATT
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.AR.PATTERN/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.AR}" rcs "${A.ARCHIVE_FILE_PATH}" "${A.OBJECT_FILE}"
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN.1/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN.1/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN.1/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.GCC}" ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.LD} ${A.BUILD.FLAGS.LDSPECS} ${A.BUILD.FLAGS.CPU} -o "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf" 
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN.1/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.LINKER}" ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.LD} ${A.BUILD.FLAGS.LDSPECS} ${A.BUILD.FLAGS.CPU} -o "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf" 
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN.2/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN.2/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN.2/value=\ 
@@ -151,10 +157,10 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBI
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN.3/value=\ "-L${A.BUILD.PATH}" ${A.BUILD.FLAGS.LIBS}
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.GCC}" ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.LD} ${A.BUILD.FLAGS.LDSPECS} ${A.BUILD.FLAGS.CPU} -o "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf" ${A.OBJECT_FILES} "${A.BUILD.PATH}/${A.ARCHIVE_FILE}" "-L${A.BUILD.PATH}" ${A.BUILD.FLAGS.LIBS}
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.COMBINE.PATTERN/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.LINKER}" ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.LD} ${A.BUILD.FLAGS.LDSPECS} ${A.BUILD.FLAGS.CPU} -o "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf" ${A.OBJECT_FILES} "${A.BUILD.PATH}/${A.ARCHIVE_FILE}" "-L${A.BUILD.PATH}" ${A.BUILD.FLAGS.LIBS}
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN.1/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN.1/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN.1/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.GCC}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.C} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} 
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN.1/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.GCC}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.C} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DARDUINO_${A.BUILD.BOARD} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} 
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN.2/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN.2/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN.2/value=\ -o 
@@ -163,10 +169,10 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PAT
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN.3/value=
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.GCC}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.C} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} "${A.SOURCE_FILE}" -o "${A.OBJECT_FILE}"
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.C.O.PATTERN/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.GCC}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.C} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DARDUINO_${A.BUILD.BOARD} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} "${A.SOURCE_FILE}" -o "${A.OBJECT_FILE}"
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN.1/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN.1/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN.1/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.G++}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.CPP} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} "-I${A.BUILD.PATH}/pch" ${A.INCLUDES} 
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN.1/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.G++}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.CPP} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DARDUINO_${A.BUILD.BOARD} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} "-I${A.BUILD.PATH}/pch" ${A.INCLUDES} 
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN.2/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN.2/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN.2/value=\ -o 
@@ -175,7 +181,7 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.P
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN.3/value=
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.G++}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.CPP} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} "-I${A.BUILD.PATH}/pch" ${A.INCLUDES} "${A.SOURCE_FILE}" -o "${A.OBJECT_FILE}"
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.CPP.O.PATTERN/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.G++}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.CPP} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DARDUINO_${A.BUILD.BOARD} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} "-I${A.BUILD.PATH}/pch" ${A.INCLUDES} "${A.SOURCE_FILE}" -o "${A.OBJECT_FILE}"
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.ELFPATCH.PATTERN/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.ELFPATCH.PATTERN/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.ELFPATCH.PATTERN/value="${A.COMPILER.PATH}/hardware/tools/${A.BUILD.ELFPATCH}" -mmcu\=${A.BUILD.MCU} "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf" "${A.SKETCH_PATH}/disk"
@@ -190,7 +196,7 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.HOOKS.P
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.HOOKS.POSTBUILD.3.PATTERN/value="${A.COMPILER.PATH}teensy_post_compile" "-file\=${A.BUILD.PROJECT_NAME}" "-path\=${A.BUILD.PATH}" "-tools\=${A.COMPILER.PATH}" "-board\=${A.BUILD.BOARD}"
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.HOOKS.SKETCH.PREBUILD.1.PATTERN/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.HOOKS.SKETCH.PREBUILD.1.PATTERN/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.HOOKS.SKETCH.PREBUILD.1.PATTERN/value="${A.COMPILER.PATH}precompile_helper" "${A.RUNTIME.PLATFORM.PATH}/cores/${A.BUILD.CORE}" "${A.BUILD.PATH}" "${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.G++}" -x c++-header ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.CPP} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} "-I${A.RUNTIME.PLATFORM.PATH}/cores/${A.BUILD.CORE}" "${A.BUILD.PATH}/pch/Arduino.h" -o "${A.BUILD.PATH}/pch/Arduino.h.gch"
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.HOOKS.SKETCH.PREBUILD.1.PATTERN/value="${A.COMPILER.PATH}precompile_helper" "${A.RUNTIME.PLATFORM.PATH}/cores/${A.BUILD.CORE}" "${A.BUILD.PATH}" "${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.G++}" -x c++-header ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.CPP} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DARDUINO_${A.BUILD.BOARD} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} "-I${A.RUNTIME.PLATFORM.PATH}/cores/${A.BUILD.CORE}" "${A.BUILD.PATH}/pch/Arduino.h" -o "${A.BUILD.PATH}/pch/Arduino.h.gch"
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.OBJCOPY.EEP.PATTERN.1/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.OBJCOPY.EEP.PATTERN.1/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.OBJCOPY.EEP.PATTERN.1/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.OBJCOPY}" ${A.COMPILER.OBJCOPY.EEP.FLAGS} "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf" "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.eep"
@@ -217,13 +223,13 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.OUTPUT.
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.OUTPUT.TMP_FILE2/value=${A.BUILD.PROJECT_NAME}.elf
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.PREPROC.INCLUDES/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.PREPROC.INCLUDES/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.PREPROC.INCLUDES/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.G++}" -M -MG -MP -x c++ -w ${A.BUILD.FLAGS.CPP} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} "${A.SOURCE_FILE}"
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.PREPROC.INCLUDES/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.G++}" -M -MG -MP -x c++ -w ${A.BUILD.FLAGS.CPP} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DARDUINO_${A.BUILD.BOARD} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} "${A.SOURCE_FILE}"
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.PREPROC.MACROS/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.PREPROC.MACROS/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.PREPROC.MACROS/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.G++}" -E -CC -x c++ -w ${A.COMPILER.CPP.FLAGS} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.CPP} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} "${A.SOURCE_FILE}" -o "${A.PREPROCESSED_FILE_PATH}"
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.PREPROC.MACROS/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.G++}" -E -CC -x c++ -w ${A.COMPILER.CPP.FLAGS} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.CPP} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DARDUINO_${A.BUILD.BOARD} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} "${A.SOURCE_FILE}" -o "${A.PREPROCESSED_FILE_PATH}"
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN.1/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN.1/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN.1/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.GCC}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.S} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} 
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN.1/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.GCC}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.S} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DARDUINO_${A.BUILD.BOARD} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} 
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN.2/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN.2/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN.2/value=\ -o 
@@ -232,7 +238,7 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PAT
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN.3/value=
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.GCC}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.S} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} "${A.SOURCE_FILE}" -o "${A.OBJECT_FILE}"
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.S.O.PATTERN/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.GCC}" -c ${A.BUILD.FLAGS.OPTIMIZE} ${A.BUILD.FLAGS.COMMON} ${A.BUILD.FLAGS.DEP} ${A.BUILD.FLAGS.S} ${A.BUILD.FLAGS.CPU} ${A.BUILD.FLAGS.DEFS} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DARDUINO_${A.BUILD.BOARD} -DF_CPU\=${A.BUILD.FCPU} -D${A.BUILD.USBTYPE} -DLAYOUT_${A.BUILD.KEYLAYOUT} ${A.INCLUDES} "${A.SOURCE_FILE}" -o "${A.OBJECT_FILE}"
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.PATTERN.1/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.PATTERN.1/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.PATTERN.1/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.SIZE}" -A "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf"
@@ -241,34 +247,34 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.PA
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.PATTERN/value="${A.COMPILER.PATH}${A.BUILD.TOOLCHAIN}${A.BUILD.COMMAND.SIZE}" -A "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf"
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.REGEX.DATA/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.REGEX.DATA/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.REGEX.DATA/value=^(?\:\\.usbdescriptortable|\\.dmabuffers|\\.usbbuffers|\\.data|\\.bss|\\.noinit)\\s+([0-9]+).*
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.REGEX.DATA/value=^(?\:\\.usbdescriptortable|\\.dmabuffers|\\.usbbuffers|\\.data|\\.bss|\\.noinit|\\.text\\.itcm|\\.text\\.itcm\\.padding)\\s+([0-9]+).*
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.REGEX.EEPROM/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.REGEX.EEPROM/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.REGEX.EEPROM/value=^(?\:\\.eeprom)\\s+([0-9]+).*
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.REGEX/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.REGEX/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.REGEX/value=^(?\:\\.text|\\.data|\\.bootloader)\\s+([0-9]+).*
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RECIPE.SIZE.REGEX/value=^(?\:\\.text|\\.text\\.progmem|\\.text\\.itcm|\\.data)\\s+([0-9]+).*
 environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.CORE.PATH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.CORE.PATH/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.CORE.PATH/value=/home/zwax/arduino-1.8.7/hardware/teensy/avr
+environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.CORE.PATH/value=/home/zwax/arduino-1.8.13/hardware/teensy/avr
 environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.UPLOAD.PATH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.UPLOAD.PATH/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.UPLOAD.PATH/value=/home/zwax/arduino-1.8.7/hardware/teensy/avr
+environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.UPLOAD.PATH/value=/home/zwax/arduino-1.8.13/hardware/teensy/avr
 environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.VARIANT.PATH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.VARIANT.PATH/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.VARIANT.PATH/value=/home/zwax/arduino-1.8.7/hardware/teensy/avr
+environment/project/io.sloeber.core.toolChain.release.198191952/A.REFERENCED.VARIANT.PATH/value=/home/zwax/arduino-1.8.13/hardware/teensy/avr
 environment/project/io.sloeber.core.toolChain.release.198191952/A.REWRITING/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.REWRITING/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.REWRITING/value=disabled
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.HARDWARE.PATH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.HARDWARE.PATH/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.HARDWARE.PATH/value=/home/zwax/arduino-1.8.7/hardware/teensy
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.HARDWARE.PATH/value=/home/zwax/arduino-1.8.13/hardware/teensy
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.IDE.VERSION/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.IDE.VERSION/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.IDE.VERSION/value=10802
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.PLATFORM.PATH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.PLATFORM.PATH/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.PLATFORM.PATH/value=/home/zwax/arduino-1.8.7/hardware/teensy/avr
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.PLATFORM.PATH/value=/home/zwax/arduino-1.8.13/hardware/teensy/avr
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.ARDUINOOTA-1.3.0.PATH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.ARDUINOOTA-1.3.0.PATH/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.ARDUINOOTA-1.3.0.PATH/value=${eclipse_home}/arduinoPlugin/packages/arduino/tools/arduinoOTA/1.3.0
@@ -281,12 +287,18 @@ environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC-7.3.0-ATMEL3.6.1-ARDUINO5.PATH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC-7.3.0-ATMEL3.6.1-ARDUINO5.PATH/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC-7.3.0-ATMEL3.6.1-ARDUINO5.PATH/value=${eclipse_home}/arduinoPlugin/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC-7.3.0-ATMEL3.6.1-ARDUINO7.PATH/delimiter=\:
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC-7.3.0-ATMEL3.6.1-ARDUINO7.PATH/operation=replace
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC-7.3.0-ATMEL3.6.1-ARDUINO7.PATH/value=${eclipse_home}/arduinoPlugin/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC.PATH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC.PATH/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC.PATH/value=${eclipse_home}/arduinoPlugin/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC.PATH/value=${eclipse_home}/arduinoPlugin/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC7.3.0-ATMEL3.6.1-ARDUINO5.PATH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC7.3.0-ATMEL3.6.1-ARDUINO5.PATH/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC7.3.0-ATMEL3.6.1-ARDUINO5.PATH/value=${eclipse_home}/arduinoPlugin/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino5
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC7.3.0-ATMEL3.6.1-ARDUINO7.PATH/delimiter=\:
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC7.3.0-ATMEL3.6.1-ARDUINO7.PATH/operation=replace
+environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVR-GCC7.3.0-ATMEL3.6.1-ARDUINO7.PATH/value=${eclipse_home}/arduinoPlugin/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVRDUDE-6.3.0-ARDUINO17.PATH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVRDUDE-6.3.0-ARDUINO17.PATH/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/A.RUNTIME.TOOLS.AVRDUDE-6.3.0-ARDUINO17.PATH/value=${eclipse_home}/arduinoPlugin/packages/arduino/tools/avrdude/6.3.0-arduino17
@@ -370,7 +382,7 @@ environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.ARCHITECT
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.ARCHITECTURE_ID/value=avr
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.BOARDS_FILE/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.BOARDS_FILE/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.BOARDS_FILE/value=/home/zwax/arduino-1.8.7/hardware/teensy/avr/boards.txt
+environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.BOARDS_FILE/value=/home/zwax/arduino-1.8.13/hardware/teensy/avr/boards.txt
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.BOARD_ID/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.BOARD_ID/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.BOARD_ID/value=teensy36
@@ -382,7 +394,7 @@ environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.COM_PORT/
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.COM_PORT/value=/dev/ttyACM0
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.ECLIPSE_LOCATION/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.ECLIPSE_LOCATION/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.ECLIPSE_LOCATION/value=${eclipse_home}//////////////////
+environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.ECLIPSE_LOCATION/value=${eclipse_home}///////////////////////
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.EXTRA.ALL/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.EXTRA.ALL/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.EXTRA.ALL/value=
@@ -421,7 +433,7 @@ environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.PROJECT_N
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.PROJECT_NAME/value=Amalettomat2
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.SELECTED.PLATFORM/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.SELECTED.PLATFORM/operation=replace
-environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.SELECTED.PLATFORM/value=/home/zwax/arduino-1.8.7/hardware/teensy/avr
+environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.SELECTED.PLATFORM/value=/home/zwax/arduino-1.8.13/hardware/teensy/avr
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.SIZE.SWITCH/delimiter=\:
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.SIZE.SWITCH/operation=replace
 environment/project/io.sloeber.core.toolChain.release.198191952/JANTJE.SIZE.SWITCH/value=${A.RECIPE.SIZE.PATTERN}

@@ -108,8 +108,12 @@ void writeOutputs();
 // ====================================================================
 
 void initRozel() {
+ 	g_rozelController.home(ROZEL_SPEED_UP);
 	g_rozelController.updateStatus();
-	g_rozelController.home(150);
+//	char msg[50];
+//	snprintf(msg, 50, "pos: %d", g_rozelController.getStatus().m_controllerStatus);
+//	displayMessage(msg);
+//	delay(2000);
 
 //	pinMode(PIN_STEPPER_ROZEL_ENABLE, OUTPUT);
 //	pinMode(PIN_STEPPER_ROZEL_DIR, OUTPUT);

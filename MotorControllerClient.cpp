@@ -34,7 +34,7 @@ int MotorControllerClient::home(int16_t speed) {
 		return result;
 	}
 	delay(50);
-	return sendCommand(TWI_CMD_HOME);
+	return sendCommand16(TWI_CMD_HOME, speed);
 }
 
 int MotorControllerClient::moveTo(int32_t pos) {

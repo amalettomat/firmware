@@ -136,11 +136,12 @@ void StateMaintIdle::action() {
 	if( g_btnRozel.justPressed() ) {
 		m_rozelDown = !m_rozelDown;
 		if( m_rozelDown ) {
-			g_rozelController.setSpeed(1200);
+			// g_rozelController.setSpeed(1200);
+			g_rozelController.setSpeed(ROZEL_SPEED_DOWN);
 			g_rozelController.moveTo(ROZEL_ENDPOS - 10 * g_spinRozelPos.getValue());
 			g_btnRozel.drawButton(true);
 		} else {
-			g_rozelController.home(200);
+			g_rozelController.home(ROZEL_SPEED_UP);
 			g_btnRozel.drawButton(false);
 		}
 	}

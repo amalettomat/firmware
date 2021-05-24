@@ -19,14 +19,15 @@
 
 // rozel
 // =============================================
-//#define ROZEL_MICROSTEPS 8
-//#define PIN_STEPPER_ROZEL_DIR 28
-//#define PIN_STEPPER_ROZEL_STEP 29
-//#define PIN_STEPPER_ROZEL_ENABLE 30
-//#define PIN_STEPPER_ROZEL_ENDSTOP 19
-//#define ROZEL_ENDPOS (181*ROZEL_MICROSTEPS)
-#define ROZEL_TICKS_PER_DEG (5850/360.0)
-#define ROZEL_ENDPOS 2890
+// encoder ticks per motor turn: 20
+// gear ratio: 1:135
+// ticks per deg: 20 * 135 / 360 = 2700 / 360 = 7.5
+// #define ROZEL_TICKS_PER_DEG (5850/360.0) // woher kommt 5850???
+
+// #define ROZEL_ENDPOS -2890
+#define ROZEL_ENDPOS -1110
+#define ROZEL_SPEED_UP 1000
+#define ROZEL_SPEED_DOWN 1000
 
 // display
 // =============================================

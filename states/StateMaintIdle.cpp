@@ -65,7 +65,7 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	// plate speed
 	g_spinPlateSpeed.init(g_display,
 			              COL_POS_ROW2, 58, // x-pos, y-pos
-						  255, 5, 150, 255,  // value, step, min, max
+						  g_plateMotorSpeed, 5, 150, 255,  // value, step, min, max
 						  "%3.0f");          // format
 	g_spinPlateSpeed.draw();
 
@@ -80,7 +80,7 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	// plate temperature
 	g_spinTemp.init(g_display,
 			        COL_POS_ROW2, 114, // x-pos, y-pos
-					158, 2, 120, 200,   // value, step, min, max
+					g_setTemp, 2, 120, 200,   // value, step, min, max
 					"%3.0f");
 	g_spinTemp.draw();
 

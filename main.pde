@@ -54,7 +54,7 @@ bool g_touchPressed = false;
 
 // L298 PWM outputs
 bool g_plateMotor = false;
-int g_plateMotorSpeed = 127;
+int g_plateMotorSpeed = 150;
 bool g_rollerMotor = false;
 int g_rollerMotorSpeed = 255;
 

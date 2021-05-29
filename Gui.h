@@ -11,6 +11,7 @@
 #include "layout.h"
 #include "Adafruit_ILI9486_Teensy.h"
 #include "GfxSpinButtonField.h"
+#include "GfxImageButton.h"
 
 
 extern Adafruit_ILI9486_Teensy* g_display;
@@ -24,10 +25,12 @@ extern Adafruit_GFX_Button g_btnSkip;
 
 // state IDLE
 extern Adafruit_GFX_Button g_btnMaintenance;
+extern GfxImageButton g_btnSelectFill1;
+extern GfxImageButton g_btnSelectFill2;
 
 // state MAINTENANCE
 extern Adafruit_GFX_Button g_btnRozel;
-extern GfxSpinButtonField g_spinRozelPos;
+// extern GfxSpinButtonField g_spinRozelPos;
 extern Adafruit_GFX_Button g_btnBatterOnOff;
 extern Adafruit_GFX_Button g_btnBatterDose;
 extern GfxSpinButtonField g_spinBatterAmount;

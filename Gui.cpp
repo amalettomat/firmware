@@ -15,10 +15,12 @@ Adafruit_GFX_Button g_btnSkip;
 
 // state IDLE
 Adafruit_GFX_Button g_btnMaintenance;
+GfxImageButton g_btnSelectFill1;
+GfxImageButton g_btnSelectFill2;
 
 // state MAINTENANCE
 Adafruit_GFX_Button g_btnRozel;
-GfxSpinButtonField g_spinRozelPos;
+// GfxSpinButtonField g_spinRozelPos;
 Adafruit_GFX_Button g_btnBatterOnOff;
 Adafruit_GFX_Button g_btnBatterDose;
 GfxSpinButtonField g_spinBatterAmount;
@@ -26,7 +28,6 @@ Adafruit_GFX_Button g_btnPlateMotor;
 GfxSpinButtonField g_spinPlateSpeed;
 Adafruit_GFX_Button g_btnHeating;
 GfxSpinButtonField g_spinTemp;
-
 
 
 // functions

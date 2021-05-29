@@ -67,7 +67,8 @@ bool g_showMaint = true;
 
 // processing params
 float g_batterAmount = 1.8;
-float g_spreadTime = 2.0;
+float g_spreadTime = 3.5;
+float g_bakingTime = 50.0;
 
 
 // commands received from serial

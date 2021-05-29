@@ -6,6 +6,7 @@
  */
 
 #include "StateSpreading.h"
+#include "StateBaking.h"
 #include "StateIdle.h"
 #include "../Gui.h"
 #include "../config.h"
@@ -20,7 +21,7 @@ extern float g_spreadTime;
 StateSpreading STATE_SPREADING;
 
 
-StateSpreading::StateSpreading() {
+StateSpreading::StateSpreading() : m_begin(0) {
 }
 
 StateSpreading::~StateSpreading() {
@@ -44,7 +45,8 @@ void StateSpreading::action() {
 		g_rozelController.home(ROZEL_SPEED_UP);
 		g_rozelController.home(ROZEL_SPEED_UP);
 
-		switchState(&STATE_IDLE);
+		g_plateMotor = false;
+		switchState(&STATE_BAKING);
 	}
 }
 

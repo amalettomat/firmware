@@ -18,7 +18,7 @@ public:
 
 	void transition(AbstractState* prevState);
 	void action();
-	const char* toString() { return "IDLE"; };
+	const char* toString() { return "LOWROZ"; };
 
 protected:
 	virtual void refreshDisplay();

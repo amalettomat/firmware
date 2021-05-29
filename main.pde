@@ -56,7 +56,7 @@ bool g_touchPressed = false;
 bool g_plateMotor = false;
 int g_plateMotorSpeed = 150;
 bool g_rollerMotor = false;
-int g_rollerMotorSpeed = 255;
+int g_rollerMotorSpeed = 70;
 
 // relay board
 bool g_batterValve = false;

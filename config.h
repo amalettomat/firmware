@@ -25,7 +25,7 @@
 // #define ROZEL_TICKS_PER_DEG (5850/360.0) // woher kommt 5850???
 
 // #define ROZEL_ENDPOS -2890
-#define ROZEL_ENDPOS -1110
+#define ROZEL_ENDPOS -1270
 #define ROZEL_SPEED_UP 1000
 #define ROZEL_SPEED_DOWN 1000
 

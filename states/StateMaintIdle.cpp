@@ -48,11 +48,11 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	g_btnRozel.drawButton(false);
 
 	// rozel pos
-	g_spinRozelPos.init(g_display,
-			            COL_POS_ROW2, 2, // x-pos, y-pos
-			            16, 1, 0, 25,     // value, step, min, max
-			            "%2.0f");         // format
-	g_spinRozelPos.draw();
+//	g_spinRozelPos.init(g_display,
+//			            COL_POS_ROW2, 2, // x-pos, y-pos
+//			            16, 1, 0, 25,     // value, step, min, max
+//			            "%2.0f");         // format
+//	g_spinRozelPos.draw();
 
 	// plate motor on/off
 	g_btnPlateMotor.initButtonUL(g_display,
@@ -112,12 +112,12 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 }
 
 void StateMaintIdle::action() {
-	if( g_spinRozelPos.handleTouch(g_touchPressed, g_touchX, g_touchY) ) {
-		if( m_rozelDown ) {
-			// if rozel pos changed and rozel is down, set new position
-			// g_rozelStepper.moveTo(ROZEL_ENDPOS - 5 * g_spinRozelPos.getValue());
-		}
-	}
+//	if( g_spinRozelPos.handleTouch(g_touchPressed, g_touchX, g_touchY) ) {
+//		if( m_rozelDown ) {
+//			// if rozel pos changed and rozel is down, set new position
+//			// g_rozelStepper.moveTo(ROZEL_ENDPOS - 5 * g_spinRozelPos.getValue());
+//		}
+//	}
 
 	if( g_touchPressed ) {
 		g_btnRozel.press(g_btnRozel.contains(g_touchX, g_touchY));
@@ -138,7 +138,8 @@ void StateMaintIdle::action() {
 		if( m_rozelDown ) {
 			// g_rozelController.setSpeed(1200);
 			g_rozelController.setSpeed(ROZEL_SPEED_DOWN);
-			g_rozelController.moveTo(ROZEL_ENDPOS - 10 * g_spinRozelPos.getValue());
+			// g_rozelController.moveTo(ROZEL_ENDPOS - 10 * g_spinRozelPos.getValue());
+			g_rozelController.moveTo(ROZEL_ENDPOS);
 			g_btnRozel.drawButton(true);
 		} else {
 			g_rozelController.home(ROZEL_SPEED_UP);

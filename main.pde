@@ -242,7 +242,7 @@ void readTouchPos() {
 	SPI.transfer(0xB1);
 
 	z = 32780+SPI.transfer16(0xC1)-SPI.transfer16(0x91);
-	if (z >= 1000) {
+	if (z >= 8000) {
 		SPI.transfer16(0x91);
 		x = SPI.transfer16(0xD1);
 		y = SPI.transfer16(0x91);

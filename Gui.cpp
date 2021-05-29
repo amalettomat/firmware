@@ -28,6 +28,10 @@ Adafruit_GFX_Button g_btnPlateMotor;
 GfxSpinButtonField g_spinPlateSpeed;
 Adafruit_GFX_Button g_btnHeating;
 GfxSpinButtonField g_spinTemp;
+GfxSpinButtonField g_spinSpreadTime;
+GfxSpinButtonField g_spinBakingTime;
+
+
 Adafruit_GFX_Button g_btnExit;
 
 

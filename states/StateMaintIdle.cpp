@@ -19,6 +19,8 @@ extern int g_plateMotorSpeed;
 extern bool g_heatingEnabled;
 extern float g_setTemp;
 extern float g_batterAmount;
+extern float g_bakingTime;
+extern float g_spreadTime;
 
 
 StateMaintIdle STATE_MAINTENANCE_IDLE;
@@ -110,6 +112,27 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 								  "BATTER", TEXTSIZE_BUTTON);
 	g_btnBatterOnOff.drawButton(false);
 
+	g_display->setTextColor(COL_STATUS_TEXT, COL_BACKGROUND);
+	g_display->setTextSize(2);
+	g_display->setCursor(COL_POS_ROW3, 18);
+	g_display->print("BAKE");
+	g_display->setCursor(COL_POS_ROW3, 74);
+	g_display->print("SPREAD");
+
+	// baking time
+	g_spinBakingTime.init(g_display,
+			              COL_POS_ROW4, 2,
+						  g_bakingTime, 1, 40.0, 60.0,
+						  "%2.0f");
+	g_spinBakingTime.draw();
+
+	// spreading time
+	g_spinSpreadTime.init(g_display,
+			              COL_POS_ROW4, 58,
+						  g_spreadTime, 0.1, 2.0, 5.0,
+						  "%1.1f");
+	g_spinSpreadTime.draw();
+
 	// exit
 	g_btnExit.initButtonUL(g_display,
 			               400, 226,
@@ -192,6 +215,12 @@ void StateMaintIdle::action() {
 	if( g_spinTemp.handleTouch(g_touchPressed, g_touchX, g_touchY) ) {
 		g_setTemp = g_spinTemp.getValue();
 	}
+
+	if( g_spinBakingTime.handleTouch(g_touchPressed, g_touchX, g_touchY) )
+		g_bakingTime = g_spinBakingTime.getValue();
+
+	if( g_spinSpreadTime.handleTouch(g_touchPressed, g_touchX, g_touchY) )
+		g_spreadTime = g_spinSpreadTime.getValue();
 
 	if( g_btnExit.justReleased() )
 		switchState(&STATE_IDLE);

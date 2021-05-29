@@ -6,6 +6,7 @@
  */
 
 #include "StateMaintIdle.h"
+#include "StateIdle.h"
 #include "../Gui.h"
 #include <AccelStepper.h>
 #include "../config.h"
@@ -17,6 +18,7 @@ extern bool g_plateMotor;
 extern int g_plateMotorSpeed;
 extern bool g_heatingEnabled;
 extern float g_setTemp;
+extern float g_batterAmount;
 
 
 StateMaintIdle STATE_MAINTENANCE_IDLE;
@@ -95,7 +97,7 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	// batter amount
 	g_spinBatterAmount.init(g_display,
 			                COL_POS_ROW2, 170,
-							1.5, 0.1, 1.0, 3.0, // value, step, min, max
+							g_batterAmount, 0.1, 1.0, 3.0, // value, step, min, max
 							"%3.1f");
 	g_spinBatterAmount.draw();
 
@@ -108,7 +110,13 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 								  "BATTER", TEXTSIZE_BUTTON);
 	g_btnBatterOnOff.drawButton(false);
 
-
+	// exit
+	g_btnExit.initButtonUL(g_display,
+			               400, 226,
+						   70, BUTTON_DEFAULT_HEIGHT,
+						   COL_BUTTON_OUTLINE, COL_BUTTON_EXIT, COL_BUTTON_TEXT,
+						   "EXIT", TEXTSIZE_BUTTON);
+	g_btnExit.drawButton(false);
 }
 
 void StateMaintIdle::action() {
@@ -125,15 +133,17 @@ void StateMaintIdle::action() {
 		g_btnBatterOnOff.press(g_btnBatterOnOff.contains(g_touchX, g_touchY));
 		g_btnPlateMotor.press(g_btnPlateMotor.contains(g_touchX, g_touchY));
 		g_btnHeating.press(g_btnHeating.contains(g_touchX, g_touchY));
+		g_btnExit.press(g_btnExit.contains(g_touchX, g_touchY));
 	} else {
 		g_btnRozel.press(false);
 		g_btnBatterDose.press(false);
 		g_btnBatterOnOff.press(false);
 		g_btnPlateMotor.press(false);
 		g_btnHeating.press(false);
+		g_btnExit.press(false);
 	}
 
-	if( g_btnRozel.justPressed() ) {
+	if( g_btnRozel.justReleased() ) {
 		m_rozelDown = !m_rozelDown;
 		if( m_rozelDown ) {
 			// g_rozelController.setSpeed(1200);
@@ -154,7 +164,7 @@ void StateMaintIdle::action() {
 
 	g_spinBatterAmount.handleTouch(g_touchPressed, g_touchX, g_touchY);
 
-	if( g_btnBatterDose.justPressed() && m_batterStartTime == 0 ) {
+	if( g_btnBatterDose.justReleased() && m_batterStartTime == 0 ) {
 		// start timer
 		m_batterStartTime = millis();
 		g_batterValve = true;
@@ -165,7 +175,7 @@ void StateMaintIdle::action() {
 		g_batterValve = false;
 	}
 
-	if( g_btnPlateMotor.justPressed() ) {
+	if( g_btnPlateMotor.justReleased() ) {
 		g_plateMotor = !g_plateMotor;
 		g_btnPlateMotor.drawButton(g_plateMotor);
 	}
@@ -174,7 +184,7 @@ void StateMaintIdle::action() {
 		g_plateMotorSpeed = g_spinPlateSpeed.getValue();
 	}
 
-	if( g_btnHeating.justPressed() ) {
+	if( g_btnHeating.justReleased() ) {
 		g_heatingEnabled = !g_heatingEnabled;
 		g_btnHeating.drawButton(g_heatingEnabled);
 	}
@@ -183,6 +193,8 @@ void StateMaintIdle::action() {
 		g_setTemp = g_spinTemp.getValue();
 	}
 
+	if( g_btnExit.justReleased() )
+		switchState(&STATE_IDLE);
 }
 
 void StateMaintIdle::refreshDisplay() {

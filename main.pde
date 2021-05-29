@@ -63,6 +63,11 @@ bool g_batterValve = false;
 bool g_oilerSolenoid = false;
 
 float g_credit = 0;
+bool g_showMaint = true;
+
+// processing params
+float g_batterAmount = 1.8;
+float g_spreadTime = 2.0;
 
 
 // commands received from serial
@@ -613,10 +618,10 @@ void loop() {
 
 	// g_rozelStepper.run();
 
+	readTouchPos();
+
 	// state machine: calls action method of current state
 	AbstractState::handleState();
-
-	readTouchPos();
 
 	if( millis() > displayTime ) {
 		writeState();

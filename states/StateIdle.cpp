@@ -37,12 +37,12 @@ void StateIdle::transition(AbstractState* prevState) {
 	g_fillingValve1 = false;
 	g_fillingValve2 = false;
 
-	g_display->drawRGBBitmap_fast(60, 60, (const uint8_t*)(icon_choc.pixel_data), icon_choc.width, icon_choc.height);
-	g_btnSelectFill1.initButtonUL(g_display, 60, 60, 160, 160, COL_BUTTON_SELECT, COL_BACKGROUND, 20);
+	// g_display->drawRGBBitmap_fast(60, 60, (const uint8_t*)(icon_choc.pixel_data), icon_choc.width, icon_choc.height);
+	g_btnSelectFill1.initButtonUL(g_display, icon_choc, 58, 58, 164, 164, COL_BUTTON_SELECT, COL_BACKGROUND, 20);
 	g_btnSelectFill1.drawButton(false);
 
-	g_display->drawRGBBitmap_fast(260, 60, (const uint8_t*)(icon_jam.pixel_data), icon_jam.width, icon_jam.height);
-	g_btnSelectFill2.initButtonUL(g_display, 260, 60, 160, 160, COL_BUTTON_SELECT, COL_BACKGROUND, 20);
+	// g_display->drawRGBBitmap_fast(260, 60, (const uint8_t*)(icon_jam.pixel_data), icon_jam.width, icon_jam.height);
+	g_btnSelectFill2.initButtonUL(g_display, icon_jam, 258, 58, 164, 164, COL_BUTTON_SELECT, COL_BACKGROUND, 20);
 	g_btnSelectFill2.drawButton(false);
 
 	g_btnMaintenance.initButtonUL(g_display, 400, 235, 70, 30, COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, "MAINT", TEXTSIZE_BUTTON);

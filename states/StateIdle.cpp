@@ -19,6 +19,8 @@ extern const struct BmpImage icon_jam;
 extern bool g_showMaint;
 extern bool g_plateMotor;
 extern bool g_batterValve;
+extern bool g_fillingValve1;
+extern bool g_fillingValve2;
 
 
 StateIdle::StateIdle() {
@@ -32,6 +34,8 @@ void StateIdle::transition(AbstractState* prevState) {
 
 	g_batterValve = false;
 	g_plateMotor = false;
+	g_fillingValve1 = false;
+	g_fillingValve2 = false;
 
 	g_display->drawRGBBitmap_fast(60, 60, (const uint8_t*)(icon_choc.pixel_data), icon_choc.width, icon_choc.height);
 	g_btnSelectFill1.initButtonUL(g_display, 60, 60, 160, 160, COL_BUTTON_SELECT, COL_BACKGROUND, 20);

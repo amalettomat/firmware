@@ -9,12 +9,12 @@
 #include "StateMaintIdle.h"
 #include "StateIdle.h"
 #include "../Gui.h"
+#include "../LedControl.h"
 
-// ### TEST
-#include "../MotorControllerClient.h"
-extern MotorControllerClient g_rozelController;
 
 extern bool g_heating;
+extern LedControl g_ledController;
+
 
 StatePreheat STATE_PREHEAT;
 
@@ -30,6 +30,8 @@ void StatePreheat::transition(AbstractState* prevState) {
 
 	g_btnSkip.initButtonUL(g_display, 100, 100, 150, 50, COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, "SKIP", TEXTSIZE_BUTTON);
 	g_btnSkip.drawButton(false);
+
+	g_ledController.setPattern(LedControl::LEDS_WAVE);
 }
 
 void StatePreheat::action() {

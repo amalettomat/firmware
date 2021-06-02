@@ -15,7 +15,7 @@
 #include "layout.h"
 #include "config.h"
 #include "MotorControllerClient.h"
-#include "Adafruit_DotStar.h"
+#include "LedControl.h"
 
 
 #define SERIAL_DEBUG false
@@ -35,7 +35,7 @@ RunningAverage<float> g_plateTempAverage(NUM_AVG_TEMP_VALUES);
 #define NUM_AVG_PRESSURE_VALUES 200
 RunningAverage<float> g_pressureAverage(NUM_AVG_PRESSURE_VALUES);
 
-Adafruit_DotStar g_ledStrip(NUM_PIXELS, PIN_LEDS_DATA, PIN_LEDS_CLOCK, DOTSTAR_BGR);
+LedControl g_ledController;
 
 
 // process state variables
@@ -92,7 +92,6 @@ enum eCommand {
 };
 
 #define MAX_PARAMS 5
-#define DISPLAY_INTERVAL 500
 
 // screens from SD card
 // #define SCREEN_START "/IMG/START.BMP"
@@ -106,6 +105,7 @@ int command = COMMAND_NONE;
 String commandParams[MAX_PARAMS];
 int numOfParams = 0;
 unsigned long displayTime;
+unsigned long ledUpdateTime;
 
 int16_t rozelMotorSpeed;
 MotorControllerClient g_rozelController;
@@ -185,9 +185,6 @@ void setup() {
 	// init I2C
 	Wire.begin();
 
-	g_ledStrip.begin();
-	setLedColor(0x800000); // red
-
 	pinMode(PIN_PLATE_RELAY, OUTPUT);
 	pinMode(PIN_PLATE_TEMP, INPUT);
 	pinMode(PIN_PRESSURE_SENSOR, INPUT);
@@ -212,6 +209,7 @@ void setup() {
 	initScreen();
 	initRozel();
 	initScraper();
+	g_ledController.init();
 
 	writeOutputs();
 
@@ -603,13 +601,6 @@ void coinControl() {
 	}
 }
 
-void setLedColor(uint32_t color) {
-	for( int index=0; index < NUM_PIXELS; index++ ) {
-		g_ledStrip.setPixelColor(index, color);
-	}
-	g_ledStrip.show();
-}
-
 // =============================================================================
 
 void loop() {
@@ -644,6 +635,11 @@ void loop() {
 		// displayState();
 		AbstractState::refreshStateDisplay();
 		displayTime = millis() + DISPLAY_INTERVAL;
+	}
+
+	if( millis() > ledUpdateTime ) {
+		ledUpdateTime = millis() + LEDS_INTERVAL;
+		g_ledController.process();
 	}
 
 	writeOutputs();

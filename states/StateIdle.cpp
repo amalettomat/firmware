@@ -10,6 +10,7 @@
 #include "StateLowerRozel.h"
 #include "../Gui.h"
 #include "../BmpImage.h"
+#include "../LedControl.h"
 
 
 StateIdle STATE_IDLE;
@@ -21,6 +22,7 @@ extern bool g_plateMotor;
 extern bool g_batterValve;
 extern bool g_fillingValve1;
 extern bool g_fillingValve2;
+extern LedControl g_ledController;
 
 
 StateIdle::StateIdle() {
@@ -49,6 +51,8 @@ void StateIdle::transition(AbstractState* prevState) {
 	if( g_showMaint ) {
 		g_btnMaintenance.drawButton(false);
 	}
+
+	g_ledController.setPattern(LedControl::LEDS_ALL_GREEN);
 }
 
 void StateIdle::action() {

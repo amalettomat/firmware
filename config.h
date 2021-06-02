@@ -31,6 +31,7 @@
 
 // display
 // =============================================
+#define DISPLAY_INTERVAL 500
 #define TP_SETTING SPISettings(2000000, MSBFIRST, SPI_MODE0)
 #define TP_CS 6
 #define PIN_BACKLIGHT 9
@@ -71,6 +72,7 @@
 #define NUM_PIXELS 25
 #define PIN_LEDS_DATA      28
 #define PIN_LEDS_CLOCK     29
+#define LEDS_INTERVAL      50
 
 // buttons
 #define PIN_BUTTON_MAINT   30

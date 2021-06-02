@@ -67,5 +67,13 @@
 // coin selector
 #define PIN_COIN_SIGNAL    0
 
+// LED strip
+#define NUM_PIXELS 25
+#define PIN_LEDS_DATA      28
+#define PIN_LEDS_CLOCK     29
+
+// buttons
+#define PIN_BUTTON_MAINT   30
+
 
 #endif /* CONFIG_H_ */

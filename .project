@@ -47,6 +47,11 @@
 			<location>/home/zwax/Arduino/libraries/Adafruit_BusIO</location>
 		</link>
 		<link>
+			<name>libraries/Adafruit_DotStar</name>
+			<type>2</type>
+			<location>/home/zwax/Arduino/libraries/Adafruit_DotStar</location>
+		</link>
+		<link>
 			<name>libraries/Adafruit_GFX_Library</name>
 			<type>2</type>
 			<location>/home/zwax/Arduino/libraries/Adafruit_GFX_Library</location>

@@ -15,6 +15,8 @@
 #include "layout.h"
 #include "config.h"
 #include "MotorControllerClient.h"
+#include "Adafruit_DotStar.h"
+
 
 #define SERIAL_DEBUG false
 
@@ -32,6 +34,8 @@ RunningAverage<float> g_plateTempAverage(NUM_AVG_TEMP_VALUES);
 
 #define NUM_AVG_PRESSURE_VALUES 200
 RunningAverage<float> g_pressureAverage(NUM_AVG_PRESSURE_VALUES);
+
+Adafruit_DotStar g_ledStrip(NUM_PIXELS, PIN_LEDS_DATA, PIN_LEDS_CLOCK, DOTSTAR_BGR);
 
 
 // process state variables
@@ -181,9 +185,8 @@ void setup() {
 	// init I2C
 	Wire.begin();
 
-	initScreen();
-	initRozel();
-	initScraper();
+	g_ledStrip.begin();
+	setLedColor(0x800000); // red
 
 	pinMode(PIN_PLATE_RELAY, OUTPUT);
 	pinMode(PIN_PLATE_TEMP, INPUT);
@@ -200,10 +203,15 @@ void setup() {
 	pinMode(PIN_RELAY3, OUTPUT);
 	pinMode(PIN_RELAY4, OUTPUT);
 	pinMode(PIN_COIN_SIGNAL, INPUT);
+	pinMode(PIN_BUTTON_MAINT, INPUT_PULLUP);
 
 	// turn off unused relays (active low)
 	digitalWrite(PIN_RELAY3, HIGH);
 	digitalWrite(PIN_RELAY4, HIGH);
+
+	initScreen();
+	initRozel();
+	initScraper();
 
 	writeOutputs();
 
@@ -593,6 +601,13 @@ void coinControl() {
 		}
 		prevState = true;
 	}
+}
+
+void setLedColor(uint32_t color) {
+	for( int index=0; index < NUM_PIXELS; index++ ) {
+		g_ledStrip.setPixelColor(index, color);
+	}
+	g_ledStrip.show();
 }
 
 // =============================================================================

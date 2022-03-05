@@ -2,7 +2,7 @@
  * Amalettomat2 firmware main module
  */
 
-#include <AccelStepper.h>
+#include "ScraperControl.h"
 #include "RunningAverage.h"
 #include "Adafruit_ILI9486_Teensy.h"
 #include <SPI.h>
@@ -23,9 +23,6 @@
 // #include <SD.h>
 // #include "BmpFile.h"
 
-AccelStepper scraperStepper(AccelStepper::DRIVER, PIN_STEPPER_SCRAPER_STEP, PIN_STEPPER_SCRAPER_DIR);
-// AccelStepper g_rozelStepper(AccelStepper::DRIVER, PIN_STEPPER_ROZEL_STEP, PIN_STEPPER_ROZEL_DIR);
-
 Adafruit_ILI9486_Teensy tftDisplay;
 Adafruit_ILI9486_Teensy* g_display = &tftDisplay;
 
@@ -36,6 +33,8 @@ RunningAverage<float> g_plateTempAverage(NUM_AVG_TEMP_VALUES);
 RunningAverage<float> g_pressureAverage(NUM_AVG_PRESSURE_VALUES);
 
 LedControl g_ledController;
+
+ScraperControl g_scraperControl(PIN_STEPPER_SCRAPER_STEP, PIN_STEPPER_SCRAPER_DIR, PIN_STEPPER_SCRAPER_ENABLE, PIN_STEPPER_SCRAPER_ENDSTOP);
 
 
 // process state variables
@@ -140,15 +139,17 @@ void initRozel() {
 }
 
 void initScraper() {
-	pinMode(PIN_STEPPER_SCRAPER_ENABLE, OUTPUT);
-	pinMode(PIN_STEPPER_SCRAPER_DIR, OUTPUT);
-	pinMode(PIN_STEPPER_SCRAPER_STEP, OUTPUT);
-	pinMode(PIN_STEPPER_SCRAPER_ENDSTOP, INPUT);
+	g_scraperControl.moveBack();
 
-	scraperStepper.setMaxSpeed(125.0 * SCRAPER_MICROSTEPS);
-	scraperStepper.setSpeed(125.0 * SCRAPER_MICROSTEPS);
-	scraperStepper.setAcceleration(100.0 * SCRAPER_MICROSTEPS);
-	digitalWrite(PIN_STEPPER_SCRAPER_ENABLE, LOW); // sleep mode
+//	pinMode(PIN_STEPPER_SCRAPER_ENABLE, OUTPUT);
+//	pinMode(PIN_STEPPER_SCRAPER_DIR, OUTPUT);
+//	pinMode(PIN_STEPPER_SCRAPER_STEP, OUTPUT);
+//	pinMode(PIN_STEPPER_SCRAPER_ENDSTOP, INPUT);
+
+//	scraperStepper.setMaxSpeed(125.0 * SCRAPER_MICROSTEPS);
+//	scraperStepper.setSpeed(125.0 * SCRAPER_MICROSTEPS);
+//	scraperStepper.setAcceleration(100.0 * SCRAPER_MICROSTEPS);
+//	digitalWrite(PIN_STEPPER_SCRAPER_ENABLE, LOW); // sleep mode
 }
 
 void initScreen() {
@@ -615,8 +616,9 @@ void loop() {
 
 	tempControl();
 	pressureControl();
-	// rozelControl();
 	coinControl();
+
+	g_scraperControl.run();
 
 	if( SERIAL_DEBUG )
 		serialComm();

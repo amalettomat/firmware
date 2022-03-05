@@ -11,11 +11,11 @@
 
 // scraper
 // =============================================
-#define SCRAPER_MICROSTEPS 8
+#define SCRAPER_MICROSTEPS 4
 #define PIN_STEPPER_SCRAPER_DIR 25
 #define PIN_STEPPER_SCRAPER_STEP 26
 #define PIN_STEPPER_SCRAPER_ENABLE 27
-#define PIN_STEPPER_SCRAPER_ENDSTOP 18
+#define PIN_STEPPER_SCRAPER_ENDSTOP 24
 
 // rozel
 // =============================================

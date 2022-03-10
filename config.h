@@ -16,6 +16,9 @@
 #define PIN_STEPPER_SCRAPER_STEP 26
 #define PIN_STEPPER_SCRAPER_ENABLE 27
 #define PIN_STEPPER_SCRAPER_ENDSTOP 24
+#define SCRAPER_SPEED 700
+#define SCRAPER_DIST 3050
+#define ROLLER_SPEED 40
 
 // rozel
 // =============================================
@@ -55,7 +58,7 @@
 // =============================================
 #define PIN_PLATE_MOTOR  38
 #define PIN_ROLLER_MOTOR 37
-#define PIN_OUT3         36
+#define PIN_MIXER        36
 #define PIN_OUT4         35
 
 // Relays board

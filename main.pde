@@ -34,7 +34,7 @@ RunningAverage<float> g_pressureAverage(NUM_AVG_PRESSURE_VALUES);
 
 LedControl g_ledController;
 
-ScraperControl g_scraperControl(PIN_STEPPER_SCRAPER_STEP, PIN_STEPPER_SCRAPER_DIR, PIN_STEPPER_SCRAPER_ENABLE, PIN_STEPPER_SCRAPER_ENDSTOP);
+ScraperControl g_scraperControl;
 
 
 // process state variables
@@ -58,8 +58,6 @@ bool g_touchPressed = false;
 // L298 PWM outputs
 bool g_plateMotor = false;
 int g_plateMotorSpeed = 150;
-bool g_rollerMotor = false;
-int g_rollerMotorSpeed = 70;
 
 // relay board
 bool g_batterValve = false;
@@ -139,7 +137,7 @@ void initRozel() {
 }
 
 void initScraper() {
-	g_scraperControl.moveBack();
+	// g_scraperControl.moveBack();
 
 //	pinMode(PIN_STEPPER_SCRAPER_ENABLE, OUTPUT);
 //	pinMode(PIN_STEPPER_SCRAPER_DIR, OUTPUT);
@@ -193,8 +191,7 @@ void setup() {
 	pinMode(PIN_FILLING_VALVE1, OUTPUT);
 	pinMode(PIN_FILLING_VALVE2, OUTPUT);
 	pinMode(PIN_PLATE_MOTOR, OUTPUT);
-	pinMode(PIN_ROLLER_MOTOR, OUTPUT);
-	pinMode(PIN_OUT3, OUTPUT);
+	pinMode(PIN_MIXER, OUTPUT);
 	pinMode(PIN_OUT4, OUTPUT);
 	pinMode(PIN_BATTER_VALVE, OUTPUT);
 	pinMode(PIN_OILER_SOLENOID, OUTPUT);
@@ -232,6 +229,9 @@ void setup() {
 	// clear display area
 	g_display->fillScreen(COL_BACKGROUND);
 	g_display->drawFastHLine(0, STATUS_AREA_YPOS, 480, COL_LINES);
+
+	// ### TODO remove TEST
+	g_scraperControl.startScrape();
 
 	AbstractState::switchState(&STATE_PREHEAT);
 }
@@ -435,8 +435,6 @@ void writeOutputs() {
 		analogWrite(PIN_PLATE_MOTOR, g_plateMotorSpeed);
 	else
 		analogWrite(PIN_PLATE_MOTOR, 0);
-
-	analogWrite(PIN_ROLLER_MOTOR, g_rollerMotorSpeed);
 
 	// relays board: active low
 	digitalWrite(PIN_BATTER_VALVE, !g_batterValve);

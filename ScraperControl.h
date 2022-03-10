@@ -6,17 +6,23 @@
 
 class ScraperControl {
 public:
-	ScraperControl(int pinStep, int pinDir, int pinEnable, int pinEndstop);
+	ScraperControl();
 	virtual ~ScraperControl();
 
+	enum State { IDLE, MOVING_BACK, SCRAPING };
+
 	void moveBack();
+	void startScrape();
+	bool isRunning();
 
 	void run();
 
+protected:
+	void handleState();
+
 private:
 	AccelStepper m_motor;
-	int m_pinEnable;
-	int m_pinEndstop;
+	State m_state;
 };
 
 #endif /* SCRAPERCONTROL_H_ */

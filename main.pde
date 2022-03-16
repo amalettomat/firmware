@@ -230,9 +230,6 @@ void setup() {
 	g_display->fillScreen(COL_BACKGROUND);
 	g_display->drawFastHLine(0, STATUS_AREA_YPOS, 480, COL_LINES);
 
-	// ### TODO remove TEST
-	g_scraperControl.startScrape();
-
 	AbstractState::switchState(&STATE_PREHEAT);
 }
 

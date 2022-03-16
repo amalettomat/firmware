@@ -23,7 +23,7 @@ ScraperControl::~ScraperControl() {
 }
 
 bool ScraperControl::isRunning() {
-	return m_motor.isRunning();
+	return m_state == IDLE && m_motor.isRunning();
 }
 
 void ScraperControl::handleState() {

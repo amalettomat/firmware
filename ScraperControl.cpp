@@ -10,11 +10,8 @@ ScraperControl::ScraperControl() : m_motor(AccelStepper::DRIVER, PIN_STEPPER_SCR
 	pinMode(PIN_ROLLER_MOTOR, OUTPUT);
 
 	m_motor.disableOutputs();
-	m_motor.setMaxSpeed(SCRAPER_SPEED * SCRAPER_MICROSTEPS);
-	// m_motor.setSpeed(125.0 * SCRAPER_MICROSTEPS);
-	// m_motor.setSpeed(50.0 * SCRAPER_MICROSTEPS);
-	// m_motor.setAcceleration(100.0 * SCRAPER_MICROSTEPS);
-	m_motor.setAcceleration(2000.0 * SCRAPER_MICROSTEPS);
+	m_motor.setMaxSpeed(SCRAPER_SPEED);
+	m_motor.setAcceleration(SCRAPER_ACCELARATION);
 
 	analogWrite(PIN_ROLLER_MOTOR, 0);
 }
@@ -23,7 +20,7 @@ ScraperControl::~ScraperControl() {
 }
 
 bool ScraperControl::isRunning() {
-	return m_state == IDLE && m_motor.isRunning();
+	return m_state != IDLE;
 }
 
 void ScraperControl::handleState() {
@@ -37,17 +34,17 @@ void ScraperControl::handleState() {
 		}
 		break;
 
-	case SCRAPING:
-		if( m_motor.speed() > 0 ) {
-			if( !digitalRead(PIN_STEPPER_SCRAPER_ENDSTOP) ) {
-				// hit end stop switch
-				m_motor.setCurrentPosition(0);
-				analogWrite(PIN_ROLLER_MOTOR, ROLLER_SPEED);
-				// change direction
-				m_motor.moveTo(-SCRAPER_DIST * SCRAPER_MICROSTEPS);
-			}
+	case PRE_SCRAPING:
+		if( !digitalRead(PIN_STEPPER_SCRAPER_ENDSTOP) ) {
+			// hit end stop switch
+			m_motor.stop();
+			m_motor.setCurrentPosition(0);
+			m_motor.moveTo(-SCRAPER_DIST);
+			m_state = SCRAPING;
 		}
+		break;
 
+	case SCRAPING:
 		if( !m_motor.isRunning() ) {
 			moveBack();
 		}
@@ -68,19 +65,17 @@ void ScraperControl::moveBack() {
 
 	m_motor.enableOutputs();
 	m_motor.setCurrentPosition(0);
-	m_motor.moveTo(SCRAPER_DIST * SCRAPER_MICROSTEPS);
+	m_motor.moveTo(SCRAPER_DIST);
 	m_state = MOVING_BACK;
 }
 
 void ScraperControl::startScrape() {
-	analogWrite(PIN_ROLLER_MOTOR, 0);
+	analogWrite(PIN_ROLLER_MOTOR, ROLLER_SPEED);
 
 	// first move back until end stop
 	m_motor.enableOutputs();
-	m_motor.setSpeed(200.0 * SCRAPER_MICROSTEPS);
 	m_motor.setCurrentPosition(0);
-	m_motor.moveTo(SCRAPER_DIST * SCRAPER_MICROSTEPS);
-
-	m_state = SCRAPING;
+	m_motor.moveTo(SCRAPER_DIST);
+	m_state = PRE_SCRAPING;
 }
 

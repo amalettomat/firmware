@@ -9,7 +9,7 @@ public:
 	ScraperControl();
 	virtual ~ScraperControl();
 
-	enum State { IDLE, MOVING_BACK, SCRAPING };
+	enum State { IDLE, MOVING_BACK, PRE_SCRAPING, SCRAPING };
 
 	void moveBack();
 	void startScrape();

@@ -136,20 +136,6 @@ void initRozel() {
 //	g_rozelStepper.move(-200*ROZEL_MICROSTEPS);
 }
 
-void initScraper() {
-	// g_scraperControl.moveBack();
-
-//	pinMode(PIN_STEPPER_SCRAPER_ENABLE, OUTPUT);
-//	pinMode(PIN_STEPPER_SCRAPER_DIR, OUTPUT);
-//	pinMode(PIN_STEPPER_SCRAPER_STEP, OUTPUT);
-//	pinMode(PIN_STEPPER_SCRAPER_ENDSTOP, INPUT);
-
-//	scraperStepper.setMaxSpeed(125.0 * SCRAPER_MICROSTEPS);
-//	scraperStepper.setSpeed(125.0 * SCRAPER_MICROSTEPS);
-//	scraperStepper.setAcceleration(100.0 * SCRAPER_MICROSTEPS);
-//	digitalWrite(PIN_STEPPER_SCRAPER_ENABLE, LOW); // sleep mode
-}
-
 void initScreen() {
 	pinMode(PIN_BACKLIGHT, OUTPUT);
 	analogWrite(PIN_BACKLIGHT, 70);
@@ -206,7 +192,9 @@ void setup() {
 
 	initScreen();
 	initRozel();
-	initScraper();
+
+	g_scraperControl.moveBack();
+
 	g_ledController.init();
 
 	writeOutputs();
@@ -548,7 +536,7 @@ void tempControl() {
 void pressureControl() {
 	float pressure = g_pressureAverage.getAverage();
 
-	if( pressure > 1.7F )
+	if( pressure > 1.35F )
 		g_compressor = false;
 	if( pressure < 0.7F )
 		g_compressor = true;

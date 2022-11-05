@@ -11,14 +11,15 @@
 
 // scraper
 // =============================================
-#define SCRAPER_MICROSTEPS 4
+#define SCRAPER_MICROSTEPS 2
 #define PIN_STEPPER_SCRAPER_DIR 25
 #define PIN_STEPPER_SCRAPER_STEP 26
 #define PIN_STEPPER_SCRAPER_ENABLE 27
 #define PIN_STEPPER_SCRAPER_ENDSTOP 24
-#define SCRAPER_SPEED 700
-#define SCRAPER_DIST 3050
-#define ROLLER_SPEED 40
+#define SCRAPER_SPEED (400 * SCRAPER_MICROSTEPS)
+#define SCRAPER_ACCELARATION (2000 * SCRAPER_MICROSTEPS)
+#define SCRAPER_DIST (3050 * SCRAPER_MICROSTEPS)
+#define ROLLER_SPEED 50
 
 // rozel
 // =============================================

@@ -7,6 +7,7 @@
 
 #include "StateBaking.h"
 #include "StateIdle.h"
+#include "StateScraping.h"
 #include "../Gui.h"
 #include "../config.h"
 
@@ -34,7 +35,7 @@ void StateBaking::transition(AbstractState* prevState) {
 void StateBaking::action() {
 
 	if( millis() - m_begin >= g_bakingTime * 1000 ) {
-		switchState(&STATE_IDLE);
+		switchState(&STATE_SCRAPING);
 	}
 }
 

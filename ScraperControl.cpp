@@ -10,7 +10,7 @@ ScraperControl::ScraperControl() : m_motor(AccelStepper::DRIVER, PIN_STEPPER_SCR
 	pinMode(PIN_ROLLER_MOTOR, OUTPUT);
 
 	m_motor.disableOutputs();
-	m_motor.setMaxSpeed(SCRAPER_SPEED);
+	m_motor.setMaxSpeed(SCRAPER_SPEED_REV);
 	m_motor.setAcceleration(SCRAPER_ACCELARATION);
 
 	analogWrite(PIN_ROLLER_MOTOR, 0);
@@ -39,6 +39,7 @@ void ScraperControl::handleState() {
 			// hit end stop switch
 			m_motor.stop();
 			m_motor.setCurrentPosition(0);
+			m_motor.setMaxSpeed(SCRAPER_SPEED_FWD);
 			m_motor.moveTo(-SCRAPER_DIST);
 			m_state = SCRAPING;
 		}
@@ -63,10 +64,17 @@ void ScraperControl::run() {
 void ScraperControl::moveBack() {
 	analogWrite(PIN_ROLLER_MOTOR, 0);
 
-	m_motor.enableOutputs();
-	m_motor.setCurrentPosition(0);
-	m_motor.moveTo(SCRAPER_DIST);
-	m_state = MOVING_BACK;
+	if( m_state == MOVING_BACK )
+		return;
+
+	m_motor.setMaxSpeed(SCRAPER_SPEED_REV);
+
+	if( digitalRead(PIN_STEPPER_SCRAPER_ENDSTOP) ) {
+		m_motor.enableOutputs();
+		m_motor.setCurrentPosition(0);
+		m_motor.moveTo(SCRAPER_DIST);
+		m_state = MOVING_BACK;
+	}
 }
 
 void ScraperControl::startScrape() {
@@ -75,6 +83,7 @@ void ScraperControl::startScrape() {
 	// first move back until end stop
 	m_motor.enableOutputs();
 	m_motor.setCurrentPosition(0);
+	m_motor.setMaxSpeed(SCRAPER_SPEED_REV);
 	m_motor.moveTo(SCRAPER_DIST);
 	m_state = PRE_SCRAPING;
 }

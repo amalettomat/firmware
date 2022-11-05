@@ -21,6 +21,10 @@ extern float g_setTemp;
 extern float g_batterAmount;
 extern float g_bakingTime;
 extern float g_spreadTime;
+extern float g_amountFilling1;
+extern float g_amountFilling2;
+extern bool g_fillingValve1;
+extern bool g_fillingValve2;
 
 
 StateMaintIdle STATE_MAINTENANCE_IDLE;
@@ -133,6 +137,21 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 						  "%1.1f");
 	g_spinSpreadTime.draw();
 
+	// filling 1 button
+	g_btnFilling1.initButtonUL(g_display,
+			                   COL_POS_ROW3, 114,
+							   MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
+							   COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
+							   "FILL 1", TEXTSIZE_BUTTON);
+	g_btnFilling1.drawButton(false);
+
+	// filling time 1
+	g_spinFillingTime1.init(g_display,
+			              COL_POS_ROW4, 114,
+						  g_amountFilling1, 0.1, 0.0, 4.0,
+						  "%1.1f");
+	g_spinFillingTime1.draw();
+
 	// exit
 	g_btnExit.initButtonUL(g_display,
 			               400, 226,
@@ -157,6 +176,7 @@ void StateMaintIdle::action() {
 		g_btnPlateMotor.press(g_btnPlateMotor.contains(g_touchX, g_touchY));
 		g_btnHeating.press(g_btnHeating.contains(g_touchX, g_touchY));
 		g_btnExit.press(g_btnExit.contains(g_touchX, g_touchY));
+		g_btnFilling1.press(g_btnFilling1.contains(g_touchX, g_touchY));
 	} else {
 		g_btnRozel.press(false);
 		g_btnBatterDose.press(false);
@@ -164,6 +184,7 @@ void StateMaintIdle::action() {
 		g_btnPlateMotor.press(false);
 		g_btnHeating.press(false);
 		g_btnExit.press(false);
+		g_btnFilling1.press(false);
 	}
 
 	if( g_btnRozel.justReleased() ) {
@@ -221,6 +242,14 @@ void StateMaintIdle::action() {
 
 	if( g_spinSpreadTime.handleTouch(g_touchPressed, g_touchX, g_touchY) )
 		g_spreadTime = g_spinSpreadTime.getValue();
+
+	if( g_spinFillingTime1.handleTouch(g_touchPressed, g_touchX, g_touchY) )
+		g_amountFilling1 = g_spinFillingTime1.getValue();
+
+	if( g_btnFilling1.justPressed() )
+		g_fillingValve1 = true;
+	else if( g_btnFilling1.justReleased() )
+		g_fillingValve1 = false;
 
 	if( g_btnExit.justReleased() )
 		switchState(&STATE_IDLE);

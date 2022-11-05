@@ -28,6 +28,7 @@ protected:
 private:
 	bool m_rozelDown;
 	uint32_t m_batterStartTime;
+	uint32_t m_maintStartTime;
 };
 
 extern StateMaintIdle STATE_MAINTENANCE_IDLE;

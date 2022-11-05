@@ -70,6 +70,8 @@ bool g_showMaint = true;
 float g_batterAmount = 1.8;
 float g_spreadTime = 3.5;
 float g_bakingTime = 50.0;
+float g_amountFilling1 = 2.5;
+float g_amountFilling2 = 0.0;
 
 
 // commands received from serial

@@ -11,6 +11,7 @@
 #include "../Gui.h"
 #include "../BmpImage.h"
 #include "../LedControl.h"
+#include "../ScraperControl.h"
 
 
 StateIdle STATE_IDLE;
@@ -23,9 +24,10 @@ extern bool g_batterValve;
 extern bool g_fillingValve1;
 extern bool g_fillingValve2;
 extern LedControl g_ledController;
+extern ScraperControl g_scraperControl;
 
 
-StateIdle::StateIdle() {
+StateIdle::StateIdle() : m_startTime(0) {
 }
 
 StateIdle::~StateIdle() {
@@ -53,6 +55,8 @@ void StateIdle::transition(AbstractState* prevState) {
 	}
 
 	g_ledController.setPattern(LedControl::LEDS_ALL_GREEN);
+
+	m_startTime = millis() + 500; // debounce time
 }
 
 void StateIdle::action() {
@@ -61,6 +65,9 @@ void StateIdle::action() {
 		prevShowMaint = g_showMaint;
 		g_btnMaintenance.drawButton(false);
 	}
+
+	if( m_startTime > millis() )
+		return;
 
 	if( g_touchPressed ) {
 		if( g_showMaint )
@@ -94,6 +101,8 @@ void StateIdle::action() {
 	} else if( g_btnSelectFill2.justReleased() ) {
 		g_btnSelectFill2.drawButton(false);
 	}
+
+	g_scraperControl.moveBack();
 }
 
 void StateIdle::refreshDisplay() {

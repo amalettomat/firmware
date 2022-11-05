@@ -9,6 +9,7 @@
 #define STATES_STATEIDLE_H_
 
 #include "AbstractState.h"
+#include <cstdint>
 
 
 class StateIdle: public AbstractState {
@@ -23,6 +24,8 @@ public:
 protected:
 	virtual void refreshDisplay();
 
+private:
+	uint32_t m_startTime;
 };
 
 extern StateIdle STATE_IDLE;

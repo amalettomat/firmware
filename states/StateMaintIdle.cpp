@@ -11,6 +11,8 @@
 #include <AccelStepper.h>
 #include "../config.h"
 #include "../MotorControllerClient.h"
+#include "../ScraperControl.h"
+
 
 extern MotorControllerClient g_rozelController;
 extern bool g_batterValve;
@@ -25,12 +27,13 @@ extern float g_amountFilling1;
 extern float g_amountFilling2;
 extern bool g_fillingValve1;
 extern bool g_fillingValve2;
+extern ScraperControl g_scraperControl;
 
 
 StateMaintIdle STATE_MAINTENANCE_IDLE;
 
 
-StateMaintIdle::StateMaintIdle() : m_rozelDown(false), m_batterStartTime(0) {
+StateMaintIdle::StateMaintIdle() : m_rozelDown(false), m_batterStartTime(0), m_maintStartTime(0) {
 }
 
 StateMaintIdle::~StateMaintIdle() {
@@ -126,7 +129,7 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	// baking time
 	g_spinBakingTime.init(g_display,
 			              COL_POS_ROW4, 2,
-						  g_bakingTime, 1, 40.0, 60.0,
+						  g_bakingTime, 1, 40.0, 99.0,
 						  "%2.0f");
 	g_spinBakingTime.draw();
 
@@ -151,6 +154,14 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 						  g_amountFilling1, 0.1, 0.0, 4.0,
 						  "%1.1f");
 	g_spinFillingTime1.draw();
+
+	// scrape button
+	g_btnScrape.initButtonUL(g_display,
+			               COL_POS_ROW3, 170,
+						   70, BUTTON_DEFAULT_HEIGHT,
+						   COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
+						   "SCRAPE", TEXTSIZE_BUTTON);
+	g_btnScrape.drawButton(false);
 
 	// exit
 	g_btnExit.initButtonUL(g_display,
@@ -177,6 +188,7 @@ void StateMaintIdle::action() {
 		g_btnHeating.press(g_btnHeating.contains(g_touchX, g_touchY));
 		g_btnExit.press(g_btnExit.contains(g_touchX, g_touchY));
 		g_btnFilling1.press(g_btnFilling1.contains(g_touchX, g_touchY));
+		g_btnScrape.press(g_btnScrape.contains(g_touchX, g_touchY));
 	} else {
 		g_btnRozel.press(false);
 		g_btnBatterDose.press(false);
@@ -185,6 +197,7 @@ void StateMaintIdle::action() {
 		g_btnHeating.press(false);
 		g_btnExit.press(false);
 		g_btnFilling1.press(false);
+		g_btnScrape.press(false);
 	}
 
 	if( g_btnRozel.justReleased() ) {
@@ -206,7 +219,9 @@ void StateMaintIdle::action() {
 	else if( g_btnBatterOnOff.justReleased() )
 		g_batterValve = false;
 
-	g_spinBatterAmount.handleTouch(g_touchPressed, g_touchX, g_touchY);
+	if( g_spinBatterAmount.handleTouch(g_touchPressed, g_touchX, g_touchY) ) {
+		g_batterAmount = g_spinBatterAmount.getValue();
+	}
 
 	if( g_btnBatterDose.justReleased() && m_batterStartTime == 0 ) {
 		// start timer
@@ -250,6 +265,9 @@ void StateMaintIdle::action() {
 		g_fillingValve1 = true;
 	else if( g_btnFilling1.justReleased() )
 		g_fillingValve1 = false;
+
+	if( g_btnScrape.justReleased() )
+		g_scraperControl.startScrape();
 
 	if( g_btnExit.justReleased() )
 		switchState(&STATE_IDLE);

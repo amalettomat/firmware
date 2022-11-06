@@ -67,9 +67,9 @@ float g_credit = 0;
 bool g_showMaint = true;
 
 // processing params
-float g_batterAmount = 1.8;
+float g_batterAmount = 1.5;
 float g_spreadTime = 3.5;
-float g_bakingTime = 50.0;
+float g_bakingTime = 75.0;
 float g_amountFilling1 = 2.5;
 float g_amountFilling2 = 0.0;
 

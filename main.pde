@@ -188,6 +188,9 @@ void setup() {
 	pinMode(PIN_COIN_SIGNAL, INPUT);
 	pinMode(PIN_BUTTON_MAINT, INPUT_PULLUP);
 
+	// turn off batter valve (active low)
+	digitalWrite(PIN_BATTER_VALVE, HIGH);
+
 	// turn off unused relays (active low)
 	digitalWrite(PIN_RELAY3, HIGH);
 	digitalWrite(PIN_RELAY4, HIGH);

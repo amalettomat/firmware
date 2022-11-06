@@ -30,9 +30,9 @@ Adafruit_GFX_Button g_btnHeating;
 GfxSpinButtonField g_spinTemp;
 GfxSpinButtonField g_spinSpreadTime;
 GfxSpinButtonField g_spinBakingTime;
-
 Adafruit_GFX_Button g_btnFilling1;
 GfxSpinButtonField g_spinFillingTime1;
+Adafruit_GFX_Button g_btnScrape;
 
 
 Adafruit_GFX_Button g_btnExit;

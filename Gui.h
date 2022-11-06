@@ -40,10 +40,9 @@ extern Adafruit_GFX_Button g_btnHeating;
 extern GfxSpinButtonField g_spinTemp;
 extern GfxSpinButtonField g_spinSpreadTime;
 extern GfxSpinButtonField g_spinBakingTime;
-
-
 extern Adafruit_GFX_Button g_btnFilling1;
 extern GfxSpinButtonField g_spinFillingTime1;
+extern Adafruit_GFX_Button g_btnScrape;
 
 extern Adafruit_GFX_Button g_btnExit;
 

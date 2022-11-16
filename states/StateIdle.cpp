@@ -8,6 +8,7 @@
 #include "StateIdle.h"
 #include "StateMaintIdle.h"
 #include "StateLowerRozel.h"
+#include "StateInsertCoins.h"
 #include "../Gui.h"
 #include "../BmpImage.h"
 #include "../LedControl.h"
@@ -25,6 +26,8 @@ extern bool g_fillingValve1;
 extern bool g_fillingValve2;
 extern LedControl g_ledController;
 extern ScraperControl g_scraperControl;
+extern float g_credit;
+extern float g_price;
 
 
 StateIdle::StateIdle() : m_startTime(0) {
@@ -49,7 +52,7 @@ void StateIdle::transition(AbstractState* prevState) {
 	g_btnSelectFill2.initButtonUL(g_display, icon_jam, 258, 58, 164, 164, COL_BUTTON_SELECT, COL_BACKGROUND, 20);
 	g_btnSelectFill2.drawButton(false);
 
-	g_btnMaintenance.initButtonUL(g_display, 400, 235, 70, 30, COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, "MAINT", TEXTSIZE_BUTTON);
+	g_btnMaintenance.initButtonUL(g_display, 380, 235, 90, 30, COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, "MAINT", TEXTSIZE_BUTTON);
 	if( g_showMaint ) {
 		g_btnMaintenance.drawButton(false);
 	}
@@ -65,6 +68,9 @@ void StateIdle::action() {
 		prevShowMaint = g_showMaint;
 		g_btnMaintenance.drawButton(false);
 	}
+
+	if( g_credit < g_price )
+		switchState(&STATE_INSERT_COINS);
 
 	if( m_startTime > millis() )
 		return;
@@ -89,6 +95,9 @@ void StateIdle::action() {
 	if( g_btnSelectFill1.justPressed() ) {
 		g_btnSelectFill1.drawButton(true);
 		// TODO store filling selection
+
+		g_credit -= g_price;
+
 		switchState(&STATE_LOWER_ROZEL);
 	} else if( g_btnSelectFill1.justReleased() ) {
 		g_btnSelectFill1.drawButton(false);
@@ -97,6 +106,9 @@ void StateIdle::action() {
 	if( g_btnSelectFill2.justPressed() ) {
 		g_btnSelectFill2.drawButton(true);
 		// TODO store filling selection
+
+		g_credit -= g_price;
+
 		switchState(&STATE_LOWER_ROZEL);
 	} else if( g_btnSelectFill2.justReleased() ) {
 		g_btnSelectFill2.drawButton(false);

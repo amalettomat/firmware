@@ -33,7 +33,7 @@ extern ScraperControl g_scraperControl;
 StateMaintIdle STATE_MAINTENANCE_IDLE;
 
 
-StateMaintIdle::StateMaintIdle() : m_rozelDown(false), m_batterStartTime(0), m_maintStartTime(0) {
+StateMaintIdle::StateMaintIdle() : m_rozelDown(false), m_batterStartTime(0), m_maintStartTime(0), m_fillStartTime(0) {
 }
 
 StateMaintIdle::~StateMaintIdle() {
@@ -76,7 +76,7 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	// plate speed
 	g_spinPlateSpeed.init(g_display,
 			              COL_POS_ROW2, 58, // x-pos, y-pos
-						  g_plateMotorSpeed, 5, 150, 255,  // value, step, min, max
+						  g_plateMotorSpeed, 5, 50, 255,  // value, step, min, max
 						  "%3.0f");          // format
 	g_spinPlateSpeed.draw();
 
@@ -120,10 +120,10 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	g_btnBatterOnOff.drawButton(false);
 
 	g_display->setTextColor(COL_STATUS_TEXT, COL_BACKGROUND);
-	g_display->setTextSize(2);
-	g_display->setCursor(COL_POS_ROW3, 18);
+	g_display->setTextSize(1);
+	g_display->setCursor(COL_POS_ROW3, 32);
 	g_display->print("BAKE");
-	g_display->setCursor(COL_POS_ROW3, 74);
+	g_display->setCursor(COL_POS_ROW3, 88);
 	g_display->print("SPREAD");
 
 	// baking time
@@ -151,8 +151,8 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	// filling time 1
 	g_spinFillingTime1.init(g_display,
 			              COL_POS_ROW4, 114,
-						  g_amountFilling1, 0.1, 0.0, 4.0,
-						  "%1.1f");
+						  g_amountFilling1, 0.02, 0.0, 0.75,
+						  "%1.2f");
 	g_spinFillingTime1.draw();
 
 	// scrape button
@@ -261,10 +261,17 @@ void StateMaintIdle::action() {
 	if( g_spinFillingTime1.handleTouch(g_touchPressed, g_touchX, g_touchY) )
 		g_amountFilling1 = g_spinFillingTime1.getValue();
 
-	if( g_btnFilling1.justPressed() )
+	if( g_btnFilling1.justPressed() && m_fillStartTime == 0 ) {
+		// start timer for filling
+		m_fillStartTime = millis();
 		g_fillingValve1 = true;
-	else if( g_btnFilling1.justReleased() )
+	}
+
+	if( m_fillStartTime > 0 && millis() - m_fillStartTime >= g_spinFillingTime1.getValue() * 1000 ) {
+		m_fillStartTime = 0;
 		g_fillingValve1 = false;
+	}
+
 
 	if( g_btnScrape.justReleased() )
 		g_scraperControl.startScrape();

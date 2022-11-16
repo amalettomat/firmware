@@ -11,6 +11,13 @@
 #define STATES_ABSTRACTSTATE_H_
 
 
+class GFXcanvas16;
+
+
+#define CANVAS_WIDTH 365
+#define CANVAS_HEIGHT 22
+
+
 class AbstractState {
 public:
 	AbstractState();
@@ -32,6 +39,10 @@ protected:
 
 private:
 	static AbstractState* currentState;
+	static int prevHeating;
+	static float prevPressure;
+	static int prevTemp;
+	static float prevCredit;
 };
 
 // NO-OP state

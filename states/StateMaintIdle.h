@@ -29,6 +29,7 @@ private:
 	bool m_rozelDown;
 	uint32_t m_batterStartTime;
 	uint32_t m_maintStartTime;
+	uint32_t m_fillStartTime;
 };
 
 extern StateMaintIdle STATE_MAINTENANCE_IDLE;

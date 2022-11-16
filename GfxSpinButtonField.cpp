@@ -35,19 +35,19 @@ void GfxSpinButtonField::init(Adafruit_GFX* gfx, int x1, int y1, float value, fl
 	int btnSize = m_height - 2 * SPINBTN_PADDING;
 	m_btnDec->initButtonUL(gfx, x1+SPINBTN_PADDING, y1+SPINBTN_PADDING, btnSize, btnSize,
 			               COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
-						   "-", 3);
+						   "-", 1);
 	m_btnInc->initButtonUL(gfx, x1+m_width-btnSize-SPINBTN_PADDING, y1+SPINBTN_PADDING, btnSize, btnSize,
 			               COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
-						   "+", 3);
+						   "+", 1);
 
     char output[20];
     snprintf(output, 20, m_format, min);
     int16_t x, y;
     uint16_t txtWidth, txtHeight;
-    m_gfx->setTextSize(2, 2);
+    m_gfx->setTextSize(1, 1);
     m_gfx->getTextBounds(output, 0, 0, &x, &y, &txtWidth, &txtHeight);
-	m_textX = x1 + m_width/2 - txtWidth/2;
-	m_textY = y1 + m_height/2 - txtHeight/2;
+	m_textX = x1 + m_width/2 - txtWidth/2 -1;
+	m_textY = y1 + m_height/2 - txtHeight/2 + 12;
 }
 
 void GfxSpinButtonField::draw() {
@@ -60,9 +60,12 @@ void GfxSpinButtonField::draw() {
 void GfxSpinButtonField::refreshText() {
     char output[20];
     snprintf(output, 20, m_format, m_value);
+
+    m_gfx->fillRect(m_x1+m_height, m_y1+1, m_width-2*m_height, m_height-2, COL_BACKGROUND);
+
     m_gfx->setCursor(m_textX, m_textY);
     m_gfx->setTextColor(SPINBTN_COL_TEXT, COL_BACKGROUND);
-    m_gfx->setTextSize(2, 2);
+    m_gfx->setTextSize(1, 1);
     m_gfx->print(output);
 }
 

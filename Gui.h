@@ -46,6 +46,9 @@ extern Adafruit_GFX_Button g_btnScrape;
 
 extern Adafruit_GFX_Button g_btnExit;
 
+extern const GFXfont* DEFAULT_FONT;
+extern const GFXfont* BIG_FONT;
+
 // functions
 
 void clearMainArea();

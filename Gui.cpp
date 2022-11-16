@@ -8,6 +8,9 @@
  */
 
 #include "Gui.h"
+// #include "Fonts/FreeSans12pt7b.h"
+#include "Fonts/FreeSans9pt7b.h"
+#include "Fonts/FreeSans24pt7b.h"
 
 
 // state PREHEAT
@@ -36,6 +39,10 @@ Adafruit_GFX_Button g_btnScrape;
 
 
 Adafruit_GFX_Button g_btnExit;
+
+// const GFXfont* DEFAULT_FONT = &FreeSans12pt7b;
+const GFXfont* DEFAULT_FONT = &FreeSans9pt7b;
+const GFXfont* BIG_FONT = &FreeSans24pt7b;
 
 
 // functions

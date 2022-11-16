@@ -19,14 +19,17 @@
 #define COL_BACKGROUND     0x0000
 #define COL_LINES          0xFFFF
 #define COL_STATUS_TEXT    0xFFFF
+
 #define STATUS_AREA_YPOS   280
+// #define STATUS_TEXT_YPOS   310
+#define STATUS_TEXT_YPOS   16 // relative to status area
 
 #define COL_BUTTON_INFILL  0x6B6D
 #define COL_BUTTON_OUTLINE 0xFFFF
 #define COL_BUTTON_TEXT    0xFFFF
 #define COL_BUTTON_SELECT  0xF800
 #define COL_BUTTON_EXIT    0xFB6D
-#define TEXTSIZE_BUTTON    2
+#define TEXTSIZE_BUTTON    1
 #define BUTTON_DEFAULT_HEIGHT 50
 
 #define SPINBTN_DEFAULT_WIDTH  150

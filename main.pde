@@ -3,7 +3,6 @@
  */
 
 #include "ScraperControl.h"
-#include "RunningAverage.h"
 #include "Adafruit_ILI9486_Teensy.h"
 #include <SPI.h>
 #include "Splashscreen.h"
@@ -16,6 +15,7 @@
 #include "config.h"
 #include "MotorControllerClient.h"
 #include "LedControl.h"
+#include "Gui.h"
 
 
 #define SERIAL_DEBUG false
@@ -23,14 +23,19 @@
 // #include <SD.h>
 // #include "BmpFile.h"
 
+// extern const GFXfont FreeSans18pt7b;
+
+
 Adafruit_ILI9486_Teensy tftDisplay;
 Adafruit_ILI9486_Teensy* g_display = &tftDisplay;
 
-#define NUM_AVG_TEMP_VALUES 32
-RunningAverage<float> g_plateTempAverage(NUM_AVG_TEMP_VALUES);
+// #define NUM_AVG_TEMP_VALUES 32
+// RunningAverage<float> g_plateTempAverage(NUM_AVG_TEMP_VALUES);
+float g_plateTemp = 0.0F;
 
-#define NUM_AVG_PRESSURE_VALUES 200
-RunningAverage<float> g_pressureAverage(NUM_AVG_PRESSURE_VALUES);
+// #define NUM_AVG_PRESSURE_VALUES 200
+// RunningAverage<float> g_pressureAverage(NUM_AVG_PRESSURE_VALUES);
+float g_pressure = 0.0F;
 
 LedControl g_ledController;
 
@@ -42,7 +47,7 @@ ScraperControl g_scraperControl;
 
 // heating
 bool g_heating = false;
-bool g_heatingEnabled = false;
+bool g_heatingEnabled = true;
 float g_setTemp = 160.0;
 
 // pneumatics
@@ -70,8 +75,12 @@ bool g_showMaint = true;
 float g_batterAmount = 1.5;
 float g_spreadTime = 3.5;
 float g_bakingTime = 75.0;
-float g_amountFilling1 = 2.5;
+float g_amountFilling1 = 0.3;
 float g_amountFilling2 = 0.0;
+int g_numFillSpots = 3;
+
+// pancake price
+float g_price = 3.0F;
 
 
 // commands received from serial
@@ -156,6 +165,9 @@ void initScreen() {
 //	for(int i=0;i<320*480;i++){
 //		tftDisplay.pushColor( makeWord(splash_image.pixel_data[2*i], splash_image.pixel_data[2*i+1]) );
 //	}
+	// tftDisplay.setFont(&FreeSans18pt7b);
+	tftDisplay.setFont(DEFAULT_FONT);
+
 	tftDisplay.drawRGBBitmap_fast(0, 0, (const uint8_t*)splash_image.pixel_data, 480, 320);
 
 	delay(2000);
@@ -206,10 +218,10 @@ void setup() {
 
 	rozelMotorSpeed = 500;
 
-	for( int index=0; index < NUM_AVG_TEMP_VALUES; index++ )
+	for( int index=0; index < 200; index++ )
 		readPlateTemp();
 
-	for( int index=0; index < NUM_AVG_PRESSURE_VALUES; index++ )
+	for( int index=0; index < 200; index++ )
 		readPressure();
 
 	displayTime = millis() + DISPLAY_INTERVAL;
@@ -432,6 +444,12 @@ void writeOutputs() {
 }
 
 void readPlateTemp() {
+	static int count = 0;
+	count++;
+	if( count < 200 )
+		return;
+	count = 0;
+
 	int plateTempRaw;
 	float tempSensorResistance;
 	float logR;
@@ -439,27 +457,32 @@ void readPlateTemp() {
 	plateTempRaw = analogRead(PIN_PLATE_TEMP);
 	tempSensorResistance = plateTempRaw * R1 / (1024.0 - plateTempRaw);
 	logR = log(tempSensorResistance);
-
-	g_plateTempAverage.addValue((1.0 / (c1 + c2 * logR)) - 273.15);
+	float temp = (1.0 / (c1 + c2 * logR)) - 273.15;
+	// g_plateTempAverage.addValue();
+	g_plateTemp = g_plateTemp * 0.99 + temp * 0.01;
 }
 
 void readPressure() {
 	float pressure;
-//	static int count = 0;
-//
-//	// only read every 1000th run
-//	count++;
-//	if( count < 1000 ) {
-//		return;
-//	}
-//	count = 0;
+	static int count = 0;
+
+	// only read every 100th run
+	count++;
+	if( count < 100 ) {
+		return;
+	}
+	count = 0;
 
 	// g_pressureReadings++;
 
 	pressure = analogRead(PIN_PRESSURE_SENSOR) * PRESSURE_SENSOR_SCALE_FACTOR;
 	pressure = (pressure - PRESSURE_SENSOR_OFFSET_VOLTAGE) * PRESSURE_SENSOR_BAR_PER_VOLT;
 
-	g_pressureAverage.addValue(pressure);
+	if( pressure < 0.0 )
+		pressure = 0.0F;
+
+	// g_pressureAverage.addValue(pressure);
+	g_pressure = g_pressure * 0.99 + pressure * 0.01;
 }
 
 void writeState() {
@@ -470,7 +493,7 @@ void writeState() {
 //	Serial.print(", R=");
 //	Serial.print(tempSensorResistance);
 //	Serial.print(", Tavg=");
-//	Serial.print(plateTempAverage.getAverage());
+//	Serial.print(g_plateTemp);
 //	Serial.print(", heat=");
 //	Serial.println(heating);
 }
@@ -529,7 +552,7 @@ void displayMessage(const char* msg) {
 //}
 
 void tempControl() {
-	float diff = g_setTemp - g_plateTempAverage.getAverage();
+	float diff = g_setTemp - g_plateTemp;
 
 	if( diff < 0 ) {
 		g_heating = false;
@@ -539,11 +562,9 @@ void tempControl() {
 }
 
 void pressureControl() {
-	float pressure = g_pressureAverage.getAverage();
-
-	if( pressure > 1.35F )
+	if( g_pressure > 1.35F )
 		g_compressor = false;
-	if( pressure < 0.7F )
+	if( g_pressure < 0.7F )
 		g_compressor = true;
 }
 

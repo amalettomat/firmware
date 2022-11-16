@@ -20,7 +20,7 @@
 #define SCRAPER_SPEED_REV (800 * SCRAPER_MICROSTEPS)
 #define SCRAPER_ACCELARATION (2000 * SCRAPER_MICROSTEPS)
 #define SCRAPER_DIST (3050 * SCRAPER_MICROSTEPS)
-#define ROLLER_SPEED 50
+#define ROLLER_SPEED 70
 
 // rozel
 // =============================================
@@ -36,7 +36,7 @@
 
 // display
 // =============================================
-#define DISPLAY_INTERVAL 500
+#define DISPLAY_INTERVAL 200
 #define TP_SETTING SPISettings(2000000, MSBFIRST, SPI_MODE0)
 #define TP_CS 6
 #define PIN_BACKLIGHT 9

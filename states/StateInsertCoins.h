@@ -16,6 +16,8 @@ public:
 protected:
 	virtual void refreshDisplay();
 
+private:
+	float m_prevCredit;
 };
 
 extern StateInsertCoins STATE_INSERT_COINS;

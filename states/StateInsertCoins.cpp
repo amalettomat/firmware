@@ -1,6 +1,7 @@
 #include "StateInsertCoins.h"
 #include "StateIdle.h"
 #include "StateMaintIdle.h"
+#include <Adafruit_GFX.h>
 #include "../Gui.h"
 #include "../LedControl.h"
 
@@ -15,7 +16,10 @@ extern bool g_maintButton;
 StateInsertCoins STATE_INSERT_COINS;
 
 
-StateInsertCoins::StateInsertCoins() {
+#define CANVAS_HEIGHT 66
+
+
+StateInsertCoins::StateInsertCoins() : m_prevCredit(0.0) {
 }
 
 StateInsertCoins::~StateInsertCoins() {
@@ -42,13 +46,26 @@ void StateInsertCoins::transition(AbstractState* prevState) {
 }
 
 void StateInsertCoins::action() {
-
 	if( g_maintButton )
 		switchState(&STATE_MAINTENANCE_IDLE);
 
-	if( g_credit >= g_price )
+	if( g_credit >= g_price ) {
 		switchState(&STATE_IDLE);
+		return;
+	}
 
+	if( m_prevCredit != g_credit ) {
+		m_prevCredit = g_credit;
+
+		GFXcanvas16 canvas(240, CANVAS_HEIGHT);
+		// canvas.fillScreen(0x6B6D);
+		canvas.setTextColor(COL_STATUS_TEXT);
+		canvas.setFont(BIG_FONT);
+		canvas.setTextSize(2);
+		canvas.setCursor(0, CANVAS_HEIGHT - 3);
+		canvas.printf("%4.2f", g_credit);
+		g_display->drawRGBBitmap(130, 130, canvas.getBuffer(), 240, CANVAS_HEIGHT);
+	}
 //	static bool prevShowMaint = g_showMaint;
 //	if( g_showMaint != prevShowMaint ) {
 //		prevShowMaint = g_showMaint;

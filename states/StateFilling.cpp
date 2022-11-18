@@ -10,7 +10,6 @@ extern float g_amountFilling1;
 extern float g_amountFilling2;
 extern bool g_fillingValve1;
 extern bool g_fillingValve2;
-extern int g_numFillSpots;
 extern bool g_maintButton;
 
 
@@ -19,7 +18,6 @@ StateFilling STATE_FILLING;
 
 StateFilling::StateFilling() {
 	m_startTime = 0;
-	m_spotCount = 0;
 }
 
 StateFilling::~StateFilling() {
@@ -32,7 +30,6 @@ void StateFilling::transition(AbstractState* prevState) {
 	g_display->print("Filling...");
 
 	m_startTime = millis();
-	m_spotCount = 0;
 	g_plateMotor = true;
 
 	if( g_amountFilling1 > 0.0 )
@@ -52,28 +49,21 @@ void StateFilling::action() {
 		switchState(&STATE_MAINTENANCE_IDLE);
 	}
 
-	if( g_fillingValve1 ) {
-		if( elapsed >= g_amountFilling1 * 1000 ) {
-			g_fillingValve1 = false;
-			m_startTime = millis();
-			m_spotCount++;
-		}
-	} else {
-		if( elapsed >= (1.2 - g_amountFilling1) * 1000 ) {
-			g_fillingValve1 = true;
-			m_startTime = millis();
-		}
-	}
-
-//	if( g_fillingValve2 && elapsed >= g_amountFilling2 * 1000 ) {
-//		g_fillingValve2 = false;
-//	}
-
-	if( m_spotCount >= g_numFillSpots ) {
-		g_plateMotor = false;
-		g_fillingValve1 = false;
-		g_fillingValve2 = false;
+	if( !g_fillingValve1 && !g_fillingValve2 ) {
+		// both valves closed, start scraping (keep motor on!)
 		switchState(&STATE_SCRAPING);
+	} else {
+		if( g_fillingValve1 ) {
+			if( elapsed >= g_amountFilling1 * 1000 ) {
+				g_fillingValve1 = false;
+				m_startTime = millis();
+			}
+		} else {
+			if( elapsed >= g_amountFilling2 * 1000 ) {
+				g_fillingValve1 = false;
+				m_startTime = millis();
+			}
+		}
 	}
 }
 

@@ -19,7 +19,7 @@ protected:
 
 private:
 	uint32_t m_startTime;
-	int m_spotCount;
+	// int m_spotCount;
 };
 
 extern StateFilling STATE_FILLING;

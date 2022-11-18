@@ -6,8 +6,8 @@
 
 
 extern ScraperControl g_scraperControl;
-
-static int timeout = 30; // sec
+extern bool g_plateMotor;
+extern float g_fillingOverrunTime;
 
 
 StateScraping STATE_SCRAPING;
@@ -25,14 +25,19 @@ void StateScraping::transition(AbstractState* prevState) {
 	g_display->setCursor(120, 80);
 	g_display->print("Scraping...");
 
-	m_begin = millis();
-	g_scraperControl.startScrape();
+	m_begin = millis() + g_fillingOverrunTime * 1000;
 }
 
 void StateScraping::action() {
-
-	if( !g_scraperControl.isRunning() ) { // || millis() - m_begin >=  timeout * 1000 ) {
-		switchState(&STATE_IDLE);
+	if( g_plateMotor ) {
+		if( millis() >= m_begin ) {
+			g_plateMotor = false;
+			g_scraperControl.startScrape();
+		}
+	} else {
+		if( !g_scraperControl.isRunning() ) {
+			switchState(&STATE_IDLE);
+		}
 	}
 }
 

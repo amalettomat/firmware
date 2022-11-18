@@ -1,5 +1,6 @@
 #include "StateFilling.h"
 #include "StateScraping.h"
+#include "StateMaintIdle.h"
 #include "../Gui.h"
 #include "../config.h"
 
@@ -10,6 +11,7 @@ extern float g_amountFilling2;
 extern bool g_fillingValve1;
 extern bool g_fillingValve2;
 extern int g_numFillSpots;
+extern bool g_maintButton;
 
 
 StateFilling STATE_FILLING;
@@ -43,6 +45,13 @@ void StateFilling::transition(AbstractState* prevState) {
 void StateFilling::action() {
 	uint32_t elapsed = millis() - m_startTime;
 
+	if( g_maintButton ) {
+		g_plateMotor = false;
+		g_fillingValve1 = false;
+		g_fillingValve2 = false;
+		switchState(&STATE_MAINTENANCE_IDLE);
+	}
+
 	if( g_fillingValve1 ) {
 		if( elapsed >= g_amountFilling1 * 1000 ) {
 			g_fillingValve1 = false;
@@ -50,7 +59,7 @@ void StateFilling::action() {
 			m_spotCount++;
 		}
 	} else {
-		if( elapsed >= (0.72 - g_amountFilling1) * 1000 ) {
+		if( elapsed >= (1.2 - g_amountFilling1) * 1000 ) {
 			g_fillingValve1 = true;
 			m_startTime = millis();
 		}

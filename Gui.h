@@ -24,7 +24,7 @@ extern bool g_touchPressed;
 extern Adafruit_GFX_Button g_btnSkip;
 
 // state IDLE
-extern Adafruit_GFX_Button g_btnMaintenance;
+// extern Adafruit_GFX_Button g_btnMaintenance;
 extern GfxImageButton g_btnSelectFill1;
 extern GfxImageButton g_btnSelectFill2;
 

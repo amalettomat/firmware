@@ -1,13 +1,7 @@
-/*
- * StateBaking.cpp
- *
- *  Created on: 09.08.2019
- *      Author: zwax
- */
-
 #include "StateBaking.h"
 #include "StateIdle.h"
 #include "StateFilling.h"
+#include "StateMaintIdle.h"
 #include "../Gui.h"
 #include "../config.h"
 
@@ -16,6 +10,7 @@ StateBaking STATE_BAKING;
 
 
 extern float g_bakingTime;
+extern bool g_maintButton;
 
 
 StateBaking::StateBaking() : m_begin(0), m_canvas(CANVAS_WIDTH, CANVAS_HEIGHT) {
@@ -34,6 +29,8 @@ void StateBaking::transition(AbstractState* prevState) {
 }
 
 void StateBaking::action() {
+	if( g_maintButton )
+		switchState(&STATE_MAINTENANCE_IDLE);
 
 	if( millis() - m_begin >= g_bakingTime * 1000 ) {
 		switchState(&STATE_FILLING);

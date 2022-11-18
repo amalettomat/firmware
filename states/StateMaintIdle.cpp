@@ -151,7 +151,7 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	// filling time 1
 	g_spinFillingTime1.init(g_display,
 			              COL_POS_ROW4, 114,
-						  g_amountFilling1, 0.02, 0.0, 0.75,
+						  g_amountFilling1, 0.02, 0.0, 1.2,
 						  "%1.2f");
 	g_spinFillingTime1.draw();
 
@@ -283,8 +283,8 @@ void StateMaintIdle::action() {
 void StateMaintIdle::refreshDisplay() {
 	refreshStatusBar();
 
-	g_display->setTextColor(COL_STATUS_TEXT, COL_BACKGROUND);
-	g_display->setTextSize(3);
+//	g_display->setTextColor(COL_STATUS_TEXT, COL_BACKGROUND);
+//	g_display->setTextSize(3);
 
 //	bool result = g_rozelController.updateStatus();
 //	ControllerData& controllerData = g_rozelController.getStatus();

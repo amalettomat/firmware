@@ -70,14 +70,15 @@ bool g_oilerSolenoid = false;
 
 float g_credit = 0;
 bool g_showMaint = true;
+bool g_maintButton = false;
 
 // processing params
 float g_batterAmount = 1.5;
 float g_spreadTime = 3.5;
 float g_bakingTime = 75.0;
-float g_amountFilling1 = 0.3;
+float g_amountFilling1 = 0.8;
 float g_amountFilling2 = 0.0;
-int g_numFillSpots = 3;
+int g_numFillSpots = 2;
 
 // pancake price
 float g_price = 3.0F;
@@ -626,6 +627,8 @@ void loop() {
 	tempControl();
 	pressureControl();
 	coinControl();
+
+	g_maintButton = !digitalRead(PIN_BUTTON_MAINT);
 
 	g_scraperControl.run();
 

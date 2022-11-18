@@ -28,6 +28,7 @@ extern LedControl g_ledController;
 extern ScraperControl g_scraperControl;
 extern float g_credit;
 extern float g_price;
+extern bool g_maintButton;
 
 
 StateIdle::StateIdle() : m_startTime(0) {
@@ -52,10 +53,10 @@ void StateIdle::transition(AbstractState* prevState) {
 	g_btnSelectFill2.initButtonUL(g_display, icon_jam, 258, 58, 164, 164, COL_BUTTON_SELECT, COL_BACKGROUND, 20);
 	g_btnSelectFill2.drawButton(false);
 
-	g_btnMaintenance.initButtonUL(g_display, 380, 235, 90, 30, COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, "MAINT", TEXTSIZE_BUTTON);
-	if( g_showMaint ) {
-		g_btnMaintenance.drawButton(false);
-	}
+//	g_btnMaintenance.initButtonUL(g_display, 380, 235, 90, 30, COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, "MAINT", TEXTSIZE_BUTTON);
+//	if( g_showMaint ) {
+//		g_btnMaintenance.drawButton(false);
+//	}
 
 	g_ledController.setPattern(LedControl::LEDS_ALL_GREEN);
 
@@ -63,11 +64,14 @@ void StateIdle::transition(AbstractState* prevState) {
 }
 
 void StateIdle::action() {
-	static bool prevShowMaint = g_showMaint;
-	if( g_showMaint != prevShowMaint ) {
-		prevShowMaint = g_showMaint;
-		g_btnMaintenance.drawButton(false);
-	}
+	if( g_maintButton )
+		switchState(&STATE_MAINTENANCE_IDLE);
+
+//	static bool prevShowMaint = g_showMaint;
+//	if( g_showMaint != prevShowMaint ) {
+//		prevShowMaint = g_showMaint;
+//		g_btnMaintenance.drawButton(false);
+//	}
 
 	if( g_credit < g_price )
 		switchState(&STATE_INSERT_COINS);
@@ -76,21 +80,21 @@ void StateIdle::action() {
 		return;
 
 	if( g_touchPressed ) {
-		if( g_showMaint )
-			g_btnMaintenance.press(g_btnMaintenance.contains(g_touchX, g_touchY));
+//		if( g_showMaint )
+//			g_btnMaintenance.press(g_btnMaintenance.contains(g_touchX, g_touchY));
 
 		g_btnSelectFill1.press(g_btnSelectFill1.contains(g_touchX, g_touchY));
 		g_btnSelectFill2.press(g_btnSelectFill2.contains(g_touchX, g_touchY));
 	} else {
-		g_btnMaintenance.press(false);
+//		g_btnMaintenance.press(false);
 		g_btnSelectFill1.press(false);
 		g_btnSelectFill2.press(false);
 	}
 
-	if( g_btnMaintenance.justReleased() )
-		switchState(&STATE_MAINTENANCE_IDLE);
-	else if( g_btnSkip.justPressed() )
-		g_btnMaintenance.drawButton(true);
+//	if( g_btnMaintenance.justReleased() )
+//		switchState(&STATE_MAINTENANCE_IDLE);
+//	else if( g_btnSkip.justPressed() )
+//		g_btnMaintenance.drawButton(true);
 
 	if( g_btnSelectFill1.justPressed() ) {
 		g_btnSelectFill1.drawButton(true);

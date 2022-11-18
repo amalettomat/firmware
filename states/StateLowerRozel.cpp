@@ -37,33 +37,6 @@ void StateLowerRozel::transition(AbstractState* prevState) {
 }
 
 void StateLowerRozel::action() {
-//	if( g_touchPressed ) {
-//		g_btnMaintenance.press(g_btnMaintenance.contains(g_touchX, g_touchY));
-//		g_btnSelectFill1.press(g_btnSelectFill1.contains(g_touchX, g_touchY));
-//		g_btnSelectFill2.press(g_btnSelectFill2.contains(g_touchX, g_touchY));
-//	} else {
-//		g_btnMaintenance.press(false);
-//		g_btnSelectFill1.press(false);
-//		g_btnSelectFill2.press(false);
-//	}
-//
-//	if( g_btnMaintenance.justReleased() )
-//		switchState(&STATE_MAINTENANCE_IDLE);
-//	else if( g_btnSkip.justPressed() )
-//		g_btnMaintenance.drawButton(true);
-//
-//	if( g_btnSelectFill1.justPressed() ) {
-//		g_btnSelectFill1.drawButton(true);
-//	} else if( g_btnSelectFill1.justReleased() ) {
-//		g_btnSelectFill1.drawButton(false);
-//	}
-//
-//	if( g_btnSelectFill2.justPressed() ) {
-//		g_btnSelectFill2.drawButton(true);
-//	} else if( g_btnSelectFill2.justReleased() ) {
-//		g_btnSelectFill2.drawButton(false);
-//	}
-
 	static int count = 0;
 	if( count-- <= 0 ) {
 		count = 100;

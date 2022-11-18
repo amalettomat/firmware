@@ -17,7 +17,7 @@
 Adafruit_GFX_Button g_btnSkip;
 
 // state IDLE
-Adafruit_GFX_Button g_btnMaintenance;
+// Adafruit_GFX_Button g_btnMaintenance;
 GfxImageButton g_btnSelectFill1;
 GfxImageButton g_btnSelectFill2;
 

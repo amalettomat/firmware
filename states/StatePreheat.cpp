@@ -1,11 +1,13 @@
 #include "StatePreheat.h"
 #include "StateInsertCoins.h"
+#include "StateMaintIdle.h"
 #include "../Gui.h"
 #include "../LedControl.h"
 
 
 extern bool g_heating;
 extern LedControl g_ledController;
+extern bool g_maintButton;
 
 
 StatePreheat STATE_PREHEAT;
@@ -29,6 +31,10 @@ void StatePreheat::transition(AbstractState* prevState) {
 void StatePreheat::action() {
 	if( !g_heating )
 		switchState(&STATE_INSERT_COINS);
+
+	if( g_maintButton ) {
+		switchState(&STATE_MAINTENANCE_IDLE);
+	}
 
 	if( g_touchPressed ) {
 		g_btnSkip.press(g_btnSkip.contains(g_touchX, g_touchY));

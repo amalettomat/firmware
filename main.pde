@@ -73,10 +73,10 @@ bool g_showMaint = true;
 bool g_maintButton = false;
 
 // processing params
-float g_batterAmount = 1.5;
+float g_batterAmount = 1.7;
 float g_spreadTime = 3.5;
-float g_bakingTime = 75.0;
-float g_amountFilling1 = 1.5;
+float g_bakingTime = 65.0;
+float g_amountFilling1 = 1.3;
 float g_amountFilling2 = 0.0;
 float g_fillingOverrunTime = 1.5;
 

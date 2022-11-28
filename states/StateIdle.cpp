@@ -64,8 +64,10 @@ void StateIdle::transition(AbstractState* prevState) {
 }
 
 void StateIdle::action() {
-	if( g_maintButton )
+	if( g_maintButton ) {
 		switchState(&STATE_MAINTENANCE_IDLE);
+		return;
+	}
 
 //	static bool prevShowMaint = g_showMaint;
 //	if( g_showMaint != prevShowMaint ) {
@@ -73,8 +75,10 @@ void StateIdle::action() {
 //		g_btnMaintenance.drawButton(false);
 //	}
 
-	if( g_credit < g_price )
+	if( (g_credit - g_price) < -0.001F ) {
 		switchState(&STATE_INSERT_COINS);
+		return;
+	}
 
 	if( m_startTime > millis() )
 		return;
@@ -101,8 +105,10 @@ void StateIdle::action() {
 		// TODO store filling selection
 
 		g_credit -= g_price;
+		g_credit = round(g_credit*100.0)/100.0;
 
 		switchState(&STATE_LOWER_ROZEL);
+		return;
 	} else if( g_btnSelectFill1.justReleased() ) {
 		g_btnSelectFill1.drawButton(false);
 	}
@@ -112,8 +118,10 @@ void StateIdle::action() {
 		// TODO store filling selection
 
 		g_credit -= g_price;
+		g_credit = round(g_credit*100.0)/100.0;
 
 		switchState(&STATE_LOWER_ROZEL);
+		return;
 	} else if( g_btnSelectFill2.justReleased() ) {
 		g_btnSelectFill2.drawButton(false);
 	}

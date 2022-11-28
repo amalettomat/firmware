@@ -46,10 +46,12 @@ void StateInsertCoins::transition(AbstractState* prevState) {
 }
 
 void StateInsertCoins::action() {
-	if( g_maintButton )
+	if( g_maintButton ) {
 		switchState(&STATE_MAINTENANCE_IDLE);
+		return;
+	}
 
-	if( g_credit >= g_price ) {
+	if( (g_credit - g_price) > -0.001F ) {
 		switchState(&STATE_IDLE);
 		return;
 	}

@@ -47,11 +47,13 @@ void StateFilling::action() {
 		g_fillingValve1 = false;
 		g_fillingValve2 = false;
 		switchState(&STATE_MAINTENANCE_IDLE);
+		return;
 	}
 
 	if( !g_fillingValve1 && !g_fillingValve2 ) {
 		// both valves closed, start scraping (keep motor on!)
 		switchState(&STATE_SCRAPING);
+		return;
 	} else {
 		if( g_fillingValve1 ) {
 			if( elapsed >= g_amountFilling1 * 1000 ) {
@@ -60,7 +62,7 @@ void StateFilling::action() {
 			}
 		} else {
 			if( elapsed >= g_amountFilling2 * 1000 ) {
-				g_fillingValve1 = false;
+				g_fillingValve2 = false;
 				m_startTime = millis();
 			}
 		}

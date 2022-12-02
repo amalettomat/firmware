@@ -78,7 +78,7 @@ float g_spreadTime = 3.5;
 float g_bakingTime = 65.0;
 float g_amountFilling1 = 1.3;
 float g_amountFilling2 = 0.0;
-float g_fillingOverrunTime = 1.5;
+float g_fillingOverrunTime = 2.15;
 
 // pancake price
 float g_price = 3.0F;

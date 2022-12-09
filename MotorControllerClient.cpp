@@ -46,9 +46,11 @@ int MotorControllerClient::setSpeed(int16_t speed) {
 }
 
 bool MotorControllerClient::updateStatus() {
-	Wire.requestFrom(m_twiAddress, sizeof(m_controllerData));
+	int count = Wire.requestFrom(m_twiAddress, sizeof(m_controllerData));
+	if( count != sizeof(m_controllerData) )
+		return false;
 
-	int count = Wire.readBytes((char*)&m_controllerData, sizeof(m_controllerData));
+	count = Wire.readBytes((char*)&m_controllerData, sizeof(m_controllerData));
 	return count == sizeof(m_controllerData);
 }
 

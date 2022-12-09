@@ -10,10 +10,9 @@
 #include "StateIdle.h"
 #include "../Gui.h"
 #include "../config.h"
-#include "../MotorControllerClient.h"
 
 
-extern MotorControllerClient g_rozelController;
+extern bool g_rozelDown;
 extern bool g_plateMotor;
 extern float g_spreadTime;
 
@@ -41,10 +40,7 @@ void StateSpreading::transition(AbstractState* prevState) {
 void StateSpreading::action() {
 
 	if( millis() - m_begin >= g_spreadTime * 1000 ) {
-		// send home command twice. sometimes first call gets lost.
-		g_rozelController.home(ROZEL_SPEED_UP);
-		g_rozelController.home(ROZEL_SPEED_UP);
-
+		g_rozelDown = false;
 		g_plateMotor = false;
 		switchState(&STATE_BAKING);
 	}

@@ -9,17 +9,20 @@
 #include "StateDoseBatter.h"
 #include "../Gui.h"
 #include "../config.h"
-#include "../MotorControllerClient.h"
 
 
-extern MotorControllerClient g_rozelController;
+extern bool g_rozelDown;
+extern bool g_rozelIsDown;
 extern bool g_plateMotor;
 
 
 StateLowerRozel STATE_LOWER_ROZEL;
 
 
-StateLowerRozel::StateLowerRozel() {
+// #define ROZEL_CHECK_INTERVAL 500 // ms
+
+
+StateLowerRozel::StateLowerRozel() /*: m_startTime(0)*/ {
 }
 
 StateLowerRozel::~StateLowerRozel() {
@@ -31,19 +34,16 @@ void StateLowerRozel::transition(AbstractState* prevState) {
 	g_display->setCursor(120, 80);
 	g_display->print("Rozel down...");
 
-	g_rozelController.setSpeed(ROZEL_SPEED_DOWN);
-	g_rozelController.moveTo(ROZEL_ENDPOS);
+	g_rozelDown = true;
+
 	g_plateMotor = true;
+	// m_startTime = millis() + ROZEL_CHECK_INTERVAL;
 }
 
 void StateLowerRozel::action() {
-	static int count = 0;
-	if( count-- <= 0 ) {
-		count = 100;
-		g_rozelController.updateStatus();
-		if( !g_rozelController.getStatus().isMoving() ) {
-			switchState(&STATE_DOSE_BATTER);
-		}
+
+	if( g_rozelIsDown ) {
+		switchState(&STATE_DOSE_BATTER);
 	}
 }
 

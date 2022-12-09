@@ -10,11 +10,9 @@
 #include "../Gui.h"
 #include <AccelStepper.h>
 #include "../config.h"
-#include "../MotorControllerClient.h"
 #include "../ScraperControl.h"
 
 
-extern MotorControllerClient g_rozelController;
 extern bool g_batterValve;
 extern bool g_plateMotor;
 extern int g_plateMotorSpeed;
@@ -28,6 +26,7 @@ extern float g_amountFilling2;
 extern bool g_fillingValve1;
 extern bool g_fillingValve2;
 extern ScraperControl g_scraperControl;
+extern bool g_rozelDown;
 
 
 StateMaintIdle STATE_MAINTENANCE_IDLE;
@@ -201,15 +200,10 @@ void StateMaintIdle::action() {
 	}
 
 	if( g_btnRozel.justReleased() ) {
-		m_rozelDown = !m_rozelDown;
-		if( m_rozelDown ) {
-			// g_rozelController.setSpeed(1200);
-			g_rozelController.setSpeed(ROZEL_SPEED_DOWN);
-			// g_rozelController.moveTo(ROZEL_ENDPOS - 10 * g_spinRozelPos.getValue());
-			g_rozelController.moveTo(ROZEL_ENDPOS);
+		g_rozelDown = !g_rozelDown;
+		if( g_rozelDown ) {
 			g_btnRozel.drawButton(true);
 		} else {
-			g_rozelController.home(ROZEL_SPEED_UP);
 			g_btnRozel.drawButton(false);
 		}
 	}

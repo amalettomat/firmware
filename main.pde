@@ -13,7 +13,6 @@
 #include "states/StateIdle.h"
 #include "layout.h"
 #include "config.h"
-#include "MotorControllerClient.h"
 #include "LedControl.h"
 #include "Gui.h"
 
@@ -78,10 +77,15 @@ float g_spreadTime = 3.5;
 float g_bakingTime = 65.0;
 float g_amountFilling1 = 1.3;
 float g_amountFilling2 = 0.0;
-float g_fillingOverrunTime = 2.15;
+float g_fillingOverrunTime = 2.9; // 2.15
 
 // pancake price
 float g_price = 3.0F;
+
+// rozel state
+bool g_rozelDown = false;
+bool g_rozelIsDown = false;
+bool g_rozelIsUp = false;
 
 
 // commands received from serial
@@ -96,7 +100,7 @@ enum eCommand {
 	COMMAND_PLATE_SPEED_DOWN,
 	COMMAND_TOGGLE_BATTER_VALVE,
 	COMMAND_TOGGLE_OILER_SOLENOID,
-	COMMAND_ROZEL_HOME,
+	COMMAND_ROZEL_UP,
 	COMMAND_ROZEL_DOWN
 };
 
@@ -116,37 +120,12 @@ int numOfParams = 0;
 unsigned long displayTime;
 unsigned long ledUpdateTime;
 
-int16_t rozelMotorSpeed;
-MotorControllerClient g_rozelController;
-
 
 // ====================================================================
 
 void writeOutputs();
 
 // ====================================================================
-
-void initRozel() {
- 	g_rozelController.home(ROZEL_SPEED_UP);
-	g_rozelController.updateStatus();
-//	char msg[50];
-//	snprintf(msg, 50, "pos: %d", g_rozelController.getStatus().m_controllerStatus);
-//	displayMessage(msg);
-//	delay(2000);
-
-//	pinMode(PIN_STEPPER_ROZEL_ENABLE, OUTPUT);
-//	pinMode(PIN_STEPPER_ROZEL_DIR, OUTPUT);
-//	pinMode(PIN_STEPPER_ROZEL_STEP, OUTPUT);
-//	pinMode(PIN_STEPPER_ROZEL_ENDSTOP, INPUT);
-//
-//	g_rozelStepper.setMaxSpeed(100.0 * ROZEL_MICROSTEPS);
-//	g_rozelStepper.setSpeed(60.0 * ROZEL_MICROSTEPS);
-//	g_rozelStepper.setAcceleration(250.0 * ROZEL_MICROSTEPS);
-//	g_rozelStepper.setCurrentPosition(0);
-//	// digitalWrite(PIN_STEPPER_ROZEL_ENABLE, HIGH); // sleep mode
-//	digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW); // enabled
-//	g_rozelStepper.move(-200*ROZEL_MICROSTEPS);
-}
 
 void initScreen() {
 	pinMode(PIN_BACKLIGHT, OUTPUT);
@@ -183,7 +162,7 @@ void setup() {
 		Serial.begin(9600);
 
 	// init I2C
-	Wire.begin();
+	// Wire.begin();
 
 	pinMode(PIN_PLATE_RELAY, OUTPUT);
 	pinMode(PIN_PLATE_TEMP, INPUT);
@@ -192,8 +171,10 @@ void setup() {
 	pinMode(PIN_FILLING_VALVE1, OUTPUT);
 	pinMode(PIN_FILLING_VALVE2, OUTPUT);
 	pinMode(PIN_PLATE_MOTOR, OUTPUT);
-	pinMode(PIN_MIXER, OUTPUT);
-	pinMode(PIN_OUT4, OUTPUT);
+	pinMode(PIN_ROZEL_UP, OUTPUT);
+	pinMode(PIN_ROZEL_DOWN, OUTPUT);
+	pinMode(PIN_ROZEL_ENDSTOP_UP, INPUT_PULLDOWN);
+	pinMode(PIN_ROZEL_ENDSTOP_DOWN, INPUT_PULLDOWN);
 	pinMode(PIN_BATTER_VALVE, OUTPUT);
 	pinMode(PIN_OILER_SOLENOID, OUTPUT);
 	pinMode(PIN_RELAY3, OUTPUT);
@@ -209,15 +190,12 @@ void setup() {
 	digitalWrite(PIN_RELAY4, HIGH);
 
 	initScreen();
-	initRozel();
 
 	g_scraperControl.moveBack();
 
 	g_ledController.init();
 
 	writeOutputs();
-
-	rozelMotorSpeed = 500;
 
 	for( int index=0; index < 200; index++ )
 		readPlateTemp();
@@ -348,8 +326,8 @@ void parseCommand(String &cmdLine) {
 		command = COMMAND_TOGGLE_OILER_SOLENOID;
 	else if( cmd.equals("bv") )
 		command = COMMAND_TOGGLE_BATTER_VALVE;
-	else if( cmd.equals("rh") )
-		command = COMMAND_ROZEL_HOME;
+	else if( cmd.equals("ru") )
+		command = COMMAND_ROZEL_UP;
 	else if( cmd.equals("rd") )
 		command = COMMAND_ROZEL_DOWN;
 	else {
@@ -413,15 +391,11 @@ void handleCommand() {
 	case COMMAND_TOGGLE_OILER_SOLENOID:
 		g_oilerSolenoid = !g_oilerSolenoid;
 		break;
-	case COMMAND_ROZEL_HOME:
-//		if( digitalRead(PIN_STEPPER_ROZEL_ENDSTOP) ) {
-//			digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW);
-//			g_rozelStepper.moveTo(-5000);
-//		}
+	case COMMAND_ROZEL_UP:
+		g_rozelDown = false;
 		break;
 	case COMMAND_ROZEL_DOWN:
-//		digitalWrite(PIN_STEPPER_ROZEL_ENABLE, LOW);
-//		g_rozelStepper.moveTo(180*ROZEL_MICROSTEPS);
+		g_rozelDown = true;
 		break;
 
 	}
@@ -483,7 +457,7 @@ void readPressure() {
 		pressure = 0.0F;
 
 	// g_pressureAverage.addValue(pressure);
-	g_pressure = g_pressure * 0.99 + pressure * 0.01;
+	g_pressure = g_pressure * 0.9 + pressure * 0.1;
 }
 
 void writeState() {
@@ -584,7 +558,7 @@ void coinControl() {
 	static bool prevState = false;
 	static long lastSignal = 0;
 
-	if( lastSignal != 0 && millis() - lastSignal > 200 ) {
+	if( lastSignal != 0 && millis() - lastSignal > 250 ) {
 		lastSignal = 0;
 		switch( signalCount ) {
 			case 1: g_credit += 0.1; break;
@@ -612,6 +586,33 @@ void coinControl() {
 	}
 }
 
+void rozelControl() {
+	g_rozelIsUp = !digitalRead(PIN_ROZEL_ENDSTOP_UP);
+	g_rozelIsDown = !digitalRead(PIN_ROZEL_ENDSTOP_DOWN);
+
+	if( g_rozelDown ) {
+		analogWrite(PIN_ROZEL_UP, 0);
+
+		if( g_rozelIsDown ) {
+			// endstop hit
+			analogWrite(PIN_ROZEL_DOWN, 0);
+		} else {
+			// endstop not hit
+			analogWrite(PIN_ROZEL_DOWN, ROZEL_SPEED_DOWN);
+		}
+	} else {
+		analogWrite(PIN_ROZEL_DOWN, 0);
+
+		if( g_rozelIsUp ) {
+			// endstop hit
+			analogWrite(PIN_ROZEL_UP, 0);
+		} else {
+			// endstop not hit
+			analogWrite(PIN_ROZEL_UP, ROZEL_SPEED_UP);
+		}
+	}
+}
+
 // =============================================================================
 
 void loop() {
@@ -627,6 +628,7 @@ void loop() {
 	tempControl();
 	pressureControl();
 	coinControl();
+	rozelControl();
 
 	g_maintButton = !digitalRead(PIN_BUTTON_MAINT);
 

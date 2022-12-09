@@ -10,14 +10,13 @@
 #include "StateMaintIdle.h"
 #include "../Gui.h"
 #include "../config.h"
-#include "../MotorControllerClient.h"
 
 
 extern bool g_batterValve;
 extern float g_batterAmount;
 extern bool g_plateMotor;
 extern bool g_maintButton;
-extern MotorControllerClient g_rozelController;
+extern bool g_rozelDown;
 
 StateDoseBatter STATE_DOSE_BATTER;
 
@@ -42,8 +41,7 @@ void StateDoseBatter::transition(AbstractState* prevState) {
 
 void StateDoseBatter::action() {
 	if( g_maintButton ) {
-		g_rozelController.home(ROZEL_SPEED_UP);
-		g_rozelController.home(ROZEL_SPEED_UP);
+		g_rozelDown = false;
 		g_batterValve = false;
 		g_plateMotor = false;
 		switchState(&STATE_MAINTENANCE_IDLE);

@@ -24,15 +24,10 @@
 
 // rozel
 // =============================================
-// encoder ticks per motor turn: 20
-// gear ratio: 1:135
-// ticks per deg: 20 * 135 / 360 = 2700 / 360 = 7.5
-// #define ROZEL_TICKS_PER_DEG (5850/360.0) // woher kommt 5850???
-
-// #define ROZEL_ENDPOS -2890
-#define ROZEL_ENDPOS -1270
-#define ROZEL_SPEED_UP 1000
-#define ROZEL_SPEED_DOWN 1000
+#define ROZEL_SPEED_UP 150
+#define ROZEL_SPEED_DOWN 100
+#define PIN_ROZEL_ENDSTOP_DOWN 1
+#define PIN_ROZEL_ENDSTOP_UP 2
 
 // display
 // =============================================
@@ -58,10 +53,10 @@
 
 // L298 PWM outputs
 // =============================================
-#define PIN_PLATE_MOTOR  38
-#define PIN_ROLLER_MOTOR 37
-#define PIN_MIXER        36
-#define PIN_OUT4         35
+#define PIN_PLATE_MOTOR  38 // OUT1
+#define PIN_ROLLER_MOTOR 37 // OUT2
+#define PIN_ROZEL_UP     36 // OUT3
+#define PIN_ROZEL_DOWN   35 // OUT4
 
 // Relays board
 // =============================================

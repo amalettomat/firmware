@@ -1,10 +1,3 @@
-/*
- * StateIdle.h
- *
- *  Created on: 09.08.2019
- *      Author: zwax
- */
-
 #ifndef STATES_STATESPREADING_H_
 #define STATES_STATESPREADING_H_
 

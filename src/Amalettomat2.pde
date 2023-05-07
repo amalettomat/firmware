@@ -80,7 +80,7 @@ float g_amountFilling2 = 0.0;
 float g_fillingOverrunTime = 2.9; // 2.15
 
 // pancake price
-float g_price = 3.0F;
+float g_price = 0.0F;
 
 // rozel state
 bool g_rozelDown = false;
@@ -441,9 +441,9 @@ void readPressure() {
 	float pressure;
 	static int count = 0;
 
-	// only read every 100th run
+	// only read every 1000th run
 	count++;
-	if( count < 100 ) {
+	if( count < 1000 ) {
 		return;
 	}
 	count = 0;
@@ -457,7 +457,7 @@ void readPressure() {
 		pressure = 0.0F;
 
 	// g_pressureAverage.addValue(pressure);
-	g_pressure = g_pressure * 0.9 + pressure * 0.1;
+	g_pressure = g_pressure * 0.99 + pressure * 0.01;
 }
 
 void writeState() {
@@ -537,7 +537,7 @@ void tempControl() {
 }
 
 void pressureControl() {
-	if( g_pressure > 1.35F )
+	if( g_pressure > 1.7F )
 		g_compressor = false;
 	if( g_pressure < 0.7F )
 		g_compressor = true;
@@ -617,14 +617,7 @@ void rozelControl() {
 
 void loop() {
 	readPlateTemp();
-
-	static int pressureReadCount = 0;
-
-	if( pressureReadCount++ > 500 ) {
-		pressureReadCount = 0;
-		readPressure();
-	}
-
+	readPressure();
 	tempControl();
 	pressureControl();
 	coinControl();

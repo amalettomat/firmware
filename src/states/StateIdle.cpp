@@ -7,7 +7,7 @@
 
 #include "StateIdle.h"
 #include "StateMaintIdle.h"
-#include "StateLowerRozel.h"
+#include "StateWaitPressure.h"
 #include "StateInsertCoins.h"
 #include "../Gui.h"
 #include "../BmpImage.h"
@@ -107,7 +107,7 @@ void StateIdle::action() {
 		g_credit -= g_price;
 		g_credit = round(g_credit*100.0)/100.0;
 
-		switchState(&STATE_LOWER_ROZEL);
+		switchState(&STATE_WAIT_PRESSURE);
 		return;
 	} else if( g_btnSelectFill1.justReleased() ) {
 		g_btnSelectFill1.drawButton(false);
@@ -120,7 +120,7 @@ void StateIdle::action() {
 		g_credit -= g_price;
 		g_credit = round(g_credit*100.0)/100.0;
 
-		switchState(&STATE_LOWER_ROZEL);
+		switchState(&STATE_WAIT_PRESSURE);
 		return;
 	} else if( g_btnSelectFill2.justReleased() ) {
 		g_btnSelectFill2.drawButton(false);

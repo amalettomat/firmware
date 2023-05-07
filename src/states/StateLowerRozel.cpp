@@ -14,6 +14,8 @@
 extern bool g_rozelDown;
 extern bool g_rozelIsDown;
 extern bool g_plateMotor;
+extern bool g_compressor;
+extern float g_pressure;
 
 
 StateLowerRozel STATE_LOWER_ROZEL;

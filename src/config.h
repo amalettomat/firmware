@@ -62,7 +62,7 @@
 // =============================================
 #define PIN_BATTER_VALVE   31
 #define PIN_OILER_SOLENOID 32
-#define PIN_RELAY3         33
+#define PIN_COMPRESSOR2    33
 #define PIN_RELAY4         34
 
 // coin selector

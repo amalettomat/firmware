@@ -1,7 +1,7 @@
 /**
  * Amalettomat2 firmware main module
  */
-
+#include "Arduino.h"
 #include "ScraperControl.h"
 #include "Adafruit_ILI9486_Teensy.h"
 #include <SPI.h>
@@ -153,6 +153,49 @@ void initScreen() {
 	delay(2000);
 }
 
+void readPlateTemp() {
+	static int count = 0;
+	count++;
+	if( count < 200 )
+		return;
+	count = 0;
+
+	int plateTempRaw;
+	float tempSensorResistance;
+	float logR;
+
+	plateTempRaw = analogRead(PIN_PLATE_TEMP);
+	tempSensorResistance = plateTempRaw * R1 / (1024.0 - plateTempRaw);
+	logR = log(tempSensorResistance);
+	float temp = (1.0 / (c1 + c2 * logR)) - 273.15;
+	// g_plateTempAverage.addValue();
+	g_plateTemp = g_plateTemp * 0.99 + temp * 0.01;
+}
+
+void readPressure() {
+	float pressure;
+	static int count = 0;
+
+	// only read every 1000th run
+	count++;
+	if( count < 1000 ) {
+		return;
+	}
+	count = 0;
+
+	// g_pressureReadings++;
+
+	pressure = analogRead(PIN_PRESSURE_SENSOR) * PRESSURE_SENSOR_SCALE_FACTOR;
+	pressure = (pressure - PRESSURE_SENSOR_OFFSET_VOLTAGE) * PRESSURE_SENSOR_BAR_PER_VOLT;
+
+	if( pressure < 0.0 )
+		pressure = 0.0F;
+
+	// g_pressureAverage.addValue(pressure);
+	g_pressure = g_pressure * 0.99 + pressure * 0.01;
+}
+
+
 // =============================================================================
 
 void setup() {
@@ -168,6 +211,7 @@ void setup() {
 	pinMode(PIN_PLATE_TEMP, INPUT);
 	pinMode(PIN_PRESSURE_SENSOR, INPUT);
 	pinMode(PIN_COMPRESSOR, OUTPUT);
+	pinMode(PIN_COMPRESSOR2, OUTPUT);
 	pinMode(PIN_FILLING_VALVE1, OUTPUT);
 	pinMode(PIN_FILLING_VALVE2, OUTPUT);
 	pinMode(PIN_PLATE_MOTOR, OUTPUT);
@@ -177,7 +221,6 @@ void setup() {
 	pinMode(PIN_ROZEL_ENDSTOP_DOWN, INPUT_PULLDOWN);
 	pinMode(PIN_BATTER_VALVE, OUTPUT);
 	pinMode(PIN_OILER_SOLENOID, OUTPUT);
-	pinMode(PIN_RELAY3, OUTPUT);
 	pinMode(PIN_RELAY4, OUTPUT);
 	pinMode(PIN_COIN_SIGNAL, INPUT);
 	pinMode(PIN_BUTTON_MAINT, INPUT_PULLUP);
@@ -186,7 +229,7 @@ void setup() {
 	digitalWrite(PIN_BATTER_VALVE, HIGH);
 
 	// turn off unused relays (active low)
-	digitalWrite(PIN_RELAY3, HIGH);
+	digitalWrite(PIN_COMPRESSOR2, HIGH);
 	digitalWrite(PIN_RELAY4, HIGH);
 
 	initScreen();
@@ -416,48 +459,7 @@ void writeOutputs() {
 	// relays board: active low
 	digitalWrite(PIN_BATTER_VALVE, !g_batterValve);
 	digitalWrite(PIN_OILER_SOLENOID, !g_oilerSolenoid);
-}
-
-void readPlateTemp() {
-	static int count = 0;
-	count++;
-	if( count < 200 )
-		return;
-	count = 0;
-
-	int plateTempRaw;
-	float tempSensorResistance;
-	float logR;
-
-	plateTempRaw = analogRead(PIN_PLATE_TEMP);
-	tempSensorResistance = plateTempRaw * R1 / (1024.0 - plateTempRaw);
-	logR = log(tempSensorResistance);
-	float temp = (1.0 / (c1 + c2 * logR)) - 273.15;
-	// g_plateTempAverage.addValue();
-	g_plateTemp = g_plateTemp * 0.99 + temp * 0.01;
-}
-
-void readPressure() {
-	float pressure;
-	static int count = 0;
-
-	// only read every 1000th run
-	count++;
-	if( count < 1000 ) {
-		return;
-	}
-	count = 0;
-
-	// g_pressureReadings++;
-
-	pressure = analogRead(PIN_PRESSURE_SENSOR) * PRESSURE_SENSOR_SCALE_FACTOR;
-	pressure = (pressure - PRESSURE_SENSOR_OFFSET_VOLTAGE) * PRESSURE_SENSOR_BAR_PER_VOLT;
-
-	if( pressure < 0.0 )
-		pressure = 0.0F;
-
-	// g_pressureAverage.addValue(pressure);
-	g_pressure = g_pressure * 0.99 + pressure * 0.01;
+	digitalWrite(PIN_COMPRESSOR2, !g_compressor);
 }
 
 void writeState() {

@@ -3,6 +3,7 @@
 #include "StateMaintIdle.h"
 #include "../Gui.h"
 #include "../LedControl.h"
+#include "../config.h"
 
 
 extern bool g_maintButton;
@@ -30,7 +31,7 @@ void StateWaitPressure::action() {
 		switchState(&STATE_MAINTENANCE_IDLE);
 	}
 
-	if( g_pressure < 1.2F )
+	if( g_pressure < MIN_PRESSURE_FOR_START )
 		g_compressor = true;
 
 	if( !g_compressor )

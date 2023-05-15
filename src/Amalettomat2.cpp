@@ -539,9 +539,9 @@ void tempControl() {
 }
 
 void pressureControl() {
-	if( g_pressure > 1.7F )
+	if( g_pressure > MAX_PRESSURE )
 		g_compressor = false;
-	if( g_pressure < 0.7F )
+	if( g_pressure < MIN_PRESSURE )
 		g_compressor = true;
 }
 

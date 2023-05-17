@@ -21,6 +21,8 @@ extern float g_pressure;
 StateLowerRozel STATE_LOWER_ROZEL;
 
 
+extern void increaseCounter();
+
 // #define ROZEL_CHECK_INTERVAL 500 // ms
 
 
@@ -40,6 +42,7 @@ void StateLowerRozel::transition(AbstractState* prevState) {
 
 	g_plateMotor = true;
 	// m_startTime = millis() + ROZEL_CHECK_INTERVAL;
+	increaseCounter();
 }
 
 void StateLowerRozel::action() {

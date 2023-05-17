@@ -15,6 +15,7 @@
 #include "config.h"
 #include "LedControl.h"
 #include "Gui.h"
+#include <EEPROM.h>
 
 
 #define SERIAL_DEBUG false
@@ -86,6 +87,18 @@ float g_price = 0.0F;
 bool g_rozelDown = false;
 bool g_rozelIsDown = false;
 bool g_rozelIsUp = false;
+
+// ===========================
+// persistent values in EEPROM
+
+// marker to detect if EEPROM is initialized
+int EEPROM_IDX_MARKER = 0;
+uint16_t g_eeprom_marker = 0;
+static const uint16_t EEPROM_MARKER_VALUE = 0xABAF;
+
+// pancake counter
+int EEPROM_IDX_COUNTER = 2;
+uint32_t g_counter = 0;
 
 
 // commands received from serial
@@ -195,6 +208,21 @@ void readPressure() {
 	g_pressure = g_pressure * 0.99 + pressure * 0.01;
 }
 
+void initEEPROM() {
+	EEPROM.get(EEPROM_IDX_MARKER, g_eeprom_marker);
+	if( g_eeprom_marker != EEPROM_MARKER_VALUE ) {
+		// initialize EEPROM
+		g_eeprom_marker = EEPROM_MARKER_VALUE;
+		EEPROM.put(EEPROM_IDX_MARKER, g_eeprom_marker);
+
+		g_counter = 0;
+		EEPROM.put(EEPROM_IDX_COUNTER, g_counter);
+
+		return;
+	} 
+
+	EEPROM.get(EEPROM_IDX_COUNTER, g_counter);
+}
 
 // =============================================================================
 
@@ -238,6 +266,8 @@ void setup() {
 
 	g_ledController.init();
 
+	initEEPROM();
+
 	writeOutputs();
 
 	for( int index=0; index < 200; index++ )
@@ -258,6 +288,11 @@ void setup() {
 	g_display->drawFastHLine(0, STATUS_AREA_YPOS, 480, COL_LINES);
 
 	AbstractState::switchState(&STATE_PREHEAT);
+}
+
+void increaseCounter() {
+	g_counter++;
+	EEPROM.put(EEPROM_IDX_COUNTER, g_counter);
 }
 
 void readTouchPos() {

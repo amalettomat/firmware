@@ -21,6 +21,7 @@ extern bool g_heatingEnabled;
 extern float g_plateTemp;
 extern float g_pressure;
 extern float g_credit;
+extern uint32_t g_counter;
 
 
 // GFXcanvas16 AbstractState::canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -28,6 +29,7 @@ int AbstractState::prevHeating = -1;
 int AbstractState::prevTemp = -1.0F;
 float AbstractState::prevPressure = -1.0F;
 float AbstractState::prevCredit = -1.0F;
+uint32_t AbstractState::prevCounter = 0xFFFFFFFF;
 
 
 AbstractState::AbstractState() {
@@ -112,7 +114,7 @@ void AbstractState::refreshStatusBar() {
 		canvas.setFont(DEFAULT_FONT);
 		canvas.setCursor(0, STATUS_TEXT_YPOS);
 		canvas.printf("%3d °C", curTemp);
-		g_display->drawRGBBitmap(60, 294, canvas.getBuffer(), 50, CANVAS_HEIGHT);
+		g_display->drawRGBBitmap(50, 294, canvas.getBuffer(), 50, CANVAS_HEIGHT);
 		prevTemp = curTemp;
 	}
 
@@ -125,7 +127,7 @@ void AbstractState::refreshStatusBar() {
 		canvas.setFont(DEFAULT_FONT);
 		canvas.setCursor(0, STATUS_TEXT_YPOS);
 		canvas.printf("%1.2f bar", pressure);
-		g_display->drawRGBBitmap(160, 294, canvas.getBuffer(), 70, CANVAS_HEIGHT);
+		g_display->drawRGBBitmap(120, 294, canvas.getBuffer(), 70, CANVAS_HEIGHT);
 		prevPressure = pressure;
 	}
 
@@ -137,8 +139,20 @@ void AbstractState::refreshStatusBar() {
 		canvas.setFont(DEFAULT_FONT);
 		canvas.setCursor(0, STATUS_TEXT_YPOS);
 		canvas.printf("%5.2f", g_credit);
-		g_display->drawRGBBitmap(320, 294, canvas.getBuffer(), 50, CANVAS_HEIGHT);
-		prevTemp = curTemp;
+		g_display->drawRGBBitmap(220, 294, canvas.getBuffer(), 50, CANVAS_HEIGHT);
+		prevCredit = g_credit;
+	}
+
+	// counter
+	if( g_counter != prevCounter  ) {
+		GFXcanvas16 canvas(100, CANVAS_HEIGHT);
+		// canvas.fillScreen(0x6B6D);
+		canvas.setTextColor(COL_STATUS_TEXT);
+		canvas.setFont(DEFAULT_FONT);
+		canvas.setCursor(0, STATUS_TEXT_YPOS);
+		canvas.printf("%7d", g_counter);
+		g_display->drawRGBBitmap(300, 294, canvas.getBuffer(), 100, CANVAS_HEIGHT);
+		prevCounter = g_counter;
 	}
 
 	// write state

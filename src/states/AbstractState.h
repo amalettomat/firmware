@@ -10,6 +10,8 @@
 #ifndef STATES_ABSTRACTSTATE_H_
 #define STATES_ABSTRACTSTATE_H_
 
+#include <stdint.h>
+
 
 class GFXcanvas16;
 
@@ -43,6 +45,7 @@ private:
 	static float prevPressure;
 	static int prevTemp;
 	static float prevCredit;
+	static uint32_t prevCounter;
 };
 
 // NO-OP state

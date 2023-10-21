@@ -81,7 +81,7 @@ float g_amountFilling2 = 0.0;
 float g_fillingOverrunTime = 2.9; // 2.15
 
 // pancake price
-float g_price = 3.0F;
+float g_price = 0.0F;
 
 // rozel state
 bool g_rozelDown = false;

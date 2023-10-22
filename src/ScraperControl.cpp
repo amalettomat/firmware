@@ -2,6 +2,10 @@
 #include "config.h"
 
 
+extern bool g_oilerSolenoid;
+extern bool g_plateMotor;
+
+
 ScraperControl::ScraperControl() : m_motor(AccelStepper::DRIVER, PIN_STEPPER_SCRAPER_STEP, PIN_STEPPER_SCRAPER_DIR), m_state(IDLE) {
 	m_motor.setEnablePin(PIN_STEPPER_SCRAPER_ENABLE);
 	m_motor.setPinsInverted(false, false, true);
@@ -31,6 +35,7 @@ void ScraperControl::handleState() {
 			m_motor.stop();
 			m_motor.setCurrentPosition(0);
 			m_state = IDLE;
+			g_plateMotor = false;
 		}
 		break;
 
@@ -42,12 +47,18 @@ void ScraperControl::handleState() {
 			m_motor.setMaxSpeed(SCRAPER_SPEED_FWD);
 			m_motor.moveTo(-SCRAPER_DIST);
 			m_state = SCRAPING;
+			g_oilerSolenoid = true;
 		}
 		break;
 
 	case SCRAPING:
-		if( !m_motor.isRunning() ) {
+		if( m_motor.isRunning() ) {
+			if( m_motor.currentPosition() <= -500 * SCRAPER_MICROSTEPS ) {
+				g_oilerSolenoid = false;
+			}
+		} else {
 			moveBack();
+			g_oilerSolenoid = false;
 		}
 		break;
 
@@ -72,8 +83,9 @@ void ScraperControl::moveBack() {
 	if( digitalRead(PIN_STEPPER_SCRAPER_ENDSTOP) ) {
 		m_motor.enableOutputs();
 		m_motor.setCurrentPosition(0);
-		m_motor.moveTo(SCRAPER_DIST);
+		m_motor.moveTo(SCRAPER_DIST + 50);
 		m_state = MOVING_BACK;
+		g_plateMotor = true;
 	}
 }
 

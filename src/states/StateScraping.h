@@ -19,6 +19,7 @@ protected:
 
 private:
 	uint32_t m_begin;
+	bool m_started;
 };
 
 extern StateScraping STATE_SCRAPING;

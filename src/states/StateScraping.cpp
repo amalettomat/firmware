@@ -26,12 +26,15 @@ void StateScraping::transition(AbstractState* prevState) {
 	g_display->print("Scraping...");
 
 	m_begin = millis() + g_fillingOverrunTime * 1000;
+	m_started = false;
 }
 
 void StateScraping::action() {
-	if( g_plateMotor ) {
+	if( !m_started ) {
+		// filling overrun phase
 		if( millis() >= m_begin ) {
 			g_plateMotor = false;
+			m_started = true;
 			g_scraperControl.startScrape();
 		}
 	} else {

@@ -29,6 +29,7 @@ extern ScraperControl g_scraperControl;
 extern float g_credit;
 extern float g_price;
 extern bool g_maintButton;
+extern int g_selectedFilling;
 
 
 StateIdle::StateIdle() : m_startTime(0) {
@@ -102,7 +103,8 @@ void StateIdle::action() {
 
 	if( g_btnSelectFill1.justPressed() ) {
 		g_btnSelectFill1.drawButton(true);
-		// TODO store filling selection
+		
+		g_selectedFilling = 1;
 
 		g_credit -= g_price;
 		g_credit = round(g_credit*100.0)/100.0;
@@ -115,7 +117,8 @@ void StateIdle::action() {
 
 	if( g_btnSelectFill2.justPressed() ) {
 		g_btnSelectFill2.drawButton(true);
-		// TODO store filling selection
+		
+		g_selectedFilling = 2;
 
 		g_credit -= g_price;
 		g_credit = round(g_credit*100.0)/100.0;

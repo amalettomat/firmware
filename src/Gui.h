@@ -42,6 +42,8 @@ extern GfxSpinButtonField g_spinPrice;
 extern GfxSpinButtonField g_spinBakingTime;
 extern Adafruit_GFX_Button g_btnFilling1;
 extern GfxSpinButtonField g_spinFillingTime1;
+extern Adafruit_GFX_Button g_btnFilling2;
+extern GfxSpinButtonField g_spinFillingTime2;
 extern Adafruit_GFX_Button g_btnScrape;
 
 extern Adafruit_GFX_Button g_btnExit;

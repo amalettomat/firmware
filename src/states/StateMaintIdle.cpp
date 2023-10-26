@@ -39,10 +39,15 @@ StateMaintIdle::StateMaintIdle() : m_rozelDown(false), m_batterStartTime(0), m_m
 StateMaintIdle::~StateMaintIdle() {
 }
 
-#define COL_POS_ROW1 2
-#define COL_POS_ROW2 82
-#define COL_POS_ROW3 250
-#define COL_POS_ROW4 328
+#define X_POS_COL1   0
+#define X_POS_COL2  82
+#define X_POS_COL3 248
+#define X_POS_COL4 328
+#define Y_POS_LINE1   2
+#define Y_POS_LINE2  58
+#define Y_POS_LINE3 114
+#define Y_POS_LINE4 170
+#define Y_POS_LINE5 226
 
 
 void StateMaintIdle::transition(AbstractState* prevState) {
@@ -51,8 +56,10 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	// rozel button
 	m_rozelDown = false;
 
+	// ========== Left Column =================
+
 	g_btnRozel.initButtonUL(g_display,
-			                COL_POS_ROW1, 2,                            // x-pos, y-pos
+			                X_POS_COL1, Y_POS_LINE1,                            // x-pos, y-pos
 							MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT, // width, height
 							COL_BUTTON_OUTLINE,	COL_BUTTON_INFILL, COL_BUTTON_TEXT, // colors
 							"ROZEL", TEXTSIZE_BUTTON);                 // Label, testsize
@@ -60,14 +67,14 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 
 	// rozel pos
 //	g_spinRozelPos.init(g_display,
-//			            COL_POS_ROW2, 2, // x-pos, y-pos
-//			            16, 1, 0, 25,     // value, step, min, max
+  //			            X_POS_COL2, 2, // x-pos, y-pos
+ //			            16, 1, 0, 25,     // value, step, min, max
 //			            "%2.0f");         // format
 //	g_spinRozelPos.draw();
 
 	// plate motor on/off
 	g_btnPlateMotor.initButtonUL(g_display,
-			                     COL_POS_ROW1, 58,                           // x-pos, y-pos
+			                     X_POS_COL1, Y_POS_LINE2,                           // x-pos, y-pos
 			                     MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT, // width, height
 								 COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT, // colors
 								 "PLATE", TEXTSIZE_BUTTON);                 // Label, testsize
@@ -75,14 +82,14 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 
 	// plate speed
 	g_spinPlateSpeed.init(g_display,
-			              COL_POS_ROW2, 58, // x-pos, y-pos
+  			              X_POS_COL2, Y_POS_LINE2, // x-pos, y-po s
 						  g_plateMotorSpeed, 5, 50, 255,  // value, step, min, max
 						  "%3.0f");          // format
 	g_spinPlateSpeed.draw();
 
 	// heating
 	g_btnHeating.initButtonUL(g_display,        // x-pos, y-pos
-			                  COL_POS_ROW1, 114,
+			                  X_POS_COL1, Y_POS_LINE3,
 							  MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
 							  COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
 							  "HEAT", TEXTSIZE_BUTTON);
@@ -90,14 +97,14 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 
 	// plate temperature
 	g_spinTemp.init(g_display,
-			        COL_POS_ROW2, 114, // x-pos, y-pos
+  			        X_POS_COL2, Y_POS_LINE3, // x-pos, y-po s
 					g_setTemp, 2, 120, 200,   // value, step, min, max
 					"%3.0f");
 	g_spinTemp.draw();
 
 	// batter dose button
 	g_btnBatterDose.initButtonUL(g_display,
-			                     COL_POS_ROW1, 170,
+			                     X_POS_COL1, Y_POS_LINE4,
 								 MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
 								 COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
 								 "DOSE", TEXTSIZE_BUTTON);
@@ -105,7 +112,7 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 
 	// batter amount
 	g_spinBatterAmount.init(g_display,
-			                COL_POS_ROW2, 170,
+  			                X_POS_COL2, Y_POS_LINE4 ,
 							g_batterAmount, 0.1, 1.0, 3.0, // value, step, min, max
 							"%3.1f");
 	g_spinBatterAmount.draw();
@@ -113,36 +120,38 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	// batter button
 	g_batterValve = false;
 	g_btnBatterOnOff.initButtonUL(g_display,
-			                      COL_POS_ROW1, 226,
+			                      X_POS_COL1, Y_POS_LINE5,
 								  MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
 								  COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
 								  "BATTER", TEXTSIZE_BUTTON);
 	g_btnBatterOnOff.drawButton(false);
 
+	// ========== Right Column =================
+
 	g_display->setTextColor(COL_STATUS_TEXT, COL_BACKGROUND);
 	g_display->setTextSize(1);
-	g_display->setCursor(COL_POS_ROW3, 32);
+	g_display->setCursor(X_POS_COL3, 32);
 	g_display->print("BAKE");
-	g_display->setCursor(COL_POS_ROW3, 88);
+	g_display->setCursor(X_POS_COL3, 88);
 	g_display->print("PRICE");
 
 	// baking time
 	g_spinBakingTime.init(g_display,
-			              COL_POS_ROW4, 2,
-						  g_bakingTime, 1, 40.0, 99.0,
-						  "%2.0f");
+			              X_POS_COL4, Y_POS_LINE1,
+						  g_bakingTime  , 1, 40.0, 99.0,
+						  "%2.0f" );
 	g_spinBakingTime.draw();
 
 	// spreading time
 	g_spinPrice.init(g_display,
-			              COL_POS_ROW4, 58,
-						  g_price, 0.1, 0.0, 10.0,
-						  "%1.2f");
+			              X_POS_COL4, Y_POS_LINE2,
+						  g_price, 0.1  , 0.0, 10.0,
+						  "%1.2f" );
 	g_spinPrice.draw();
 
 	// filling 1 button
 	g_btnFilling1.initButtonUL(g_display,
-			                   COL_POS_ROW3, 114,
+			                   X_POS_COL3, Y_POS_LINE3,
 							   MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
 							   COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
 							   "FILL 1", TEXTSIZE_BUTTON);
@@ -150,22 +159,37 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 
 	// filling time 1
 	g_spinFillingTime1.init(g_display,
-			              COL_POS_ROW4, 114,
+			              X_POS_COL4, Y_POS_LINE3,
 						  g_amountFilling1, 0.02, 0.0, 3.0,
-						  "%1.2f");
+						  "%1.2f" );
 	g_spinFillingTime1.draw();
+
+	// filling 2 button
+	g_btnFilling2.initButtonUL(g_display,
+			                   X_POS_COL3, Y_POS_LINE4,
+							   MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
+							   COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
+							   "FILL 2", TEXTSIZE_BUTTON);
+	g_btnFilling2.drawButton(false);
+
+	// filling time 2
+	g_spinFillingTime2.init(g_display,
+			              X_POS_COL4, Y_POS_LINE4,
+						  g_amountFilling2, 0.02, 0.0, 3.0,
+						  "%1.2f" );
+	g_spinFillingTime2.draw();
 
 	// scrape button
 	g_btnScrape.initButtonUL(g_display,
-			               COL_POS_ROW3, 170,
-						   70, BUTTON_DEFAULT_HEIGHT,
+			               X_POS_COL3, Y_POS_LINE5,
+						   MAINT_BUTTON_WIDTH, BUTTON_DEFAULT_HEIGHT,
 						   COL_BUTTON_OUTLINE, COL_BUTTON_INFILL, COL_BUTTON_TEXT,
 						   "SCRAPE", TEXTSIZE_BUTTON);
 	g_btnScrape.drawButton(false);
 
 	// exit
 	g_btnExit.initButtonUL(g_display,
-			               400, 226,
+			               400, Y_POS_LINE5,
 						   70, BUTTON_DEFAULT_HEIGHT,
 						   COL_BUTTON_OUTLINE, COL_BUTTON_EXIT, COL_BUTTON_TEXT,
 						   "EXIT", TEXTSIZE_BUTTON);
@@ -188,6 +212,7 @@ void StateMaintIdle::action() {
 		g_btnHeating.press(g_btnHeating.contains(g_touchX, g_touchY));
 		g_btnExit.press(g_btnExit.contains(g_touchX, g_touchY));
 		g_btnFilling1.press(g_btnFilling1.contains(g_touchX, g_touchY));
+		g_btnFilling2.press(g_btnFilling2.contains(g_touchX, g_touchY));
 		g_btnScrape.press(g_btnScrape.contains(g_touchX, g_touchY));
 	} else {
 		g_btnRozel.press(false);
@@ -197,6 +222,7 @@ void StateMaintIdle::action() {
 		g_btnHeating.press(false);
 		g_btnExit.press(false);
 		g_btnFilling1.press(false);
+		g_btnFilling2.press(false);
 		g_btnScrape.press(false);
 	}
 
@@ -262,9 +288,24 @@ void StateMaintIdle::action() {
 		g_fillingValve1 = true;
 	}
 
-	if( m_fillStartTime > 0 && millis() - m_fillStartTime >= g_spinFillingTime1.getValue() * 1000 ) {
-		m_fillStartTime = 0;
-		g_fillingValve1 = false;
+	if( g_spinFillingTime2.handleTouch(g_touchPressed, g_touchX, g_touchY) )
+		g_amountFilling2 = g_spinFillingTime2.getValue();
+
+	if( g_btnFilling2.justPressed() && m_fillStartTime == 0 ) {
+		// start timer for filling
+		m_fillStartTime = millis();
+		g_fillingValve2 = true;
+	}
+
+	if( m_fillStartTime > 0 ) {
+		if( g_fillingValve1 && millis() - m_fillStartTime >= g_spinFillingTime1.getValue() * 1000 ) {
+			m_fillStartTime = 0;
+			g_fillingValve1 = false;
+		} 
+		if( g_fillingValve2 && millis() - m_fillStartTime >= g_spinFillingTime2.getValue() * 1000 ) {
+			m_fillStartTime = 0;
+			g_fillingValve2 = false;
+		} 
 	}
 
 

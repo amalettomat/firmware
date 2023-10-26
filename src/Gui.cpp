@@ -35,6 +35,8 @@ GfxSpinButtonField g_spinPrice;
 GfxSpinButtonField g_spinBakingTime;
 Adafruit_GFX_Button g_btnFilling1;
 GfxSpinButtonField g_spinFillingTime1;
+Adafruit_GFX_Button g_btnFilling2;
+GfxSpinButtonField g_spinFillingTime2;
 Adafruit_GFX_Button g_btnScrape;
 
 

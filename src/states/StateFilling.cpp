@@ -11,6 +11,7 @@ extern float g_amountFilling2;
 extern bool g_fillingValve1;
 extern bool g_fillingValve2;
 extern bool g_maintButton;
+extern int g_selectedFilling;
 
 
 StateFilling STATE_FILLING;
@@ -32,10 +33,10 @@ void StateFilling::transition(AbstractState* prevState) {
 	m_startTime = millis();
 	g_plateMotor = true;
 
-	if( g_amountFilling1 > 0.0 )
+	if( g_amountFilling1 > 0.0 && (g_selectedFilling & 1) == 1 )
 		g_fillingValve1 = true;
 
-	if( g_amountFilling2 > 0.0 )
+	if( g_amountFilling2 > 0.0 && (g_selectedFilling & 2) == 2 )
 		g_fillingValve2 = true;
 }
 
@@ -58,12 +59,13 @@ void StateFilling::action() {
 		if( g_fillingValve1 ) {
 			if( elapsed >= g_amountFilling1 * 1000 ) {
 				g_fillingValve1 = false;
-				m_startTime = millis();
+				// ??? m_startTime = millis();
 			}
-		} else {
+		}
+		if( g_fillingValve2 ) {
 			if( elapsed >= g_amountFilling2 * 1000 ) {
 				g_fillingValve2 = false;
-				m_startTime = millis();
+				// ??? m_startTime = millis();
 			}
 		}
 	}

@@ -37,7 +37,7 @@
 #define SPINBTN_PADDING        5
 #define SPINBTN_COL_TEXT       0xFFFF
 
-#define MAINT_BUTTON_WIDTH   75
+#define MAINT_BUTTON_WIDTH   77
 
 
 #endif /* LAYOUT_H_ */

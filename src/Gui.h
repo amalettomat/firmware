@@ -38,7 +38,7 @@ extern Adafruit_GFX_Button g_btnPlateMotor;
 extern GfxSpinButtonField g_spinPlateSpeed;
 extern Adafruit_GFX_Button g_btnHeating;
 extern GfxSpinButtonField g_spinTemp;
-extern GfxSpinButtonField g_spinSpreadTime;
+extern GfxSpinButtonField g_spinPrice;
 extern GfxSpinButtonField g_spinBakingTime;
 extern Adafruit_GFX_Button g_btnFilling1;
 extern GfxSpinButtonField g_spinFillingTime1;

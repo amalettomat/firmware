@@ -20,7 +20,8 @@ extern bool g_heatingEnabled;
 extern float g_setTemp;
 extern float g_batterAmount;
 extern float g_bakingTime;
-extern float g_spreadTime;
+// extern float g_spreadTime;
+extern float g_price;
 extern float g_amountFilling1;
 extern float g_amountFilling2;
 extern bool g_fillingValve1;
@@ -123,7 +124,7 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	g_display->setCursor(COL_POS_ROW3, 32);
 	g_display->print("BAKE");
 	g_display->setCursor(COL_POS_ROW3, 88);
-	g_display->print("SPREAD");
+	g_display->print("PRICE");
 
 	// baking time
 	g_spinBakingTime.init(g_display,
@@ -133,11 +134,11 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	g_spinBakingTime.draw();
 
 	// spreading time
-	g_spinSpreadTime.init(g_display,
+	g_spinPrice.init(g_display,
 			              COL_POS_ROW4, 58,
-						  g_spreadTime, 0.1, 2.0, 5.0,
-						  "%1.1f");
-	g_spinSpreadTime.draw();
+						  g_price, 0.1, 0.0, 10.0,
+						  "%1.2f");
+	g_spinPrice.draw();
 
 	// filling 1 button
 	g_btnFilling1.initButtonUL(g_display,
@@ -249,8 +250,8 @@ void StateMaintIdle::action() {
 	if( g_spinBakingTime.handleTouch(g_touchPressed, g_touchX, g_touchY) )
 		g_bakingTime = g_spinBakingTime.getValue();
 
-	if( g_spinSpreadTime.handleTouch(g_touchPressed, g_touchX, g_touchY) )
-		g_spreadTime = g_spinSpreadTime.getValue();
+	if( g_spinPrice.handleTouch(g_touchPressed, g_touchX, g_touchY) )
+		g_price = g_spinPrice.getValue();
 
 	if( g_spinFillingTime1.handleTouch(g_touchPressed, g_touchX, g_touchY) )
 		g_amountFilling1 = g_spinFillingTime1.getValue();

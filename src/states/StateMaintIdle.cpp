@@ -11,6 +11,7 @@
 #include <AccelStepper.h>
 #include "../config.h"
 #include "../ScraperControl.h"
+#include <EEPROM.h>
 
 
 extern bool g_batterValve;
@@ -242,6 +243,7 @@ void StateMaintIdle::action() {
 
 	if( g_spinBatterAmount.handleTouch(g_touchPressed, g_touchX, g_touchY) ) {
 		g_batterAmount = g_spinBatterAmount.getValue();
+		EEPROM.put(EEPROM_IDX_BATTER_AMOUNT, g_batterAmount);
 	}
 
 	if( g_btnBatterDose.justReleased() && m_batterStartTime == 0 ) {
@@ -273,14 +275,20 @@ void StateMaintIdle::action() {
 		g_setTemp = g_spinTemp.getValue();
 	}
 
-	if( g_spinBakingTime.handleTouch(g_touchPressed, g_touchX, g_touchY) )
+	if( g_spinBakingTime.handleTouch(g_touchPressed, g_touchX, g_touchY) ) {
 		g_bakingTime = g_spinBakingTime.getValue();
+		EEPROM.put(EEPROM_IDX_BAKING_TIME, g_bakingTime);
+	}
 
-	if( g_spinPrice.handleTouch(g_touchPressed, g_touchX, g_touchY) )
+	if( g_spinPrice.handleTouch(g_touchPressed, g_touchX, g_touchY) ) {
 		g_price = g_spinPrice.getValue();
+		EEPROM.put(EEPROM_IDX_PRICE, g_price);
+	}
 
-	if( g_spinFillingTime1.handleTouch(g_touchPressed, g_touchX, g_touchY) )
+	if( g_spinFillingTime1.handleTouch(g_touchPressed, g_touchX, g_touchY) ) {
 		g_amountFilling1 = g_spinFillingTime1.getValue();
+		EEPROM.put(EEPROM_IDX_FILLING1, g_amountFilling1);
+	}
 
 	if( g_btnFilling1.justPressed() && m_fillStartTime == 0 ) {
 		// start timer for filling
@@ -288,8 +296,10 @@ void StateMaintIdle::action() {
 		g_fillingValve1 = true;
 	}
 
-	if( g_spinFillingTime2.handleTouch(g_touchPressed, g_touchX, g_touchY) )
+	if( g_spinFillingTime2.handleTouch(g_touchPressed, g_touchX, g_touchY) ) {
 		g_amountFilling2 = g_spinFillingTime2.getValue();
+		EEPROM.put(EEPROM_IDX_FILLING2, g_amountFilling2);
+	}
 
 	if( g_btnFilling2.justPressed() && m_fillStartTime == 0 ) {
 		// start timer for filling

@@ -93,12 +93,9 @@ bool g_rozelIsUp = false;
 // persistent values in EEPROM
 
 // marker to detect if EEPROM is initialized
-int EEPROM_IDX_MARKER = 0;
 uint16_t g_eeprom_marker = 0;
-static const uint16_t EEPROM_MARKER_VALUE = 0xABAF;
 
 // pancake counter
-int EEPROM_IDX_COUNTER = 2;
 uint32_t g_counter = 0;
 
 
@@ -219,10 +216,31 @@ void initEEPROM() {
 		g_counter = 0;
 		EEPROM.put(EEPROM_IDX_COUNTER, g_counter);
 
+		EEPROM.put(EEPROM_IDX_PRICE, g_price);
+		EEPROM.put(EEPROM_IDX_BAKING_TIME, g_bakingTime);
+		EEPROM.put(EEPROM_IDX_BATTER_AMOUNT, g_batterAmount);
+		EEPROM.put(EEPROM_IDX_FILLING1, g_amountFilling1);
+		EEPROM.put(EEPROM_IDX_FILLING2, g_amountFilling2);
+
 		return;
 	} 
 
 	EEPROM.get(EEPROM_IDX_COUNTER, g_counter);
+	EEPROM.get(EEPROM_IDX_PRICE, g_price);
+	if( isnan(g_price) )
+		g_price = 0.0;
+	EEPROM.get(EEPROM_IDX_BAKING_TIME, g_bakingTime);
+	if( isnan(g_bakingTime) )
+		g_bakingTime = 65.0;
+	EEPROM.get(EEPROM_IDX_BATTER_AMOUNT, g_batterAmount);
+	if( isnan(g_batterAmount) )
+		g_batterAmount = 1.7;
+	EEPROM.get(EEPROM_IDX_FILLING1, g_amountFilling1);
+	if( isnan(g_amountFilling1) )
+		g_amountFilling1 = 0.0;
+	EEPROM.get(EEPROM_IDX_FILLING2, g_amountFilling2);
+	if( isnan(g_amountFilling2) )
+		g_amountFilling2 = 0.0;
 }
 
 // =============================================================================

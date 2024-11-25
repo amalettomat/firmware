@@ -161,7 +161,7 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	// filling time 1
 	g_spinFillingTime1.init(g_display,
 			              X_POS_COL4, Y_POS_LINE3,
-						  g_amountFilling1, 0.02, 0.0, 3.0,
+						  g_amountFilling1, 0.1, 0.0, 8.0,
 						  "%1.2f" );
 	g_spinFillingTime1.draw();
 

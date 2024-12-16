@@ -272,12 +272,8 @@ void setup() {
 	pinMode(PIN_COIN_SIGNAL, INPUT);
 	pinMode(PIN_BUTTON_MAINT, INPUT_PULLUP);
 
-	// turn off batter valve (active low)
-	digitalWrite(PIN_BATTER_VALVE, HIGH);
-
-	// turn off unused relays (active low)
-	digitalWrite(PIN_COMPRESSOR2, HIGH);
-	digitalWrite(PIN_RELAY4, HIGH);
+	// turn off batter valve
+	digitalWrite(PIN_BATTER_VALVE, LOW);
 
 	initScreen();
 
@@ -510,10 +506,10 @@ void writeOutputs() {
 	else
 		analogWrite(PIN_PLATE_MOTOR, 0);
 
-	// relays board: active low
-	digitalWrite(PIN_BATTER_VALVE, !g_batterValve);
-	digitalWrite(PIN_OILER_SOLENOID, !g_oilerSolenoid);
-	digitalWrite(PIN_COMPRESSOR2, !g_compressor);
+	// MOSFET boards
+	digitalWrite(PIN_BATTER_VALVE, g_batterValve);     // J6-1
+	digitalWrite(PIN_OILER_SOLENOID, g_oilerSolenoid); // J6-2
+	digitalWrite(PIN_COMPRESSOR2, g_compressor);       // J6-3
 }
 
 void writeState() {

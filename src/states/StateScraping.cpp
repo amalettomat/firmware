@@ -8,7 +8,7 @@
 extern ScraperControl g_scraperControl;
 extern bool g_plateMotor;
 extern float g_fillingOverrunTime;
-
+extern bool g_oilerSolenoid;
 
 StateScraping STATE_SCRAPING;
 
@@ -35,6 +35,7 @@ void StateScraping::action() {
 		if( millis() >= m_begin ) {
 			g_plateMotor = false;
 			m_started = true;
+			g_oilerSolenoid = true;
 			g_scraperControl.startScrape();
 		}
 	} else {

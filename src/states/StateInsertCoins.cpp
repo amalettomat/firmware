@@ -19,7 +19,7 @@ StateInsertCoins STATE_INSERT_COINS;
 #define CANVAS_HEIGHT 66
 
 
-StateInsertCoins::StateInsertCoins() : m_prevCredit(0.0) {
+StateInsertCoins::StateInsertCoins() : m_prevToPay(0.0) {
 }
 
 StateInsertCoins::~StateInsertCoins() {
@@ -42,6 +42,7 @@ void StateInsertCoins::transition(AbstractState* prevState) {
 //		g_btnMaintenance.drawButton(false);
 //	}
 
+	m_prevToPay = 0.0F;
 	g_ledController.setPattern(LedControl::LEDS_WAVE);
 }
 
@@ -51,13 +52,15 @@ void StateInsertCoins::action() {
 		return;
 	}
 
-	if( (g_credit - g_price) > -0.001F ) {
+	float toPay = g_price - g_credit;
+
+	if( toPay < 0.001F ) {
 		switchState(&STATE_IDLE);
 		return;
 	}
 
-	if( m_prevCredit != g_credit ) {
-		m_prevCredit = g_credit;
+	if( m_prevToPay != toPay ) {
+		m_prevToPay = toPay;
 
 		GFXcanvas16 canvas(240, CANVAS_HEIGHT);
 		// canvas.fillScreen(0x6B6D);
@@ -65,7 +68,7 @@ void StateInsertCoins::action() {
 		canvas.setFont(BIG_FONT);
 		canvas.setTextSize(2);
 		canvas.setCursor(0, CANVAS_HEIGHT - 3);
-		canvas.printf("%4.2f", g_credit);
+		canvas.printf("%4.2f", toPay);
 		g_display->drawRGBBitmap(130, 130, canvas.getBuffer(), 240, CANVAS_HEIGHT);
 	}
 //	static bool prevShowMaint = g_showMaint;

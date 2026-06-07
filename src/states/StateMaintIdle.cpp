@@ -114,8 +114,8 @@ void StateMaintIdle::transition(AbstractState* prevState) {
 	// batter amount
 	g_spinBatterAmount.init(g_display,
   			                X_POS_COL2, Y_POS_LINE4 ,
-							g_batterAmount, 0.1, 1.0, 3.0, // value, step, min, max
-							"%3.1f");
+							g_batterAmount, 0.05, 1.0, 3.0, // value, step, min, max
+							"%3.2f");
 	g_spinBatterAmount.draw();
 
 	// batter button

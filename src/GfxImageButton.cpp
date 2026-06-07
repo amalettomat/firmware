@@ -9,7 +9,9 @@
 #include <cstring>
 
 
-GfxImageButton::GfxImageButton() {
+GfxImageButton::GfxImageButton()
+	: m_debounceUntil(0)
+{
 	_gfx = 0;
 	_radius = 2;
 	_outlinecolor = 0;
@@ -56,4 +58,14 @@ void GfxImageButton::drawButton(bool inverted) {
 	  _gfx->drawRoundRect(_x1+1, _y1+1, _w-2, _h-2, _radius-1, _bgcolor);
 	  _gfx->drawRoundRect(_x1+2, _y1+2, _w-4, _h-4, _radius-2, _bgcolor);
   }
+}
+
+void GfxImageButton::press(bool p) {
+	if (millis() < m_debounceUntil)
+		return;
+
+	Adafruit_GFX_Button::press(p);
+
+	if (isPressed())
+		m_debounceUntil = millis() + DEBOUNCE_MS;
 }

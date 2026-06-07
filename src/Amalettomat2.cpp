@@ -667,6 +667,23 @@ void rozelControl() {
 
 // =============================================================================
 
+void handleMaintButton() {
+	static uint32_t maintDebounceTime = 0;
+	static bool maintDebounced = false;
+	bool raw = !digitalRead(PIN_BUTTON_MAINT);
+	if (raw != maintDebounced) {
+		if (maintDebounceTime == 0)
+			maintDebounceTime = millis();
+		else if (millis() - maintDebounceTime >= 50)
+			maintDebounced = raw;
+	} else {
+		maintDebounceTime = 0;
+	}
+	g_maintButton = maintDebounced;
+}
+
+// =============================================================================
+
 void loop() {
 	readPlateTemp();
 	readPressure();
@@ -674,8 +691,7 @@ void loop() {
 	pressureControl();
 	coinControl();
 	rozelControl();
-
-	g_maintButton = !digitalRead(PIN_BUTTON_MAINT);
+	handleMaintButton();
 
 	g_scraperControl.run();
 

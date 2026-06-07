@@ -21,6 +21,7 @@ public:
 			          int16_t x1, int16_t y1, uint16_t w, uint16_t h,
 	                  uint16_t outline, uint16_t bgcolor, uint16_t radius);
 	void drawButton(bool inverted);
+	void press(bool p);
 
 protected:
 	Adafruit_ILI9486_Teensy *_gfx;
@@ -29,6 +30,10 @@ protected:
 	uint16_t _outlinecolor;
 	uint16_t _bgcolor;
 	uint16_t _radius;
+
+private:
+	static constexpr uint32_t DEBOUNCE_MS = 100;
+	uint32_t m_debounceUntil;
 };
 
 #endif /* GFXIMAGEBUTTON_H_ */

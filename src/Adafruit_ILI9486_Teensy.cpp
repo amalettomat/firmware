@@ -30,39 +30,33 @@ void writedata16(uint16_t c)
 }
 /*****************************************************************************/
 void writedata16(uint16_t c, uint32_t num)
-{ 
-int counter = 0;
-	//SPI.setDataSize(DATA_SIZE_16BIT);
+{
+	if (num == 0) return;
 	CD_DATA;
 	CS_ACTIVE;
-//#ifdef USE_DMA
-useDMA = 0;	// disable DMA code
-if (useDMA) {
-/*	Code won't compile with Teensy DMA library - so just disable it
-	lineBuffer[0] = color;
-	while (num>0xFFFF) {
-		SPI.dmaSend(lineBuffer, 0xFFFF, 0);
-		num -= 0xFFFF;
-	}		
-	SPI.dmaSend(lineBuffer, num, 0);
-	*/
-//#else
-} else {
-	while (num-- > 0) // >= ??? RP RP RP 
-	{
-	 SPI.transfer16(c);
-	 if (counter++ > SPIBLOCKMAX)
-	 { // transcations can be long - up to h * w * 16 bit words, so allow other SPI after a reasonable block
-		SPI.endTransaction();
-		SPI.beginTransaction(SPISET);
-		counter = 0;
-	 }
+	uint8_t buf[512];
+	uint8_t hi = c >> 8;
+	uint8_t lo = c & 0xFF;
+	for (int i = 0; i < 256; i++) {
+		buf[i*2] = hi;
+		buf[i*2+1] = lo;
 	}
-		//SPI.transfer16(c>>8,c&0xFF, num);
-//#endif
-}
+	while (num >= 256) {
+		SPI.transfer(buf, 512);
+		num -= 256;
+		for (int i = 0; i < 256; i++) {
+			buf[i*2] = hi;
+			buf[i*2+1] = lo;
+		}
+	}
+	if (num) {
+		for (uint32_t i = 0; i < num; i++) {
+			buf[i*2] = hi;
+			buf[i*2+1] = lo;
+		}
+		SPI.transfer(buf, num * 2);
+	}
 	CS_IDLE;
-	//SPI.setDataSize(DATA_SIZE_8BIT);
 }
 /*****************************************************************************/
 void writecommand(uint8_t c)
@@ -164,7 +158,7 @@ void Adafruit_ILI9486_Teensy::begin(void)
 	commandList(ili9486_init_sequence);
 
 	SPI.endTransaction();
-
+	CS_IDLE;
 }
 
 /*****************************************************************************/
@@ -424,12 +418,38 @@ void Adafruit_ILI9486_Teensy::invertDisplay(boolean i)
 void Adafruit_ILI9486_Teensy::drawRGBBitmap_fast(int16_t x, int16_t y, const uint8_t *bitmap,
                                  int16_t w, int16_t h) {
 
-	setAddrWindow(x, y, x + w - 1, y + h -1);
-
+	setAddrWindow(x, y, x + w - 1, y + h - 1);
+	CD_DATA;
+	CS_ACTIVE;
 	SPI.beginTransaction(SPISET);
-	for( int32_t i=0; i < w * h * 2; i += 2 ) {
-		writedata16(makeWord(bitmap[i], bitmap[i+1]));
+	SPI.transfer((const void*)bitmap, NULL, (uint32_t)w * h * 2);
+	SPI.endTransaction();
+	CS_IDLE;
+}
+
+/*****************************************************************************/
+void Adafruit_ILI9486_Teensy::drawRGBBitmap(int16_t x, int16_t y, const uint16_t *bitmap,
+                                int16_t w, int16_t h) {
+
+	setAddrWindow(x, y, x + w - 1, y + h - 1);
+	CD_DATA;
+	CS_ACTIVE;
+	SPI.beginTransaction(SPISET);
+	uint32_t pixels = (uint32_t)w * h;
+	uint32_t i = 0;
+	uint8_t buf[512];
+	while (i < pixels) {
+		uint32_t chunk = pixels - i;
+		if (chunk > 256) chunk = 256;
+		for (uint32_t j = 0; j < chunk; j++) {
+			uint16_t c = bitmap[i + j];
+			buf[j*2] = c >> 8;
+			buf[j*2+1] = c & 0xFF;
+		}
+		SPI.transfer(buf, NULL, chunk * 2);
+		i += chunk;
 	}
 	SPI.endTransaction();
+	CS_IDLE;
 }
 

@@ -26,7 +26,7 @@ GfxImageButton::~GfxImageButton() {
 }
 
 
-void GfxImageButton::initButtonUL(Adafruit_ILI9486_Teensy *gfx, const BmpImage& image,
+void GfxImageButton::initButtonUL(Adafruit_GFX *gfx, const BmpImage& image,
 		                          int16_t x1, int16_t y1, uint16_t w, uint16_t h,
                                   uint16_t outline, uint16_t bgcolor, uint16_t radius) {
 	int xPad = (w - image.width) / 2;
@@ -35,7 +35,8 @@ void GfxImageButton::initButtonUL(Adafruit_ILI9486_Teensy *gfx, const BmpImage& 
 	int yPad = (h - image.height) / 2;
 	if( yPad < 0 )
 		yPad = 0;
-	gfx->drawRGBBitmap_fast(x1+xPad, y1+yPad, (const uint8_t*)(image.pixel_data), image.width, image.height);
+	gfx->drawRGBBitmap(x1+xPad, y1+yPad, (uint16_t*)image.pixel_data, image.width, image.height);
+	// drawRGBBitmap(x1+xPad, y1+yPad, (const uint8_t*)(image.pixel_data), image.width, image.height);
 
 	Adafruit_GFX_Button::initButtonUL(gfx, x1, y1, w, h, outline, bgcolor, 0, "", 1);
 	_h = h;

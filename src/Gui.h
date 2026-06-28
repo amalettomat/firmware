@@ -9,12 +9,24 @@
 #define GUI_H_
 
 #include "layout.h"
-#include "Adafruit_ILI9486_Teensy.h"
+// #include "Adafruit_ILI9486_Teensy.h"
+#include "ILI9486_SPI.h"
+#include "Adafruit_GFX.h"
 #include "GfxSpinButtonField.h"
 #include "GfxImageButton.h"
 
 
-extern Adafruit_ILI9486_Teensy* g_display;
+#define BLACK   0x0000
+#define BLUE    0x001F
+#define RED     0xF800
+#define GREEN   0x07E0
+#define CYAN    0x07FF
+#define MAGENTA 0xF81F
+#define YELLOW  0xFFE0
+#define WHITE   0xFFFF
+
+// extern Adafruit_ILI9486_Teensy* g_display;
+extern ILI9486_SPI* g_display;
 extern int g_touchX;
 extern int g_touchY;
 extern bool g_touchPressed;

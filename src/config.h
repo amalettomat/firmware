@@ -56,10 +56,10 @@
 
 // L298 PWM outputs
 // =============================================
-#define PIN_PLATE_MOTOR  38 // OUT1
+#define PIN_PLATE_MOTOR  29 // OUT1 formerly: 38
 #define PIN_ROLLER_MOTOR 37 // OUT2
 #define PIN_ROZEL_UP     36 // OUT3
-#define PIN_ROZEL_DOWN   35 // OUT4
+#define PIN_ROZEL_DOWN    3 // OUT4 formerly: 35
 
 // Relays board
 // =============================================
@@ -74,7 +74,7 @@
 // LED strip
 #define NUM_PIXELS 25
 #define PIN_LEDS_DATA      28
-#define PIN_LEDS_CLOCK     29
+#define PIN_LEDS_CLOCK     38 // formerly: 29
 #define LEDS_INTERVAL      50
 
 // buttons

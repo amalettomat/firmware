@@ -3,7 +3,9 @@
  */
 #include "Arduino.h"
 #include "ScraperControl.h"
-#include "Adafruit_ILI9486_Teensy.h"
+// #include "Adafruit_ILI9486_Teensy.h"
+#include <ILI9486_SPI.h>
+#include "GfxImageButton.h"
 #include <SPI.h>
 #include "Splashscreen.h"
 #include "images/icon_choc.bmp.h"
@@ -26,8 +28,10 @@
 // extern const GFXfont FreeSans18pt7b;
 
 
-Adafruit_ILI9486_Teensy tftDisplay;
-Adafruit_ILI9486_Teensy* g_display = &tftDisplay;
+// Adafruit_ILI9486_Teensy tftDisplay;
+// Adafruit_ILI9486_Teensy* g_display = &tftDisplay;
+ILI9486_SPI tftDisplay(/*CS=*/ 10, /*DC=*/ 7, /*RST=*/ 8);
+ILI9486_SPI* g_display = &tftDisplay;
 
 // #define NUM_AVG_TEMP_VALUES 32
 // RunningAverage<float> g_plateTempAverage(NUM_AVG_TEMP_VALUES);
@@ -145,12 +149,16 @@ void initScreen() {
 	pinMode(TP_CS, OUTPUT);
 	digitalWrite(TP_CS, HIGH);
 
-	tftDisplay.begin();
+	// tftDisplay.setSpiKludge(false); // false to disable rpi_spi16_mode
+	tftDisplay.init();
+
+	// tftDisplay.begin();
 	delay(100);
 
 	tftDisplay.setRotation(1);
 
 	// show splash screen
+	g_display->drawRGBBitmap(0, 0, (uint16_t*)splash_image.pixel_data, 480, 320);
 	//g_display->drawRGBBitmap(0, 0, (uint16_t*)splash_image.pixel_data, 480, 320);
 //	tftDisplay.setAddrWindow(0,0, 480, 320);
 //	for(int i=0;i<320*480;i++){
@@ -158,8 +166,6 @@ void initScreen() {
 //	}
 	// tftDisplay.setFont(&FreeSans18pt7b);
 	tftDisplay.setFont(DEFAULT_FONT);
-
-	tftDisplay.drawRGBBitmap_fast(0, 0, (const uint8_t*)splash_image.pixel_data, 480, 320);
 
 	delay(2000);
 }
@@ -282,6 +288,9 @@ void setup() {
 	g_ledController.init();
 
 	initEEPROM();
+	// manually set counter
+	// g_counter = 2858;
+	// EEPROM.put(EEPROM_IDX_COUNTER, g_counter);
 
 	writeOutputs();
 

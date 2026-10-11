@@ -26,6 +26,7 @@
 // =============================================
 #define ROZEL_SPEED_UP 150
 #define ROZEL_SPEED_DOWN 100
+#define ROZEL_ENDSTOP_DEBOUNCE_MS 30
 #define PIN_ROZEL_ENDSTOP_DOWN 1
 #define PIN_ROZEL_ENDSTOP_UP 2
 

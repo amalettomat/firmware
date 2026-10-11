@@ -91,8 +91,8 @@ float g_price = 0.0F;
 
 // rozel state
 bool g_rozelDown = false;
-bool g_rozelIsDown = false;
-bool g_rozelIsUp = false;
+Debounce g_rozelIsDown(ROZEL_ENDSTOP_DEBOUNCE_MS);
+Debounce g_rozelIsUp(ROZEL_ENDSTOP_DEBOUNCE_MS);
 
 // ===========================
 // persistent values in EEPROM
@@ -649,13 +649,13 @@ void coinControl() {
 }
 
 void rozelControl() {
-	g_rozelIsUp = !digitalRead(PIN_ROZEL_ENDSTOP_UP);
-	g_rozelIsDown = !digitalRead(PIN_ROZEL_ENDSTOP_DOWN);
+	g_rozelIsUp.update(!digitalRead(PIN_ROZEL_ENDSTOP_UP));
+	g_rozelIsDown.update(!digitalRead(PIN_ROZEL_ENDSTOP_DOWN));
 
 	if( g_rozelDown ) {
 		analogWrite(PIN_ROZEL_UP, 0);
 
-		if( g_rozelIsDown ) {
+		if( g_rozelIsDown.value() ) {
 			// endstop hit
 			analogWrite(PIN_ROZEL_DOWN, 0);
 		} else {
@@ -665,7 +665,7 @@ void rozelControl() {
 	} else {
 		analogWrite(PIN_ROZEL_DOWN, 0);
 
-		if( g_rozelIsUp ) {
+		if( g_rozelIsUp.value() ) {
 			// endstop hit
 			analogWrite(PIN_ROZEL_UP, 0);
 		} else {

@@ -9,10 +9,11 @@
 #include "StateDoseBatter.h"
 #include "../Gui.h"
 #include "../config.h"
+#include "../Debounce.h"
 
 
 extern bool g_rozelDown;
-extern bool g_rozelIsDown;
+extern Debounce g_rozelIsDown;
 extern bool g_plateMotor;
 extern bool g_compressor;
 extern float g_pressure;
@@ -47,7 +48,7 @@ void StateLowerRozel::transition(AbstractState* prevState) {
 
 void StateLowerRozel::action() {
 
-	if( g_rozelIsDown ) {
+	if( g_rozelIsDown.value() ) {
 		switchState(&STATE_DOSE_BATTER);
 	}
 }

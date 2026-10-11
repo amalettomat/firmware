@@ -79,7 +79,7 @@ Debounce g_maintButton;
 
 // processing params
 float g_batterAmount = 1.7;
-float g_spreadTime = 3.5; // orig: 3.5
+float g_spreadTime = 2.0; // orig: 3.5
 float g_bakingTime = 65.0;
 float g_amountFilling1 = 1.3;
 float g_amountFilling2 = 1.2;
@@ -619,8 +619,9 @@ void coinControl() {
 	static int signalCount = 0;
 	static bool prevState = false;
 	static long lastSignal = 0;
+	static Debounce coinSignal(COIN_SIGNAL_DEBOUNCE_MS, true);
 
-	if( lastSignal != 0 && millis() - lastSignal > 250 ) {
+	if( lastSignal != 0 && millis() - lastSignal > 100 ) {
 		lastSignal = 0;
 		switch( signalCount ) {
 			case 1: g_credit += 0.1; break;
@@ -632,7 +633,9 @@ void coinControl() {
 		signalCount = 0;
 	}
 
-	if( digitalRead(PIN_COIN_SIGNAL) ) {
+	bool raw = coinSignal.update(digitalRead(PIN_COIN_SIGNAL));
+
+	if( raw ) {
 		// NO signal
 		if( prevState ) { // transition from high to low
 			lastSignal = millis();

@@ -72,6 +72,7 @@
 
 // coin selector
 #define PIN_COIN_SIGNAL    0
+#define COIN_SIGNAL_DEBOUNCE_MS 10
 
 // LED strip
 #define NUM_PIXELS 25

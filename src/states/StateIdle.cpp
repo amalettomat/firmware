@@ -13,6 +13,7 @@
 #include "../BmpImage.h"
 #include "../LedControl.h"
 #include "../ScraperControl.h"
+#include "../Debounce.h"
 
 
 StateIdle STATE_IDLE;
@@ -28,7 +29,7 @@ extern LedControl g_ledController;
 extern ScraperControl g_scraperControl;
 extern float g_credit;
 extern float g_price;
-extern bool g_maintButton;
+extern Debounce g_maintButton;
 extern int g_selectedFilling;
 
 
@@ -65,7 +66,7 @@ void StateIdle::transition(AbstractState* prevState) {
 }
 
 void StateIdle::action() {
-	if( g_maintButton ) {
+	if( g_maintButton.value() ) {
 		switchState(&STATE_MAINTENANCE_IDLE);
 		return;
 	}

@@ -3,6 +3,7 @@
 #include "StateMaintIdle.h"
 #include "../Gui.h"
 #include "../config.h"
+#include "../Debounce.h"
 
 
 extern bool g_plateMotor;
@@ -10,7 +11,7 @@ extern float g_amountFilling1;
 extern float g_amountFilling2;
 extern bool g_fillingValve1;
 extern bool g_fillingValve2;
-extern bool g_maintButton;
+extern Debounce g_maintButton;
 extern int g_selectedFilling;
 
 
@@ -43,7 +44,7 @@ void StateFilling::transition(AbstractState* prevState) {
 void StateFilling::action() {
 	uint32_t elapsed = millis() - m_startTime;
 
-	if( g_maintButton ) {
+	if( g_maintButton.value() ) {
 		g_plateMotor = false;
 		g_fillingValve1 = false;
 		g_fillingValve2 = false;

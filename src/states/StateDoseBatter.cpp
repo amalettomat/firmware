@@ -10,12 +10,13 @@
 #include "StateMaintIdle.h"
 #include "../Gui.h"
 #include "../config.h"
+#include "../Debounce.h"
 
 
 extern bool g_batterValve;
 extern float g_batterAmount;
 extern bool g_plateMotor;
-extern bool g_maintButton;
+extern Debounce g_maintButton;
 extern bool g_rozelDown;
 
 StateDoseBatter STATE_DOSE_BATTER;
@@ -40,7 +41,7 @@ void StateDoseBatter::transition(AbstractState* prevState) {
 }
 
 void StateDoseBatter::action() {
-	if( g_maintButton ) {
+	if( g_maintButton.value() ) {
 		g_rozelDown = false;
 		g_batterValve = false;
 		g_plateMotor = false;

@@ -15,6 +15,7 @@
 #include "states/StateIdle.h"
 #include "layout.h"
 #include "config.h"
+#include "Debounce.h"
 #include "LedControl.h"
 #include "Gui.h"
 #include <EEPROM.h>
@@ -74,7 +75,7 @@ bool g_oilerSolenoid = false;
 
 float g_credit = 0;
 bool g_showMaint = true;
-bool g_maintButton = false;
+Debounce g_maintButton;
 
 // processing params
 float g_batterAmount = 1.7;
@@ -677,18 +678,7 @@ void rozelControl() {
 // =============================================================================
 
 void handleMaintButton() {
-	static uint32_t maintDebounceTime = 0;
-	static bool maintDebounced = false;
-	bool raw = !digitalRead(PIN_BUTTON_MAINT);
-	if (raw != maintDebounced) {
-		if (maintDebounceTime == 0)
-			maintDebounceTime = millis();
-		else if (millis() - maintDebounceTime >= 50)
-			maintDebounced = raw;
-	} else {
-		maintDebounceTime = 0;
-	}
-	g_maintButton = maintDebounced;
+	g_maintButton.update(!digitalRead(PIN_BUTTON_MAINT));
 }
 
 // =============================================================================

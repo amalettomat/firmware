@@ -4,13 +4,14 @@
 #include "StateMaintIdle.h"
 #include "../Gui.h"
 #include "../config.h"
+#include "../Debounce.h"
 
 
 StateBaking STATE_BAKING;
 
 
 extern float g_bakingTime;
-extern bool g_maintButton;
+extern Debounce g_maintButton;
 
 
 StateBaking::StateBaking() : m_begin(0), m_canvas(CANVAS_WIDTH, CANVAS_HEIGHT) {
@@ -29,7 +30,7 @@ void StateBaking::transition(AbstractState* prevState) {
 }
 
 void StateBaking::action() {
-	if( g_maintButton )
+	if( g_maintButton.value() )
 		switchState(&STATE_MAINTENANCE_IDLE);
 
 	if( millis() - m_begin >= g_bakingTime * 1000 ) {

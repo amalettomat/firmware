@@ -3,11 +3,12 @@
 #include "StateMaintIdle.h"
 #include "../Gui.h"
 #include "../LedControl.h"
+#include "../Debounce.h"
 
 
 extern bool g_heating;
 extern LedControl g_ledController;
-extern bool g_maintButton;
+extern Debounce g_maintButton;
 
 
 StatePreheat STATE_PREHEAT;
@@ -32,7 +33,7 @@ void StatePreheat::action() {
 	if( !g_heating )
 		switchState(&STATE_INSERT_COINS);
 
-	if( g_maintButton ) {
+	if( g_maintButton.value() ) {
 		switchState(&STATE_MAINTENANCE_IDLE);
 	}
 

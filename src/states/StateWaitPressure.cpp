@@ -4,9 +4,10 @@
 #include "../Gui.h"
 #include "../LedControl.h"
 #include "../config.h"
+#include "../Debounce.h"
 
 
-extern bool g_maintButton;
+extern Debounce g_maintButton;
 extern float g_pressure;
 extern bool g_compressor;
 
@@ -27,7 +28,7 @@ void StateWaitPressure::transition(AbstractState* prevState) {
 }
 
 void StateWaitPressure::action() {
-	if( g_maintButton ) {
+	if( g_maintButton.value() ) {
 		switchState(&STATE_MAINTENANCE_IDLE);
 	}
 

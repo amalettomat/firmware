@@ -4,13 +4,14 @@
 #include <Adafruit_GFX.h>
 #include "../Gui.h"
 #include "../LedControl.h"
+#include "../Debounce.h"
 
 
 extern float g_price;
 extern float g_credit;
 extern LedControl g_ledController;
 // extern bool g_showMaint;
-extern bool g_maintButton;
+extern Debounce g_maintButton;
 
 
 StateInsertCoins STATE_INSERT_COINS;
@@ -47,7 +48,7 @@ void StateInsertCoins::transition(AbstractState* prevState) {
 }
 
 void StateInsertCoins::action() {
-	if( g_maintButton ) {
+	if( g_maintButton.value() ) {
 		switchState(&STATE_MAINTENANCE_IDLE);
 		return;
 	}

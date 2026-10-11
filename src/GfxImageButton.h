@@ -10,6 +10,7 @@
 
 #include "Adafruit_GFX.h"
 #include "BmpImage.h"
+#include "Debounce.h"
 
 
 class GfxImageButton: public Adafruit_GFX_Button {
@@ -32,8 +33,7 @@ protected:
 	uint16_t _radius;
 
 private:
-	static constexpr uint32_t DEBOUNCE_MS = 100;
-	uint32_t m_debounceUntil;
+	Debounce m_debounce;
 };
 
 #endif /* GFXIMAGEBUTTON_H_ */

@@ -6,11 +6,12 @@
  */
 
 #include "GfxImageButton.h"
+#include "config.h"
 #include <cstring>
 
 
 GfxImageButton::GfxImageButton()
-	: m_debounceUntil(0)
+	: m_debounce(BUTTON_DEBOUNCE_MS)
 {
 	_gfx = 0;
 	_radius = 2;
@@ -62,11 +63,5 @@ void GfxImageButton::drawButton(bool inverted) {
 }
 
 void GfxImageButton::press(bool p) {
-	if (millis() < m_debounceUntil)
-		return;
-
-	Adafruit_GFX_Button::press(p);
-
-	if (isPressed())
-		m_debounceUntil = millis() + DEBOUNCE_MS;
+	Adafruit_GFX_Button::press(m_debounce.update(p));
 }

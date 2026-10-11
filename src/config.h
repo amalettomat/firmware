@@ -80,6 +80,7 @@
 
 // buttons
 #define PIN_BUTTON_MAINT   30
+#define BUTTON_DEBOUNCE_MS 30
 
 // EEPROM
 #define EEPROM_MARKER_VALUE 0xABAF

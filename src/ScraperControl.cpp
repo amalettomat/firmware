@@ -6,7 +6,7 @@ extern bool g_oilerSolenoid;
 extern bool g_plateMotor;
 
 
-ScraperControl::ScraperControl() : m_motor(AccelStepper::DRIVER, PIN_STEPPER_SCRAPER_STEP, PIN_STEPPER_SCRAPER_DIR), m_state(IDLE) {
+ScraperControl::ScraperControl() : m_motor(AccelStepper::DRIVER, PIN_STEPPER_SCRAPER_STEP, PIN_STEPPER_SCRAPER_DIR), m_endstop(SCRAPER_ENDSTOP_DEBOUNCE_MS), m_state(IDLE) {
 	m_motor.setEnablePin(PIN_STEPPER_SCRAPER_ENABLE);
 	m_motor.setPinsInverted(false, false, true);
 
@@ -30,7 +30,7 @@ bool ScraperControl::isRunning() {
 void ScraperControl::handleState() {
 	switch( m_state ) {
 	case MOVING_BACK:
-		if( !digitalRead(PIN_STEPPER_SCRAPER_ENDSTOP) ) {
+		if( m_endstop.value() ) {
 			// hit end stop switch
 			m_motor.stop();
 			m_motor.setCurrentPosition(0);
@@ -40,7 +40,7 @@ void ScraperControl::handleState() {
 		break;
 
 	case PRE_SCRAPING:
-		if( !digitalRead(PIN_STEPPER_SCRAPER_ENDSTOP) ) {
+		if( m_endstop.value() ) {
 			// hit end stop switch
 			m_motor.stop();
 			m_motor.setCurrentPosition(0);
@@ -67,6 +67,7 @@ void ScraperControl::handleState() {
 }
 
 void ScraperControl::run() {
+	m_endstop.update(!digitalRead(PIN_STEPPER_SCRAPER_ENDSTOP));
 	handleState();
 
 	m_motor.run();
@@ -80,7 +81,7 @@ void ScraperControl::moveBack() {
 
 	m_motor.setMaxSpeed(SCRAPER_SPEED_REV);
 
-	if( digitalRead(PIN_STEPPER_SCRAPER_ENDSTOP) ) {
+	if( !m_endstop.value() ) {
 		m_motor.enableOutputs();
 		m_motor.setCurrentPosition(0);
 		m_motor.moveTo(SCRAPER_DIST + 50);

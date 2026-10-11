@@ -2,6 +2,7 @@
 #define SCRAPERCONTROL_H_
 
 #include <AccelStepper.h>
+#include "Debounce.h"
 
 
 class ScraperControl {
@@ -22,6 +23,7 @@ protected:
 
 private:
 	AccelStepper m_motor;
+	Debounce m_endstop;
 	State m_state;
 };
 

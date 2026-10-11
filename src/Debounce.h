@@ -5,7 +5,7 @@
 
 class Debounce {
 public:
-	explicit Debounce(uint32_t delay = 50) : m_delay(delay), m_time(0), m_value(false) {}
+	explicit Debounce(uint32_t delay = 50, bool initialValue = false) : m_delay(delay), m_time(0), m_value(initialValue) {}
 
 	bool update(bool raw) {
 		if (raw != m_value) {
